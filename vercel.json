@@ -2,12 +2,11 @@
   "services": {
     "frontend": {
       "root": "frontend",
-      "framework": "vite",
-      "buildCommand": "vite build"
+      "framework": "vite"
     },
     "backend": {
       "root": "backend",
-      "buildCommand": "tsc"
+      "entrypoint": "src/server.ts"
     }
   },
   "rewrites": [
