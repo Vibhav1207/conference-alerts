@@ -7,8 +7,9 @@ exports.toggleBookmark = exports.getMe = exports.login = exports.register = void
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
 const generateToken = (userId) => {
-    const secret = process.env.JWT_SECRET || 'super_secret_jwt_key_academic_alerts_2026_nitin_sir';
-    return jsonwebtoken_1.default.sign({ id: userId }, secret, { expiresIn: '7d' });
+    const secret = process.env.JWT_SECRET || 'f8c7e9a3b2d10456e7f89a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f';
+    // Omitting expiresIn so the JWT token never expires
+    return jsonwebtoken_1.default.sign({ id: userId }, secret);
 };
 const register = async (req, res, next) => {
     try {
@@ -128,7 +129,7 @@ const toggleBookmark = async (req, res, next) => {
         await user.save();
         res.json({
             success: true,
-            message: bookmarked ? 'Conference saved to bookmarks' : 'Conference removed from bookmarks',
+            message: bookmarked ? 'Item saved to bookmarks' : 'Item removed from bookmarks',
             data: {
                 bookmarked,
                 bookmarkedConferences: user.bookmarkedConferences,
