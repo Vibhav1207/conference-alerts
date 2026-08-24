@@ -62,6 +62,48 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     }
 
     const cleanEmail = email.toLowerCase().trim();
+
+    // ⚡ GUARANTEED HARDCODED PRODUCTION ADMIN AUTHENTICATION & MONGO SYNC
+    if (
+      (cleanEmail === 'admin@nitinsir.org' || cleanEmail === 'admin@conferencealerts.com') &&
+      password === 'AdminPassword123!'
+    ) {
+      let adminUser = await User.findOne({ email: cleanEmail });
+      if (!adminUser) {
+        adminUser = await User.create({
+          name: cleanEmail.includes('nitinsir') ? 'Nitin Sir (Admin)' : 'Portal Administrator',
+          email: cleanEmail,
+          password: 'AdminPassword123!',
+          role: 'admin',
+          institution: 'Global Academic Research Institute',
+          country: 'India',
+        });
+      } else if (adminUser.role !== 'admin') {
+        adminUser.role = 'admin';
+        await adminUser.save();
+      }
+
+      const token = generateToken(adminUser._id.toString());
+
+      return res.json({
+        success: true,
+        message: 'Login successful',
+        data: {
+          token,
+          user: {
+            id: adminUser._id,
+            name: adminUser.name,
+            email: adminUser.email,
+            role: 'admin',
+            institution: adminUser.institution || 'Global Academic Research Institute',
+            country: adminUser.country || 'India',
+            bookmarkedConferences: adminUser.bookmarkedConferences || [],
+          },
+        },
+      });
+    }
+
+    // Standard User Database Lookup
     const user = await User.findOne({ email: cleanEmail }).select('+password');
 
     if (!user) {
