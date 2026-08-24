@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import dotenv from 'dotenv';
 import path from 'path';
+import { autoSeedIfEmpty } from '../seed/seedHelper';
 
 // Ensure .env is loaded from root or current dir
 dotenv.config();
@@ -14,11 +15,11 @@ export const connectDB = async (): Promise<void> => {
   const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/conference_alerts';
 
   try {
-    // Attempt connecting to specified MongoDB URI with a 5s timeout
     await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 5000,
     });
-    console.log(`[Database] Successfully connected to MongoDB Atlas cluster!`);
+    console.log(`[Database] Successfully connected to MongoDB!`);
+    await autoSeedIfEmpty();
   } catch (error: any) {
     console.warn(`[Database] Standard connection error (${error.message}). Fallback to MongoMemoryServer...`);
     try {
@@ -26,6 +27,7 @@ export const connectDB = async (): Promise<void> => {
       const memUri = mongoMemoryServer.getUri();
       await mongoose.connect(memUri);
       console.log(`[Database] Connected to In-Memory MongoDB at ${memUri}`);
+      await autoSeedIfEmpty();
     } catch (memErr) {
       console.error('[Database] Critical error connecting to MongoDB:', memErr);
       process.exit(1);
