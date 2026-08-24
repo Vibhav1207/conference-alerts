@@ -1,11 +1,17 @@
-import express from 'express';
-import dotenv from 'dotenv';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import app from '../server/app';
 import { connectDB } from '../server/config/db';
 
-dotenv.config();
+let isConnected = false;
 
-// Connect MongoDB for serverless execution
-connectDB().catch((err) => console.error('[Vercel DB Error]', err));
-
-export default app;
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (!isConnected) {
+    try {
+      await connectDB();
+      isConnected = true;
+    } catch (err) {
+      console.error('[Vercel DB Connection Error]:', err);
+    }
+  }
+  return app(req, res);
+}
