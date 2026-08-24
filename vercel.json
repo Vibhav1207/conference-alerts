@@ -1,8 +1,29 @@
 {
+  "services": {
+    "frontend": {
+      "root": "frontend",
+      "framework": "vite",
+      "buildCommand": "vite build"
+    },
+    "backend": {
+      "root": "backend",
+      "buildCommand": "tsc"
+    }
+  },
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/index.ts"
+      "source": "/api/(.*)?",
+      "destination": {
+        "type": "service",
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "type": "service",
+        "service": "frontend"
+      }
     }
   ]
 }
