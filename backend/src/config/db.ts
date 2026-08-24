@@ -12,13 +12,13 @@ dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
 let mongoMemoryServer: MongoMemoryServer | null = null;
 
 export const connectDB = async (): Promise<void> => {
-  const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/conference_alerts';
+  const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/conferencealerts';
 
   try {
     await mongoose.connect(uri, {
       serverSelectionTimeoutMS: 5000,
     });
-    console.log(`[Database] Successfully connected to MongoDB!`);
+    console.log(`[Database] Successfully connected to MongoDB database 'conferencealerts'!`);
     await autoSeedIfEmpty();
   } catch (error: any) {
     console.warn(`[Database] Standard connection error (${error.message}). Fallback to MongoMemoryServer...`);

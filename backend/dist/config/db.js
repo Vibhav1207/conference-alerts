@@ -15,12 +15,12 @@ dotenv_1.default.config({ path: path_1.default.resolve(process.cwd(), '.env') })
 dotenv_1.default.config({ path: path_1.default.resolve(process.cwd(), '../.env') });
 let mongoMemoryServer = null;
 const connectDB = async () => {
-    const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/conference_alerts';
+    const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/conferencealerts';
     try {
         await mongoose_1.default.connect(uri, {
             serverSelectionTimeoutMS: 5000,
         });
-        console.log(`[Database] Successfully connected to MongoDB!`);
+        console.log(`[Database] Successfully connected to MongoDB database 'conferencealerts'!`);
         await (0, seedHelper_1.autoSeedIfEmpty)();
     }
     catch (error) {
