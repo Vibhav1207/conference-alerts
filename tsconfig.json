@@ -20,5 +20,11 @@
       "@/*": ["src/*"]
     }
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "node"
+    }
+  },
   "include": ["src", "server", "api"]
 }
