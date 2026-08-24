@@ -5,26 +5,25 @@ import { AuthRequest } from '../middleware/auth';
 
 const generateToken = (userId: string): string => {
   const secret = process.env.JWT_SECRET || 'f8c7e9a3b2d10456e7f89a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f';
-  // Omitting expiresIn so the JWT token never expires
   return jwt.sign({ id: userId }, secret);
 };
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, email, password, institution, country } = req.body;
+    const cleanEmail = email.toLowerCase().trim();
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: cleanEmail });
     if (existingUser) {
       return res.status(400).json({ success: false, message: 'An account with this email already exists' });
     }
 
-    // Default first registered user or admin email to admin role
     const isFirstUser = (await User.countDocuments()) === 0;
-    const role = isFirstUser || email.includes('admin') ? 'admin' : 'user';
+    const role = isFirstUser || cleanEmail.includes('admin') ? 'admin' : 'user';
 
     const user = await User.create({
       name,
-      email,
+      email: cleanEmail,
       password,
       institution,
       country,
@@ -58,7 +57,13 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email }).select('+password');
+    if (!email || !password) {
+      return res.status(400).json({ success: false, message: 'Email and password are required' });
+    }
+
+    const cleanEmail = email.toLowerCase().trim();
+    const user = await User.findOne({ email: cleanEmail }).select('+password');
+
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid credentials' });
     }
