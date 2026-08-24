@@ -1,6 +1,7 @@
 {
   "name": "conference-alerts",
   "version": "1.0.0",
+  "type": "module",
   "private": true,
   "description": "Production-Ready MERN Academic Conference Alerts Portal",
   "scripts": {
