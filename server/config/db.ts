@@ -21,7 +21,14 @@ export const connectDB = async (): Promise<void> => {
     console.log(`[Database] Successfully connected to MongoDB database 'conferencealerts'!`);
     await autoSeedIfEmpty();
   } catch (error: any) {
-    console.warn(`[Database] Standard connection error (${error.message}). Fallback to MongoMemoryServer...`);
+    console.warn(`[Database] Connection error (${error.message}).`);
+    
+    // Serverless / Vercel environments do not support running MongoMemoryServer binary
+    if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+      console.error('[Database] Production/Vercel environment: Failed to connect to MONGODB_URI. Please verify MONGODB_URI credentials in Vercel Dashboard Environment Variables.');
+      throw error;
+    }
+
     try {
       mongoMemoryServer = await MongoMemoryServer.create();
       const memUri = mongoMemoryServer.getUri();
@@ -30,7 +37,7 @@ export const connectDB = async (): Promise<void> => {
       await autoSeedIfEmpty();
     } catch (memErr) {
       console.error('[Database] Critical error connecting to MongoDB:', memErr);
-      process.exit(1);
+      throw memErr;
     }
   }
 };
