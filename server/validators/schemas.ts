@@ -21,6 +21,7 @@ export const conferenceSchema = z.object({
   organizer: z.string().min(2, 'Organizer is required'),
   category: z.enum(CATEGORIES),
   mode: z.enum(['Hybrid', 'In-Person', 'Online']),
+  conferenceScope: z.enum(['International', 'National']).optional(),
   venue: z.object({
     continent: z.enum(CONTINENTS),
     country: z.string().min(1, 'Country is required'),

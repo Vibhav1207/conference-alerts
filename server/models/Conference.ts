@@ -17,10 +17,11 @@ export interface IRegistrationFee {
 export interface IConference extends Document {
   title: string;
   acronym: string;
-  eventType: 'Conference' | 'Internship' | 'Call for Papers' | 'Workshop / Seminar';
+  eventType: 'Conference' | 'Internship' | 'Journals' | 'Workshop / Seminar';
   organizer: string;
   category: string;
   mode: 'Hybrid' | 'In-Person' | 'Online';
+  conferenceScope?: 'International' | 'National';
   venue: {
     continent: string;
     country: string;
@@ -69,6 +70,7 @@ const ConferenceSchema = new Schema<IConference>(
       index: true,
     },
     mode: { type: String, enum: ['Hybrid', 'In-Person', 'Online'], required: true, default: 'In-Person' },
+    conferenceScope: { type: String, enum: ['International', 'National'], default: undefined },
     venue: {
       continent: { type: String, enum: CONTINENTS, required: true, index: true, default: 'Asia' },
       country: { type: String, required: true, index: true },

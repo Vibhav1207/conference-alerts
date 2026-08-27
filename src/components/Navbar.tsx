@@ -1,22 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
-  Bell,
-  Search,
-  User,
-  LogOut,
-  Bookmark,
-  PlusCircle,
-  LayoutDashboard,
-  Menu,
-  X,
-  FileText,
-  Briefcase,
-  GraduationCap,
-  CalendarCheck,
-  CheckCircle2,
-  Loader2,
+  Bell, User, LogOut, Bookmark, LayoutDashboard, Menu, X,
+  FileText, Briefcase, GraduationCap, CalendarCheck, CheckCircle2,
+  ChevronDown,
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -31,8 +19,19 @@ export const Navbar: React.FC = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isNavActive = (path: string) => location.pathname === path;
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setUserDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,138 +47,105 @@ export const Navbar: React.FC = () => {
     }, 600);
   };
 
+  const navLinks = [
+    { to: '/', label: 'Browse All', icon: CalendarCheck, query: '' },
+    { to: '/?eventType=Journals', label: 'Journals', icon: GraduationCap, query: 'eventType=Journals' },
+    { to: '/?eventType=Conference', label: 'Conferences', icon: CalendarCheck, query: 'eventType=Conference' },
+    { to: '/?eventType=Internship', label: 'Internships', icon: Briefcase, query: 'eventType=Internship' },
+    { to: '/resources', label: 'Resources', icon: FileText, query: 'resources' },
+  ];
+
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+      <header className="sticky top-0 z-40 bg-brutal-black text-white border-b-4 border-brutal-yellow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16">
             {/* Logo & Brand */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-navy-900 to-navy-800 text-white flex items-center justify-center font-serif text-2xl font-bold shadow-md shadow-navy-900/20 group-hover:scale-105 transition-transform">
+              <div className="w-10 h-10 bg-brutal-yellow text-brutal-black flex items-center justify-center font-display text-2xl font-bold border-3 border-brutal-black shadow-brutal-sm group-hover:translate-x-[-2px] group-hover:translate-y-[-2px] group-hover:shadow-brutal transition-all">
                 N
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-xl font-bold tracking-tight text-navy-900 leading-tight">
+                <span className="font-display text-lg font-bold tracking-tight text-white leading-tight">
                   Nitin Sir
                 </span>
-                <span className="text-[11px] font-semibold tracking-wider text-emerald-800 uppercase">
+                <span className="text-[9px] font-bold tracking-widest text-brutal-yellow uppercase">
                   Academic Alerts 2026
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-1 font-medium text-xs sm:text-sm text-slate-700">
-              <Link
-                to="/"
-                className={`px-3.5 py-2 rounded-xl transition-colors ${
-                  isNavActive('/') && !location.search
-                    ? 'bg-navy-900 text-white font-semibold shadow-xs'
-                    : 'hover:bg-slate-100 text-slate-700'
-                }`}
-              >
-                Browse All
-              </Link>
-
-              <Link
-                to="/?eventType=Conference"
-                className={`px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5 ${
-                  location.search.includes('eventType=Conference')
-                    ? 'bg-navy-900 text-white font-semibold shadow-xs'
-                    : 'hover:bg-slate-100 text-slate-700'
-                }`}
-              >
-                <CalendarCheck className="w-4 h-4 text-emerald-700" />
-                <span>Conferences</span>
-              </Link>
-
-              <Link
-                to="/?eventType=Internship"
-                className={`px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5 ${
-                  location.search.includes('eventType=Internship')
-                    ? 'bg-navy-900 text-white font-semibold shadow-xs'
-                    : 'hover:bg-slate-100 text-slate-700'
-                }`}
-              >
-                <Briefcase className="w-4 h-4 text-blue-600" />
-                <span>Internships</span>
-              </Link>
-
-              <Link
-                to="/?eventType=Call for Papers"
-                className={`px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5 ${
-                  location.search.includes('eventType=Call%20for%20Papers')
-                    ? 'bg-navy-900 text-white font-semibold shadow-xs'
-                    : 'hover:bg-slate-100 text-slate-700'
-                }`}
-              >
-                <GraduationCap className="w-4 h-4 text-purple-600" />
-                <span>Call for Papers</span>
-              </Link>
-
-              <Link
-                to="/resources"
-                className={`px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1.5 ${
-                  isNavActive('/resources')
-                    ? 'bg-navy-900 text-white font-semibold shadow-xs'
-                    : 'hover:bg-slate-100 text-slate-700'
-                }`}
-              >
-                <FileText className="w-4 h-4 text-slate-500" />
-                <span>Resources</span>
-              </Link>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1 font-bold text-xs">
+              {navLinks.map((link) => {
+                const Icon = link.icon;
+                const active =
+                  link.query === ''
+                    ? isNavActive('/') && !location.search
+                    : location.search.includes(link.query);
+                return (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className={`px-3 py-2 transition-all flex items-center gap-1.5 border-2 ${
+                      active
+                        ? 'bg-brutal-yellow text-brutal-black border-brutal-yellow shadow-brutal-sm'
+                        : 'border-transparent text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20'
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    <span>{link.label}</span>
+                  </Link>
+                );
+              })}
             </nav>
 
-            {/* Action Buttons & Profile */}
-            <div className="hidden sm:flex items-center gap-3">
+            {/* Action Buttons */}
+            <div className="hidden sm:flex items-center gap-2">
               <button
                 onClick={() => setAlertModalOpen(true)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 rounded-xl transition-all shadow-xs"
+                className="brutal-btn-secondary text-xs py-2 px-3"
               >
-                <Bell className="w-4 h-4 text-emerald-700" />
-                <span>Get Alerts</span>
+                <Bell className="w-3.5 h-3.5" />
+                <span className="hidden md:inline">Alerts</span>
               </button>
 
               {isAuthenticated ? (
-                <div className="relative">
+                <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2.5 p-1.5 pr-3 rounded-xl border border-slate-200 hover:bg-slate-50 transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 border-2 border-white/20 hover:border-brutal-yellow transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-lg bg-navy-900 text-white flex items-center justify-center font-bold text-xs uppercase">
+                    <div className="w-7 h-7 bg-brutal-yellow text-brutal-black flex items-center justify-center font-bold text-xs border-2 border-brutal-black">
                       {user?.name?.charAt(0) || 'U'}
                     </div>
-                    <div className="text-left text-xs">
-                      <p className="font-semibold text-slate-900 leading-tight">{user?.name}</p>
-                      <p className="text-[10px] text-slate-500 capitalize">{user?.role}</p>
-                    </div>
+                    <span className="text-xs font-bold hidden md:inline">{user?.name}</span>
+                    <ChevronDown className="w-3 h-3" />
                   </button>
 
                   {userDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                      <div className="px-4 py-2.5 border-b border-slate-100">
-                        <p className="text-xs font-bold text-slate-900">{user?.name}</p>
-                        <p className="text-[11px] text-slate-500 truncate">{user?.email}</p>
+                    <div className="absolute right-0 mt-2 w-56 bg-white border-3 border-brutal-black shadow-brutal-lg z-50 animate-slide-down">
+                      <div className="px-4 py-3 border-b-2 border-brutal-black bg-brutal-yellow/10">
+                        <p className="text-xs font-bold text-brutal-black">{user?.name}</p>
+                        <p className="text-[10px] text-brutal-black/60 truncate">{user?.email}</p>
                       </div>
-
                       {isAdmin && (
                         <Link
                           to="/admin"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-navy-900 hover:bg-slate-50"
+                          className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-black hover:bg-brutal-yellow/20 transition-colors"
                         >
-                          <LayoutDashboard className="w-4 h-4 text-navy-700" />
-                          <span>Admin Control Center</span>
+                          <LayoutDashboard className="w-4 h-4" />
+                          <span>Admin Dashboard</span>
                         </Link>
                       )}
-
                       <button
                         onClick={() => {
                           logout();
                           setUserDropdownOpen(false);
                           navigate('/');
                         }}
-                        className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 text-left"
+                        className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-red hover:bg-red-50 text-left"
                       >
                         <LogOut className="w-4 h-4" />
                         <span>Log Out</span>
@@ -191,13 +157,13 @@ export const Navbar: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <Link
                     to="/login"
-                    className="px-4 py-2 text-xs font-semibold text-navy-900 hover:bg-slate-100 rounded-xl transition-colors"
+                    className="brutal-btn-outline text-xs py-2 px-3"
                   >
                     Log In
                   </Link>
                   <Link
                     to="/register"
-                    className="px-4 py-2.5 text-xs font-semibold text-white bg-navy-900 hover:bg-navy-850 rounded-xl shadow-md shadow-navy-900/10 transition-all"
+                    className="brutal-btn-secondary text-xs py-2 px-3"
                   >
                     Register
                   </Link>
@@ -205,13 +171,13 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            {/* Mobile menu trigger */}
-            <div className="flex sm:hidden items-center gap-2">
+            {/* Mobile Menu Trigger */}
+            <div className="flex lg:hidden items-center gap-2">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 text-slate-700 hover:bg-slate-100 rounded-lg"
+                className="p-2 border-2 border-white/20 hover:border-brutal-yellow transition-colors"
               >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -219,61 +185,38 @@ export const Navbar: React.FC = () => {
 
         {/* Mobile Drawer */}
         {mobileMenuOpen && (
-          <div className="sm:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3">
-            <Link
-              to="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-slate-100"
-            >
-              Browse All Events
-            </Link>
-            <Link
-              to="/?eventType=Conference"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-slate-100"
-            >
-              Conferences
-            </Link>
-            <Link
-              to="/?eventType=Internship"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-slate-100"
-            >
-              Internships
-            </Link>
-            <Link
-              to="/?eventType=Call for Papers"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-slate-100"
-            >
-              Call for Papers
-            </Link>
-            <Link
-              to="/resources"
-              onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-slate-100"
-            >
-              Resource Library
-            </Link>
-
+          <div className="lg:hidden border-t-2 border-white/10 bg-brutal-black px-4 pt-3 pb-6 space-y-1 animate-slide-down">
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-white/80 hover:bg-white/10 transition-colors"
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
             {isAuthenticated ? (
               <>
                 {isAdmin && (
                   <Link
                     to="/admin"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 rounded-lg text-sm font-semibold text-navy-900 bg-slate-50"
+                    className="flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-brutal-yellow"
                   >
-                    Admin Control Center
+                    <LayoutDashboard className="w-4 h-4" />
+                    Admin Dashboard
                   </Link>
                 )}
                 <button
-                  onClick={() => {
-                    logout();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="w-full text-left px-3 py-2 text-sm font-semibold text-red-600"
+                  onClick={() => { logout(); setMobileMenuOpen(false); }}
+                  className="w-full text-left flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-brutal-red"
                 >
+                  <LogOut className="w-4 h-4" />
                   Log Out
                 </button>
               </>
@@ -282,14 +225,14 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center px-4 py-2 text-sm font-semibold text-navy-900 bg-slate-100 rounded-xl"
+                  className="text-center px-4 py-2.5 text-sm font-bold text-white border-2 border-white/20 hover:bg-white/10"
                 >
                   Log In
                 </Link>
                 <Link
                   to="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center px-4 py-2 text-sm font-semibold text-white bg-navy-900 rounded-xl"
+                  className="text-center px-4 py-2.5 text-sm font-bold bg-brutal-yellow text-brutal-black border-2 border-brutal-black"
                 >
                   Register
                 </Link>
@@ -299,63 +242,59 @@ export const Navbar: React.FC = () => {
         )}
       </header>
 
-      {/* Top-Level Modal Outside Header to ensure exact viewport centering & no stacking clipping */}
+      {/* Alert Modal */}
       {alertModalOpen && (
         <div
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setAlertModalOpen(false);
-          }}
-          className="fixed inset-0 z-[100] bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto"
+          onClick={(e) => { if (e.target === e.currentTarget) setAlertModalOpen(false); }}
+          className="brutal-overlay"
         >
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100 relative animate-in zoom-in-95 duration-200 my-auto">
+          <div className="bg-white border-4 border-brutal-black shadow-brutal-xl max-w-md w-full p-6 sm:p-8 relative animate-scale-in my-auto">
             <button
               onClick={() => setAlertModalOpen(false)}
-              className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 transition-colors"
+              className="absolute top-3 right-3 p-2 border-2 border-brutal-black hover:bg-brutal-black hover:text-white transition-colors"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
             {subscribedSuccess ? (
               <div className="text-center py-6 space-y-3">
-                <div className="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="w-8 h-8" />
+                <div className="w-14 h-14 bg-brutal-green border-3 border-brutal-black flex items-center justify-center mx-auto shadow-brutal">
+                  <CheckCircle2 className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-navy-900">Subscription Active!</h3>
-                <p className="text-xs text-slate-600">
-                  You will now receive verified academic and internship alerts for <strong>{categoryInput}</strong>.
+                <h3 className="font-serif text-xl font-bold text-brutal-black">Subscription Active!</h3>
+                <p className="text-xs text-brutal-black/70">
+                  You'll receive alerts for <strong>{categoryInput}</strong>.
                 </p>
               </div>
             ) : (
               <>
-                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center mb-4 shadow-sm">
-                  <Bell className="w-6 h-6 text-emerald-700" />
+                <div className="w-12 h-12 bg-brutal-yellow border-3 border-brutal-black flex items-center justify-center mb-4 shadow-brutal-sm">
+                  <Bell className="w-6 h-6 text-brutal-black" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-navy-900 mb-1">
-                  Subscribe to Academic Alerts
+                <h3 className="font-serif text-xl font-bold text-brutal-black mb-1">
+                  Subscribe to Alerts
                 </h3>
-                <p className="text-xs text-slate-600 mb-5 leading-relaxed">
-                  Get verified notifications for upcoming Conferences, Research Internships, and Call for Papers directly in your inbox.
+                <p className="text-xs text-brutal-black/60 mb-5 leading-relaxed">
+                  Get verified notifications for Conferences, Internships, and Journals.
                 </p>
-
                 <form onSubmit={handleSubscribe} className="space-y-4 text-xs">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Email Address</label>
+                    <label className="brutal-label">Email Address</label>
                     <input
                       type="email"
                       required
                       value={emailInput}
                       onChange={(e) => setEmailInput(e.target.value)}
                       placeholder="author@university.edu"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-800 text-slate-900"
+                      className="brutal-input"
                     />
                   </div>
-
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Field of Interest</label>
+                    <label className="brutal-label">Field of Interest</label>
                     <select
                       value={categoryInput}
                       onChange={(e) => setCategoryInput(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-800 bg-white font-medium text-slate-800"
+                      className="brutal-select"
                     >
                       <option value="Engineering & Tech">Engineering & Tech</option>
                       <option value="Physical & Life Sciences">Physical & Life Sciences</option>
@@ -366,14 +305,13 @@ export const Navbar: React.FC = () => {
                       <option value="Social Sciences">Social Sciences</option>
                     </select>
                   </div>
-
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full py-3 text-xs font-bold text-white bg-navy-900 hover:bg-navy-850 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
+                    className="w-full brutal-btn-primary py-3"
                   >
                     {submitting ? (
-                      <Loader2 className="w-4 h-4 animate-spin text-white" />
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                     ) : (
                       <span>Activate Free Alerts</span>
                     )}

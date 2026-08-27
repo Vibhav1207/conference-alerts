@@ -67,7 +67,7 @@ export const AdminConferencesPage: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex min-h-screen bg-brutal-cream">
       <AdminSidebar />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
@@ -78,17 +78,17 @@ export const AdminConferencesPage: React.FC = () => {
 
         <main className="p-8 space-y-6 flex-1">
           {/* Top Bar: Tabs & Search */}
-          <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="bg-white border-3 border-brutal-black shadow-brutal p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Status Filter Tabs */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
               {['All', 'Published', 'Pending', 'Draft', 'Archived'].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                  className={`px-4 py-2 text-xs font-bold transition-all whitespace-nowrap border-2 border-brutal-black ${
                     activeTab === tab
-                      ? 'bg-navy-900 text-white shadow-xs'
-                      : 'text-slate-600 hover:bg-slate-100'
+                      ? 'bg-brutal-black text-brutal-yellow shadow-brutal-sm'
+                      : 'bg-white text-brutal-black hover:bg-brutal-cream'
                   }`}
                 >
                   {tab}
@@ -98,59 +98,63 @@ export const AdminConferencesPage: React.FC = () => {
 
             {/* Search Input */}
             <div className="relative w-full md:w-72">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+              <Search className="w-4 h-4 text-brutal-black/40 absolute left-3 top-2.5" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search acronym, title..."
-                className="w-full pl-9 pr-3.5 py-2 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900 bg-white"
+                className="brutal-input pl-9 pr-3.5 py-2 text-xs"
               />
             </div>
           </div>
 
           {/* Conferences Data Table */}
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="bg-white border-3 border-brutal-black shadow-brutal overflow-hidden">
             {loading ? (
-              <div className="py-20 flex flex-col items-center justify-center text-slate-400 gap-3">
-                <Loader2 className="w-8 h-8 animate-spin text-emerald-800" />
-                <p className="text-xs font-semibold text-slate-600">Loading conference records...</p>
+              <div className="py-20 flex flex-col items-center justify-center gap-3">
+                <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+                <p className="text-xs font-bold text-brutal-black/50">Loading conference records...</p>
               </div>
             ) : conferences.length === 0 ? (
-              <div className="p-12 text-center text-slate-500 text-xs">
-                No conferences found under this filter status.
+              <div className="p-12 text-center">
+                <div className="w-16 h-16 border-3 border-brutal-black bg-brutal-cream flex items-center justify-center mx-auto mb-4">
+                  <Filter className="w-8 h-8 text-brutal-black/30" />
+                </div>
+                <p className="text-sm font-bold text-brutal-black">No conferences found</p>
+                <p className="text-xs text-brutal-black/50 mt-1">No results match the current filter status.</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
+                <table className="brutal-table">
                   <thead>
-                    <tr className="bg-slate-100 text-slate-700 font-bold uppercase text-[10px] tracking-wider border-b border-slate-200">
-                      <th className="p-4">Acronym & Title</th>
-                      <th className="p-4">Category & Mode</th>
-                      <th className="p-4">Location</th>
-                      <th className="p-4">Submission Deadline</th>
-                      <th className="p-4">Status</th>
-                      <th className="p-4 text-right">Actions</th>
+                    <tr>
+                      <th>Acronym & Title</th>
+                      <th>Category & Mode</th>
+                      <th>Location</th>
+                      <th>Submission Deadline</th>
+                      <th>Status</th>
+                      <th className="text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100">
+                  <tbody>
                     {conferences.map((conf) => (
-                      <tr key={conf._id} className="hover:bg-slate-50 transition-colors">
-                        <td className="p-4">
-                          <span className="font-bold text-navy-900 block text-sm">{conf.acronym}</span>
-                          <span className="text-slate-600 line-clamp-1 max-w-sm">{conf.title}</span>
+                      <tr key={conf._id}>
+                        <td>
+                          <span className="font-bold text-brutal-black block text-sm">{conf.acronym}</span>
+                          <span className="text-brutal-black/50 line-clamp-1 max-w-sm block text-[11px]">{conf.title}</span>
                         </td>
 
-                        <td className="p-4">
-                          <span className="font-semibold text-slate-800 block">{conf.category}</span>
-                          <span className="text-[10px] text-slate-500 uppercase">{conf.mode}</span>
+                        <td>
+                          <span className="font-semibold text-brutal-black block text-xs">{conf.category}</span>
+                          <span className="text-[10px] text-brutal-black/50 uppercase">{conf.mode}</span>
                         </td>
 
-                        <td className="p-4 text-slate-700">
+                        <td className="text-brutal-black/70 text-xs">
                           {conf.venue.city}, {conf.venue.country}
                         </td>
 
-                        <td className="p-4 font-medium text-slate-800">
+                        <td className="font-medium text-brutal-black text-xs">
                           {new Date(conf.dates.submissionDeadline).toLocaleDateString('en-US', {
                             month: 'short',
                             day: 'numeric',
@@ -158,28 +162,28 @@ export const AdminConferencesPage: React.FC = () => {
                           })}
                         </td>
 
-                        <td className="p-4">
+                        <td>
                           <span
-                            className={`px-2.5 py-1 rounded-lg text-[10px] font-bold ${
+                            className={`brutal-badge text-[9px] ${
                               conf.status === 'Published'
-                                ? 'bg-emerald-100 text-emerald-800'
+                                ? 'bg-brutal-green/10 text-brutal-green border-brutal-green'
                                 : conf.status === 'Pending'
-                                ? 'bg-amber-100 text-amber-800'
+                                ? 'bg-brutal-orange/10 text-brutal-orange border-brutal-orange'
                                 : conf.status === 'Draft'
-                                ? 'bg-slate-200 text-slate-700'
-                                : 'bg-red-100 text-red-800'
+                                ? 'bg-brutal-cream text-brutal-black/60 border-brutal-black/20'
+                                : 'bg-brutal-red/10 text-brutal-red border-brutal-red'
                             }`}
                           >
                             {conf.status}
                           </span>
                         </td>
 
-                        <td className="p-4 text-right space-x-1">
+                        <td className="text-right space-x-1">
                           <Link
                             to={`/conference/${conf._id}`}
                             target="_blank"
                             title="View Public Page"
-                            className="inline-flex p-1.5 text-slate-500 hover:text-navy-900 hover:bg-slate-100 rounded-lg"
+                            className="inline-flex p-1.5 text-brutal-black/50 hover:text-brutal-black hover:bg-brutal-cream transition-colors"
                           >
                             <Eye className="w-4 h-4" />
                           </Link>
@@ -187,7 +191,7 @@ export const AdminConferencesPage: React.FC = () => {
                           <button
                             onClick={() => navigate(`/admin/conferences/edit/${conf._id}`)}
                             title="Edit Event"
-                            className="inline-flex p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg"
+                            className="inline-flex p-1.5 text-brutal-blue hover:bg-brutal-blue/10 transition-colors"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
@@ -196,7 +200,7 @@ export const AdminConferencesPage: React.FC = () => {
                             <button
                               onClick={() => handleStatusUpdate(conf._id, 'Published')}
                               title="Approve & Publish"
-                              className="inline-flex p-1.5 text-emerald-700 hover:bg-emerald-50 rounded-lg"
+                              className="inline-flex p-1.5 text-brutal-green hover:bg-brutal-green/10 transition-colors"
                             >
                               <CheckCircle className="w-4 h-4" />
                             </button>
@@ -206,7 +210,7 @@ export const AdminConferencesPage: React.FC = () => {
                             <button
                               onClick={() => handleStatusUpdate(conf._id, 'Archived')}
                               title="Archive Event"
-                              className="inline-flex p-1.5 text-amber-600 hover:bg-amber-50 rounded-lg"
+                              className="inline-flex p-1.5 text-brutal-orange hover:bg-brutal-orange/10 transition-colors"
                             >
                               <Archive className="w-4 h-4" />
                             </button>
@@ -215,7 +219,7 @@ export const AdminConferencesPage: React.FC = () => {
                           <button
                             onClick={() => handleDelete(conf._id, conf.title)}
                             title="Delete Event"
-                            className="inline-flex p-1.5 text-red-600 hover:bg-red-50 rounded-lg"
+                            className="inline-flex p-1.5 text-brutal-red hover:bg-brutal-red/10 transition-colors"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>

@@ -2,7 +2,7 @@ export const EVENT_TYPES = [
   'All',
   'Conference',
   'Internship',
-  'Call for Papers',
+  'Journals',
   'Workshop / Seminar',
 ] as const;
 
@@ -15,6 +15,7 @@ export const CATEGORIES = [
   'Business & Management',
   'Arts & Humanities',
   'Social Sciences',
+  'FDP',
 ] as const;
 
 export const CONTINENTS = [

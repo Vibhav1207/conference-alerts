@@ -23,6 +23,7 @@ export const AdminAddEventPage: React.FC = () => {
     organizer: '',
     category: 'Engineering & Tech' as typeof CATEGORIES[number],
     mode: 'In-Person' as 'Hybrid' | 'In-Person' | 'Online',
+    conferenceScope: '' as '' | 'International' | 'National',
     continent: 'Asia' as typeof CONTINENTS[number],
     country: 'Japan',
     city: 'Tokyo',
@@ -96,6 +97,7 @@ export const AdminAddEventPage: React.FC = () => {
               organizer: conf.organizer,
               category: (conf.category as any) || 'Engineering & Tech',
               mode: conf.mode,
+              conferenceScope: (conf.conferenceScope as any) || '',
               continent: (conf.venue.continent as any) || 'Asia',
               country: conf.venue.country || 'Japan',
               city: conf.venue.city || 'Tokyo',
@@ -145,6 +147,7 @@ export const AdminAddEventPage: React.FC = () => {
       organizer: formData.organizer,
       category: formData.category,
       mode: formData.mode,
+      conferenceScope: formData.conferenceScope || undefined,
       venue: {
         continent: formData.continent,
         country: formData.country,
@@ -187,48 +190,51 @@ export const AdminAddEventPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-slate-100">
+      <div className="flex min-h-screen bg-brutal-cream">
         <AdminSidebar />
-        <div className="flex-1 flex flex-col items-center justify-center text-slate-400 gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-emerald-800" />
-          <p className="text-xs font-semibold text-slate-600">Loading form data...</p>
+        <div className="flex-1 flex flex-col items-center justify-center gap-3">
+          <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+          <p className="text-xs font-bold text-brutal-black/50">Loading form data...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-slate-100">
+    <div className="flex min-h-screen bg-brutal-cream">
       <AdminSidebar />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         <AdminHeader
           title={isEditing ? 'Edit Academic Opportunity' : 'Post New Academic Opportunity'}
-          subtitle="Publish Conferences, Research Internships, Call for Papers, and Workshops with official redirect links"
+          subtitle="Publish Conferences, Research Internships, Journals, and Workshops with official redirect links"
         />
 
         <main className="p-8 max-w-4xl space-y-8">
           {error && (
-            <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-700 font-medium flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-600" />
+            <div className="p-4 bg-brutal-red/10 border-3 border-brutal-red text-xs text-brutal-red font-bold flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{error}</span>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* General Information Section */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
-              <h3 className="font-serif text-lg font-bold text-navy-900 border-b border-slate-100 pb-3">
-                General Information & Type
-              </h3>
+            <div className="bg-white border-3 border-brutal-black shadow-brutal p-6 space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
+                <div className="w-3 h-6 bg-brutal-yellow" />
+                <h3 className="font-serif text-lg font-bold text-brutal-black">
+                  General Information & Type
+                </h3>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Listing Type</label>
+                  <label className="brutal-label">Listing Type</label>
                   <select
                     value={formData.eventType}
                     onChange={(e) => setFormData({ ...formData, eventType: e.target.value as any })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900 bg-white font-semibold text-emerald-900"
+                    className="brutal-select text-xs"
                   >
                     {EVENT_TYPES.filter((t) => t !== 'All').map((type) => (
                       <option key={type} value={type}>
@@ -239,37 +245,37 @@ export const AdminAddEventPage: React.FC = () => {
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Full Listing Title</label>
+                  <label className="brutal-label">Full Listing Title</label>
                   <input
                     type="text"
                     required
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     placeholder="e.g. CERN International Research Internship in Quantum Physics"
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                    className="brutal-input"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Acronym / Code</label>
+                  <label className="brutal-label">Acronym / Code</label>
                   <input
                     type="text"
                     required
                     value={formData.acronym}
                     onChange={(e) => setFormData({ ...formData, acronym: e.target.value })}
                     placeholder="e.g. CERN-INT 2026"
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                    className="brutal-input"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Academic Category / Domain</label>
+                  <label className="brutal-label">Academic Category / Domain</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900 bg-white font-medium"
+                    className="brutal-select text-xs"
                   >
                     {CATEGORIES.filter((c) => c !== 'All').map((cat) => (
                       <option key={cat} value={cat}>
@@ -280,51 +286,69 @@ export const AdminAddEventPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Attendance Mode</label>
+                  <label className="brutal-label">Attendance Mode</label>
                   <select
                     value={formData.mode}
                     onChange={(e) => setFormData({ ...formData, mode: e.target.value as any })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900 bg-white"
+                    className="brutal-select text-xs"
                   >
                     <option value="In-Person">In-Person</option>
                     <option value="Hybrid">Hybrid</option>
                     <option value="Online">Online</option>
                   </select>
                 </div>
+
+                {formData.eventType === 'Conference' && (
+                  <div>
+                    <label className="brutal-label">Conference Scope</label>
+                    <select
+                      value={formData.conferenceScope}
+                      onChange={(e) => setFormData({ ...formData, conferenceScope: e.target.value as '' | 'International' | 'National' })}
+                      className="brutal-select text-xs"
+                    >
+                      <option value="">Not Applicable</option>
+                      <option value="International">International</option>
+                      <option value="National">National</option>
+                    </select>
+                  </div>
+                )}
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Organizing Body / Institution</label>
+                <label className="brutal-label">Organizing Body / Institution</label>
                 <input
                   type="text"
                   required
                   value={formData.organizer}
                   onChange={(e) => setFormData({ ...formData, organizer: e.target.value })}
                   placeholder="e.g. European Organization for Nuclear Research (CERN)"
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                  className="brutal-input"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Overview & Scope</label>
+                <label className="brutal-label">Overview & Scope</label>
                 <textarea
                   required
                   rows={4}
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Provide a comprehensive summary of the scope, eligibility, and themes..."
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                  className="brutal-input resize-none"
                 />
               </div>
             </div>
 
             {/* Official Redirect Link Section */}
-            <div className="bg-emerald-50/80 rounded-3xl p-6 border border-emerald-200 shadow-sm space-y-3">
-              <h3 className="font-serif text-lg font-bold text-emerald-950 flex items-center gap-2">
-                <LinkIcon className="w-5 h-5 text-emerald-800" />
-                <span>Official External Application / Registration Link</span>
-              </h3>
-              <p className="text-xs text-emerald-800 leading-relaxed">
+            <div className="bg-brutal-yellow/20 border-3 border-brutal-black shadow-brutal p-6 space-y-3">
+              <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
+                <div className="w-3 h-6 bg-brutal-green" />
+                <h3 className="font-serif text-lg font-bold text-brutal-black flex items-center gap-2">
+                  <LinkIcon className="w-5 h-5" />
+                  <span>Official External Application / Registration Link</span>
+                </h3>
+              </div>
+              <p className="text-xs text-brutal-black/60 leading-relaxed">
                 Applicants are redirected to this URL when clicking "Apply on Official Site".
               </p>
               <input
@@ -333,23 +357,26 @@ export const AdminAddEventPage: React.FC = () => {
                 value={formData.externalApplyUrl}
                 onChange={(e) => setFormData({ ...formData, externalApplyUrl: e.target.value })}
                 placeholder="https://official-conference-site.org/register"
-                className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-800 bg-white font-mono"
+                className="brutal-input font-mono text-xs"
               />
             </div>
 
             {/* Location Hierarchy Dropdowns Section */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
-              <h3 className="font-serif text-lg font-bold text-navy-900 border-b border-slate-100 pb-3">
-                Location Hierarchy Dropdowns
-              </h3>
+            <div className="bg-white border-3 border-brutal-black shadow-brutal p-6 space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
+                <div className="w-3 h-6 bg-brutal-blue" />
+                <h3 className="font-serif text-lg font-bold text-brutal-black">
+                  Location Hierarchy Dropdowns
+                </h3>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Continent</label>
+                  <label className="brutal-label">Continent</label>
                   <select
                     value={formData.continent}
                     onChange={(e) => handleContinentChange(e.target.value as any)}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900 bg-white font-medium text-slate-800"
+                    className="brutal-select text-xs"
                   >
                     {CONTINENTS.filter((c) => c !== 'All').map((cont) => (
                       <option key={cont} value={cont}>
@@ -360,11 +387,11 @@ export const AdminAddEventPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Host Country</label>
+                  <label className="brutal-label">Host Country</label>
                   <select
                     value={formData.country}
                     onChange={(e) => handleCountryChange(e.target.value)}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900 bg-white font-medium text-slate-800"
+                    className="brutal-select text-xs"
                   >
                     {availableCountries.map((c) => (
                       <option key={c} value={c}>
@@ -375,11 +402,11 @@ export const AdminAddEventPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Host City</label>
+                  <label className="brutal-label">Host City</label>
                   <select
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900 bg-white font-medium text-slate-800"
+                    className="brutal-select text-xs"
                   >
                     {availableCities.map((ct) => (
                       <option key={ct} value={ct}>
@@ -391,54 +418,57 @@ export const AdminAddEventPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Specific Venue / Address</label>
+                <label className="brutal-label">Specific Venue / Address</label>
                 <input
                   type="text"
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                   placeholder="e.g. CERN Science Gateway, Esplanade des Particules 1"
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                  className="brutal-input"
                 />
               </div>
             </div>
 
             {/* Key Deadlines */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
-              <h3 className="font-serif text-lg font-bold text-navy-900 border-b border-slate-100 pb-3">
-                Key Deadlines & Dates
-              </h3>
+            <div className="bg-white border-3 border-brutal-black shadow-brutal p-6 space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
+                <div className="w-3 h-6 bg-brutal-red" />
+                <h3 className="font-serif text-lg font-bold text-brutal-black">
+                  Key Deadlines & Dates
+                </h3>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Application / Paper Deadline</label>
+                  <label className="brutal-label">Application / Paper Deadline</label>
                   <input
                     type="date"
                     required
                     value={formData.submissionDeadline}
                     onChange={(e) => setFormData({ ...formData, submissionDeadline: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                    className="brutal-input"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Start Date</label>
+                  <label className="brutal-label">Start Date</label>
                   <input
                     type="date"
                     required
                     value={formData.startDate}
                     onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                    className="brutal-input"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">End Date</label>
+                  <label className="brutal-label">End Date</label>
                   <input
                     type="date"
                     required
                     value={formData.endDate}
                     onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-navy-900"
+                    className="brutal-input"
                   />
                 </div>
               </div>
@@ -449,7 +479,7 @@ export const AdminAddEventPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => navigate('/admin/conferences')}
-                className="px-5 py-3 text-xs font-bold text-slate-600 hover:bg-slate-200 rounded-xl transition-colors"
+                className="brutal-btn-outline text-xs"
               >
                 Cancel
               </button>
@@ -457,9 +487,13 @@ export const AdminAddEventPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="px-6 py-3 bg-emerald-800 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center gap-2"
+                className="brutal-btn-primary text-xs"
               >
-                {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                {submitting ? (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
                 <span>{isEditing ? 'Save Changes' : 'Publish Opportunity'}</span>
               </button>
             </div>

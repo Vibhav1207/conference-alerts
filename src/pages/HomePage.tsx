@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
@@ -6,28 +6,11 @@ import { ConferenceCard } from '../components/ConferenceCard';
 import { FilterSidebar } from '../components/FilterSidebar';
 import { Conference, FilterState } from '../types';
 import { conferenceAPI } from '../services/api';
-import { CATEGORIES, CONTINENTS, EVENT_TYPES } from '../utils/locationData';
 import {
-  Search,
-  Calendar,
-  Globe,
-  Sparkles,
-  Award,
-  BookOpen,
-  ArrowRight,
-  Loader2,
-  CheckCircle2,
-  Bell,
-  Cpu,
-  HeartPulse,
-  Leaf,
-  Layers,
-  Briefcase,
-  GraduationCap,
-  FlaskConical,
-  ExternalLink,
-  MapPin,
+  Search, Globe, Loader2, CheckCircle2, Bell, Cpu, HeartPulse, Leaf,
+  Layers, Briefcase, GraduationCap, FlaskConical, MapPin, Calendar, BookOpen, ArrowRight, Zap,
 } from 'lucide-react';
+import { staggerReveal, setupScrollReveal } from '../lib/animations';
 
 export const HomePage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,16 +35,30 @@ export const HomePage: React.FC = () => {
     order: 'desc',
   });
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const eventGridRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    setFilters((prev) => ({
-      ...prev,
-      eventType: eventTypeParam,
-      category: categoryParam,
-      page: 1,
-    }));
+    setFilters((prev) => ({ ...prev, eventType: eventTypeParam, category: categoryParam, page: 1 }));
   }, [eventTypeParam, categoryParam]);
 
-  const fetchConferences = async () => {
+  // Scroll reveal
+  useEffect(() => {
+    if (!scrollRef.current) return;
+    const els = Array.from(scrollRef.current.querySelectorAll<HTMLElement>('[data-reveal]'));
+    const cleanup = setupScrollReveal(els);
+    return () => { if (typeof cleanup === 'function') cleanup(); };
+  }, [conferences]);
+
+  // Stagger card animations
+  useEffect(() => {
+    if (eventGridRef.current && conferences.length > 0) {
+      const cards = Array.from(eventGridRef.current.querySelectorAll<HTMLElement>('.conf-card'));
+      setTimeout(() => staggerReveal(cards), 100);
+    }
+  }, [conferences]);
+
+  const fetchConferences = useCallback(async () => {
     setLoading(true);
     try {
       const res = await conferenceAPI.getConferences(filters);
@@ -74,11 +71,9 @@ export const HomePage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    fetchConferences();
   }, [filters]);
+
+  useEffect(() => { fetchConferences(); }, [fetchConferences]);
 
   const handleFilterChange = (newFilters: Partial<FilterState>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
@@ -87,138 +82,149 @@ export const HomePage: React.FC = () => {
   const handleResetFilters = () => {
     setSearchParams({});
     setFilters({
-      search: '',
-      category: 'All',
-      eventType: 'All',
-      continent: 'All',
-      country: 'All',
-      city: 'All',
-      mode: 'All',
-      page: 1,
-      limit: 6,
-      sortBy: 'createdAt',
-      order: 'desc',
+      search: '', category: 'All', eventType: 'All', continent: 'All', country: 'All',
+      city: 'All', mode: 'All', page: 1, limit: 6, sortBy: 'createdAt', order: 'desc',
     });
   };
 
+  const continents = ['Asia', 'Europe', 'North America', 'South America', 'Africa', 'Australia / Oceania'];
+
+  const topics = [
+    { label: 'Engineering & Tech', icon: Cpu },
+    { label: 'Physical & Life Sciences', icon: FlaskConical },
+    { label: 'Agricultural & Biological Sciences', icon: Leaf },
+    { label: 'Medical & Health Sciences', icon: HeartPulse },
+    { label: 'Business & Management', icon: BookOpen },
+    { label: 'Arts & Humanities', icon: GraduationCap },
+    { label: 'Social Sciences', icon: Layers },
+  ];
+
+  const eventTabs = [
+    { label: 'All', icon: Zap },
+    { label: 'Journals', icon: GraduationCap },
+    { label: 'Conference', icon: Calendar },
+    { label: 'Internship', icon: Briefcase },
+    { label: 'Workshop / Seminar', icon: BookOpen },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-brutal-cream" ref={scrollRef}>
       <Navbar />
 
-      {/* Hero Section matching Stitch styling */}
-      <section className="bg-gradient-to-b from-navy-950 via-navy-900 to-navy-850 text-white relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(#006c49_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
+      {/* ═══ HERO SECTION ═══ */}
+      <section className="bg-brutal-black text-white relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden border-b-6 border-brutal-yellow">
+        {/* Decorative geometric elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-brutal-yellow/5 -rotate-12 translate-x-20 -translate-y-20" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-brutal-blue/5 rotate-12 -translate-x-10 translate-y-10" />
+        <div className="absolute top-1/2 right-1/4 w-4 h-4 bg-brutal-yellow rotate-45" />
+        <div className="absolute top-1/3 left-1/6 w-3 h-3 bg-brutal-red rotate-45" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-xs font-semibold uppercase tracking-wider shadow-inner">
-            <Sparkles className="w-4 h-4 text-emerald-400" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-brutal-yellow text-brutal-black border-3 border-brutal-black shadow-brutal-sm font-bold text-[10px] uppercase tracking-widest">
+            <Zap className="w-3.5 h-3.5" />
             <span>Nitin Sir — Academic Information Hub 2026</span>
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight max-w-4xl mx-auto">
-            Discover Verified Academic Conferences, Internships & Call for Papers
+          <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] max-w-4xl mx-auto text-balance">
+            Discover Verified{' '}
+            <span className="bg-brutal-yellow text-brutal-black px-2 inline-block -rotate-1">Academic</span>{' '}
+            Conferences,{' '}
+            <span className="bg-brutal-green text-brutal-black px-2 inline-block rotate-1">Internships</span>{' '}
+            & Call for Papers
           </h1>
 
-          <p className="text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto font-sans leading-relaxed">
-            The single informational portal to search international symposia, research student fellowships, paper submission deadlines, and direct official application links.
+          <p className="text-white/60 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
+            The single informational portal to search international symposia, research fellowships, paper submission deadlines, and direct official application links.
           </p>
 
-          {/* Event Type Filter Tabs */}
+          {/* Event Type Tabs */}
           <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-            {[
-              { label: 'All', icon: Calendar },
-              { label: 'Conference', icon: Calendar },
-              { label: 'Internship', icon: Briefcase },
-              { label: 'Call for Papers', icon: GraduationCap },
-              { label: 'Workshop / Seminar', icon: BookOpen },
-            ].map((tab) => {
+            {eventTabs.map((tab) => {
               const Icon = tab.icon;
               const isSelected = filters.eventType === tab.label;
               return (
                 <button
                   key={tab.label}
                   onClick={() => handleFilterChange({ eventType: tab.label, page: 1 })}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                  className={`px-4 py-2.5 text-xs font-bold transition-all flex items-center gap-2 border-2 ${
                     isSelected
-                      ? 'bg-emerald-800 text-white shadow-lg shadow-emerald-950/40'
-                      : 'bg-navy-850/90 text-slate-300 hover:bg-navy-800 border border-navy-700'
+                      ? 'bg-brutal-yellow text-brutal-black border-brutal-yellow shadow-brutal-sm'
+                      : 'bg-white/5 text-white/60 border-white/10 hover:text-white hover:border-white/30'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  <span>{tab.label === 'All' ? 'All Event Types' : tab.label}</span>
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>{tab.label === 'All' ? 'All Events' : tab.label}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* Main Search Bar */}
-          <div className="max-w-3xl mx-auto bg-white rounded-2xl p-2.5 shadow-2xl shadow-navy-950/50 border border-white/20 flex flex-col sm:flex-row items-center gap-2 mt-6">
-            <div className="flex-1 flex items-center gap-3 px-4 py-2 w-full">
-              <Search className="w-5 h-5 text-slate-400 flex-shrink-0" />
+          {/* Search Bar */}
+          <div className="max-w-3xl mx-auto bg-white border-4 border-brutal-black shadow-brutal-lg p-2 flex flex-col sm:flex-row items-stretch gap-2 mt-6">
+            <div className="flex-1 flex items-center gap-3 px-4 py-2">
+              <Search className="w-5 h-5 text-brutal-black/40 flex-shrink-0" />
               <input
                 type="text"
                 value={filters.search}
                 onChange={(e) => handleFilterChange({ search: e.target.value, page: 1 })}
                 placeholder="Search by topic, keyword, city, country, or acronym..."
-                className="w-full text-xs sm:text-sm text-slate-900 bg-transparent focus:outline-none placeholder:text-slate-400"
+                className="w-full text-sm text-brutal-black bg-transparent focus:outline-none placeholder:text-brutal-black/30"
               />
             </div>
             <button
               onClick={fetchConferences}
-              className="w-full sm:w-auto px-6 py-3 bg-emerald-800 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-6 py-3 bg-brutal-yellow text-brutal-black font-bold text-xs uppercase tracking-wider border-2 border-brutal-black hover:translate-x-[-1px] hover:translate-y-[-1px] shadow-brutal-sm hover:shadow-brutal transition-all flex items-center justify-center gap-2"
             >
-              <span>Search Listings</span>
+              <Search className="w-4 h-4" />
+              <span>Search</span>
             </button>
           </div>
         </div>
       </section>
 
-      {/* Info Portal Notice Banner */}
-      <section className="bg-emerald-50 border-b border-emerald-200/80 py-4 px-4 sm:px-6 lg:px-8 text-center text-xs text-emerald-900 font-medium flex items-center justify-center gap-2">
-        <CheckCircle2 className="w-4 h-4 text-emerald-700 flex-shrink-0" />
+      {/* ═══ INFO NOTICE ═══ */}
+      <section className="bg-brutal-yellow border-b-3 border-brutal-black py-3 px-4 text-center text-xs text-brutal-black font-bold flex items-center justify-center gap-2">
+        <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
         <span>
-          <strong>Informational Portal Notice:</strong> Nitin Sir Portal provides verified event summaries. When ready to apply or register, click <strong>"Apply on Official Site"</strong> to visit the official organizer portal.
+          Informational Portal: Click <strong>"Apply"</strong> to visit the official organizer portal.
         </span>
       </section>
 
-      {/* Continents Grid Section */}
-      <section className="py-10 bg-white border-b border-slate-200">
+      {/* ═══ CONTINENTS ═══ */}
+      <section className="py-8 bg-white border-b-3 border-brutal-black" data-reveal>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-5">
             <div>
-              <h2 className="font-serif text-xl font-bold text-navy-900 flex items-center gap-2">
-                <Globe className="w-5 h-5 text-emerald-800" />
-                <span>Browse Listings by Continent</span>
+              <h2 className="font-display text-lg font-bold text-brutal-black flex items-center gap-2">
+                <Globe className="w-5 h-5" />
+                Browse by Continent
               </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Filter international opportunities by region.
-              </p>
+              <p className="text-[11px] text-brutal-black/50 mt-0.5 font-medium">Filter by region</p>
             </div>
             {filters.continent !== 'All' && (
               <button
                 onClick={() => handleFilterChange({ continent: 'All', country: 'All', city: 'All', page: 1 })}
-                className="text-xs font-bold text-slate-500 hover:text-navy-900"
+                className="text-[11px] font-bold text-brutal-red hover:underline"
               >
-                Clear Region Filter
+                Clear Filter
               </button>
             )}
           </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {['Asia', 'Europe', 'North America', 'South America', 'Africa', 'Australia / Oceania'].map((cont) => {
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+            {continents.map((cont) => {
               const isSelected = filters.continent === cont;
               return (
                 <button
                   key={cont}
                   onClick={() => handleFilterChange({ continent: cont, country: 'All', city: 'All', page: 1 })}
-                  className={`p-4 rounded-xl border text-center transition-all ${
+                  className={`p-3 border-3 border-brutal-black text-center transition-all ${
                     isSelected
-                      ? 'bg-navy-900 text-white border-navy-900 shadow-md'
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200/80'
+                      ? 'bg-brutal-black text-brutal-yellow shadow-brutal-sm'
+                      : 'bg-white hover:bg-brutal-cream text-brutal-black shadow-brutal hover:shadow-brutal-lg'
                   }`}
                 >
-                  <MapPin className={`w-4 h-4 mx-auto mb-1.5 ${isSelected ? 'text-emerald-400' : 'text-slate-400'}`} />
-                  <span className="font-bold text-xs block truncate">{cont}</span>
+                  <MapPin className={`w-4 h-4 mx-auto mb-1 ${isSelected ? 'text-brutal-yellow' : 'text-brutal-black/40'}`} />
+                  <span className="font-bold text-[11px] block truncate">{cont}</span>
                 </button>
               );
             })}
@@ -226,45 +232,36 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Topics / Domains Section */}
-      <section className="py-12 bg-slate-50 border-b border-slate-200">
+      {/* ═══ TOPICS ═══ */}
+      <section className="py-10 bg-brutal-cream border-b-3 border-brutal-black" data-reveal>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-6">
-            <h2 className="font-serif text-2xl font-bold text-navy-900">
-              Explore Academic Topics & Fields
+            <h2 className="font-display text-xl font-bold text-brutal-black">
+              Academic Topics & Fields
             </h2>
-            <p className="text-xs text-slate-500 mt-1">
-              Select your academic domain to filter conferences, research internships, and call for papers.
+            <p className="text-[11px] text-brutal-black/50 mt-1 font-medium">
+              Select your domain to filter conferences, internships, and papers.
             </p>
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-            {[
-              { label: 'Engineering & Tech', icon: Cpu },
-              { label: 'Physical & Life Sciences', icon: FlaskConical },
-              { label: 'Agricultural & Biological Sciences', icon: Leaf },
-              { label: 'Medical & Health Sciences', icon: HeartPulse },
-              { label: 'Business & Management', icon: BookOpen },
-              { label: 'Arts & Humanities', icon: GraduationCap },
-              { label: 'Social Sciences', icon: Layers },
-            ].map((item) => {
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
+            {topics.map((item) => {
               const Icon = item.icon;
               const isSelected = filters.category === item.label;
               return (
                 <button
                   key={item.label}
                   onClick={() => handleFilterChange({ category: item.label, page: 1 })}
-                  className={`p-4 rounded-2xl border text-left transition-all group ${
+                  className={`p-4 border-3 border-brutal-black text-left transition-all group ${
                     isSelected
-                      ? 'bg-navy-900 text-white border-navy-900 shadow-lg shadow-navy-900/10'
-                      : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-200/80'
+                      ? 'bg-brutal-black text-white shadow-brutal'
+                      : 'bg-white hover:bg-brutal-yellow/20 text-brutal-black shadow-brutal-sm hover:shadow-brutal'
                   }`}
                 >
-                  <div
-                    className={`w-9 h-9 rounded-xl flex items-center justify-center mb-2.5 transition-transform group-hover:scale-105 ${
-                      isSelected ? 'bg-emerald-800 text-white' : 'bg-slate-100 text-navy-900'
-                    }`}
-                  >
+                  <div className={`w-8 h-8 flex items-center justify-center mb-2 border-2 transition-all ${
+                    isSelected
+                      ? 'bg-brutal-yellow text-brutal-black border-brutal-yellow'
+                      : 'bg-brutal-cream text-brutal-black border-brutal-black/10 group-hover:border-brutal-black'
+                  }`}>
                     <Icon className="w-4 h-4" />
                   </div>
                   <h3 className="font-bold text-[11px] leading-tight line-clamp-2">{item.label}</h3>
@@ -275,73 +272,61 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Main Content Area: Sidebar + Events Grid */}
-      <section className="py-12 flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar Filter */}
+      {/* ═══ MAIN CONTENT ═══ */}
+      <section className="py-10 flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Sidebar */}
           <div className="lg:col-span-1">
-            <FilterSidebar
-              filters={filters}
-              onFilterChange={handleFilterChange}
-              onReset={handleResetFilters}
-            />
+            <FilterSidebar filters={filters} onFilterChange={handleFilterChange} onReset={handleResetFilters} />
           </div>
 
-          {/* Events List Grid */}
-          <div className="lg:col-span-3 space-y-6">
-            {/* Header info */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-200">
+          {/* Events Grid */}
+          <div className="lg:col-span-3 space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b-3 border-brutal-black">
               <div>
-                <h3 className="font-serif text-xl font-bold text-navy-900">
-                  {filters.eventType === 'All' ? 'All Verified Opportunities' : filters.eventType}
+                <h3 className="font-display text-lg font-bold text-brutal-black">
+                  {filters.eventType === 'All' ? 'All Listings' : filters.eventType}
                 </h3>
-                <p className="text-xs text-slate-500">
-                  Showing <strong className="text-slate-900">{conferences.length}</strong> of{' '}
-                  <strong className="text-slate-900">{total}</strong> verified listings
+                <p className="text-[11px] text-brutal-black/50 font-medium">
+                  Showing <strong className="text-brutal-black">{conferences.length}</strong> of{' '}
+                  <strong className="text-brutal-black">{total}</strong> verified listings
                 </p>
               </div>
-
-              {/* Sort Order */}
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-500 font-medium hidden sm:inline">Sort:</span>
-                <select
-                  value={filters.sortBy}
-                  onChange={(e) => handleFilterChange({ sortBy: e.target.value })}
-                  className="px-3 py-1.5 text-xs rounded-xl border border-slate-300 bg-white font-medium focus:outline-none"
-                >
-                  <option value="createdAt">Recently Added</option>
-                  <option value="dates.submissionDeadline">Upcoming Deadline</option>
-                  <option value="viewsCount">Most Viewed</option>
-                </select>
-              </div>
+              <select
+                value={filters.sortBy}
+                onChange={(e) => handleFilterChange({ sortBy: e.target.value })}
+                className="brutal-select text-xs py-2 px-3 w-auto"
+              >
+                <option value="createdAt">Recent</option>
+                <option value="dates.submissionDeadline">Deadline</option>
+                <option value="viewsCount">Most Viewed</option>
+              </select>
             </div>
 
-            {/* Loading State */}
             {loading ? (
-              <div className="py-20 flex flex-col items-center justify-center text-slate-400 gap-3">
-                <Loader2 className="w-8 h-8 animate-spin text-emerald-800" />
-                <p className="text-xs font-semibold text-slate-600">Loading verified opportunities...</p>
+              <div className="py-20 flex flex-col items-center justify-center gap-3">
+                <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+                <p className="text-xs font-bold text-brutal-black/50">Loading...</p>
               </div>
             ) : conferences.length === 0 ? (
-              <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto">
-                  <Search className="w-8 h-8" />
+              <div className="bg-white border-3 border-brutal-black shadow-brutal p-12 text-center space-y-4">
+                <div className="w-16 h-16 border-3 border-brutal-black bg-brutal-cream flex items-center justify-center mx-auto">
+                  <Search className="w-8 h-8 text-brutal-black/30" />
                 </div>
-                <h4 className="font-serif text-lg font-bold text-navy-900">No Opportunities Found</h4>
-                <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                  We couldn't find any listing matching your current filters. Try resetting your criteria.
+                <h4 className="font-serif text-lg font-bold text-brutal-black">No Results Found</h4>
+                <p className="text-xs text-brutal-black/50 max-w-sm mx-auto">
+                  No listing matches your current filters. Try adjusting your criteria.
                 </p>
-                <button
-                  onClick={handleResetFilters}
-                  className="px-4 py-2 bg-navy-900 text-white text-xs font-semibold rounded-xl"
-                >
+                <button onClick={handleResetFilters} className="brutal-btn-primary text-xs">
                   Reset All Filters
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div ref={eventGridRef} className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {conferences.map((conf) => (
-                  <ConferenceCard key={conf._id} conference={conf} />
+                  <div key={conf._id} className="conf-card" style={{ opacity: 0 }}>
+                    <ConferenceCard conference={conf} />
+                  </div>
                 ))}
               </div>
             )}
@@ -349,29 +334,27 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Alert Subscription Banner */}
-      <section className="bg-navy-900 text-white py-16 px-4 sm:px-6 lg:px-8 border-t border-navy-800">
+      {/* ═══ SUBSCRIBE BANNER ═══ */}
+      <section className="bg-brutal-black text-white py-16 px-4 sm:px-6 lg:px-8 border-t-6 border-brutal-yellow" data-reveal>
         <div className="max-w-4xl mx-auto text-center space-y-6">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-800 text-white flex items-center justify-center mx-auto shadow-lg">
-            <Bell className="w-6 h-6" />
+          <div className="w-12 h-12 bg-brutal-yellow border-3 border-brutal-black flex items-center justify-center mx-auto shadow-brutal">
+            <Bell className="w-6 h-6 text-brutal-black" />
           </div>
           <h2 className="font-serif text-2xl sm:text-4xl font-bold">
-            Subscribe to Verified Academic & Internship Alerts
+            Stay Updated with{' '}
+            <span className="bg-brutal-yellow text-brutal-black px-2">Verified Alerts</span>
           </h2>
-          <p className="text-slate-300 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
-            Get instant email notifications whenever new international research fellowships, paper submission deadlines, or conferences are posted.
+          <p className="text-white/50 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed">
+            Get instant email notifications for new international research fellowships, paper deadlines, and conferences.
           </p>
           <div className="max-w-md mx-auto flex gap-2">
             <input
               type="email"
-              placeholder="Enter your academic email..."
-              className="flex-1 px-4 py-3 text-xs rounded-xl text-slate-900 bg-white focus:outline-none"
+              placeholder="your@email.edu"
+              className="flex-1 px-4 py-3 text-sm border-3 border-brutal-black bg-white text-brutal-black focus:outline-none"
             />
-            <button
-              onClick={() => alert('Subscribed successfully to Nitin Sir Academic Alerts!')}
-              className="px-6 py-3 bg-emerald-800 hover:bg-emerald-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md"
-            >
-              Subscribe Free
+            <button className="px-6 py-3 bg-brutal-yellow text-brutal-black font-bold text-xs uppercase tracking-wider border-3 border-brutal-black shadow-brutal-sm hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all">
+              Subscribe
             </button>
           </div>
         </div>
