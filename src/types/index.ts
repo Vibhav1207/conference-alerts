@@ -23,7 +23,7 @@ export interface Conference {
   _id: string;
   title: string;
   acronym: string;
-  eventType: 'Conference' | 'Internship' | 'Journals' | 'Workshop / Seminar' | 'FAP';
+  eventType: 'Conference' | 'Internship' | 'Journals' | 'Workshop / Seminar';
   organizer: string;
   category: string;
   mode: 'Hybrid' | 'In-Person' | 'Online';
