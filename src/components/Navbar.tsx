@@ -52,6 +52,7 @@ export const Navbar: React.FC = () => {
     { to: '/?eventType=Journals', label: 'Journals', icon: GraduationCap, query: 'eventType=Journals' },
     { to: '/?eventType=Conference', label: 'Conferences', icon: CalendarCheck, query: 'eventType=Conference' },
     { to: '/?eventType=Internship', label: 'Internships', icon: Briefcase, query: 'eventType=Internship' },
+    { to: '/?eventType=FAP', label: 'FAP', icon: GraduationCap, query: 'eventType=FAP' },
     { to: '/?category=FDP', label: 'FDP', icon: GraduationCap, query: 'category=FDP' },
     { to: '/resources', label: 'Resources', icon: FileText, query: 'resources' },
   ];

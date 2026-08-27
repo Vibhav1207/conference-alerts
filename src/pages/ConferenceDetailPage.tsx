@@ -79,6 +79,8 @@ export const ConferenceDetailPage: React.FC = () => {
         return { badge: 'JOURNALS', aboutTitle: 'About the Journal', topicsTitle: 'Submission Tracks', applyText: 'Submit Paper', ctaSubtext: 'Peer-reviewed submission on official publisher site.' };
       case 'Workshop / Seminar':
         return { badge: 'WORKSHOP / SEMINAR', aboutTitle: 'About the Workshop', topicsTitle: 'Topics & Modules', applyText: 'Register', ctaSubtext: 'Interactive session with certificate included.' };
+      case 'FAP':
+        return { badge: 'FACULTY ACHIEVEMENT PROGRAMME', aboutTitle: 'About FAP', topicsTitle: 'Key Themes', applyText: 'Register Now', ctaSubtext: 'Professional development programme for faculty members.' };
       default:
         return { badge: 'ACADEMIC SYMPOSIUM', aboutTitle: 'About the Conference', topicsTitle: 'Conference Topics', applyText: 'Register Now', ctaSubtext: 'Early bird registration open. Limited capacity.' };
     }

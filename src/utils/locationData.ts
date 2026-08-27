@@ -4,6 +4,7 @@ export const EVENT_TYPES = [
   'Internship',
   'Journals',
   'Workshop / Seminar',
+  'FAP',
 ] as const;
 
 export const CATEGORIES = [

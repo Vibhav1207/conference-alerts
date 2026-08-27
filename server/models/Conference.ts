@@ -10,7 +10,7 @@ export interface IRegistrationFee {
 export interface IConference extends Document {
   title: string;
   acronym: string;
-  eventType: 'Conference' | 'Internship' | 'Journals' | 'Workshop / Seminar';
+  eventType: 'Conference' | 'Internship' | 'Journals' | 'Workshop / Seminar' | 'FAP';
   organizer: string;
   category: string;
   mode: 'Hybrid' | 'In-Person' | 'Online';
