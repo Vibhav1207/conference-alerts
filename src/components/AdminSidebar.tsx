@@ -1,11 +1,17 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard, CalendarCheck, PlusCircle, FileText, LogOut, ChevronRight,
+  LayoutDashboard, CalendarCheck, PlusCircle, FileText, LogOut, ChevronRight, Menu, X,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export const AdminSidebar: React.FC = () => {
+interface AdminSidebarProps {
+  mobileOpen: boolean;
+  onToggle: () => void;
+}
+
+export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle }) => {
   const location = useLocation();
   const { logout, user } = useAuth();
 
@@ -16,11 +22,11 @@ export const AdminSidebar: React.FC = () => {
     { label: 'Resources', path: '/admin/resources', icon: FileText },
   ];
 
-  return (
+  const sidebarContent = (
     <aside className="w-64 bg-brutal-black text-white min-h-screen flex flex-col border-r-4 border-brutal-yellow">
       {/* Brand */}
-      <div className="p-5 border-b-2 border-white/10">
-        <Link to="/admin" className="flex items-center gap-3">
+      <div className="p-5 border-b-2 border-white/10 flex items-center justify-between">
+        <Link to="/admin" className="flex items-center gap-3" onClick={onToggle}>
           <div className="w-9 h-9 bg-brutal-yellow text-brutal-black flex items-center justify-center font-display font-bold text-xl border-2 border-brutal-black">
             N
           </div>
@@ -33,6 +39,9 @@ export const AdminSidebar: React.FC = () => {
             </span>
           </div>
         </Link>
+        <button onClick={onToggle} className="lg:hidden p-1.5 text-white/60 hover:text-white">
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Navigation */}
@@ -47,6 +56,7 @@ export const AdminSidebar: React.FC = () => {
             <Link
               key={item.path}
               to={item.path}
+              onClick={onToggle}
               className={`flex items-center justify-between px-3.5 py-2.5 font-bold text-xs transition-all border-l-4 ${
                 isActive
                   ? 'bg-brutal-yellow text-brutal-black border-brutal-yellow'
@@ -67,6 +77,7 @@ export const AdminSidebar: React.FC = () => {
       <div className="p-3 border-t-2 border-white/10 space-y-2">
         <Link
           to="/"
+          onClick={onToggle}
           className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold text-white/60 border-2 border-white/10 hover:bg-white/5 transition-colors"
         >
           <span>Return to Portal</span>
@@ -91,5 +102,37 @@ export const AdminSidebar: React.FC = () => {
         </div>
       </div>
     </aside>
+  );
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <div className="hidden lg:block">{sidebarContent}</div>
+
+      {/* Mobile overlay + drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-brutal-black/60 backdrop-blur-sm lg:hidden"
+              onClick={onToggle}
+            />
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+              className="fixed inset-y-0 left-0 z-50 lg:hidden"
+            >
+              {sidebarContent}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };

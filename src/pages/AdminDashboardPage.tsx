@@ -7,12 +7,21 @@ import { Link } from 'react-router-dom';
 import {
   CalendarCheck, Clock, FileText, Download, Users, PlusCircle, TrendingUp, ShieldCheck, ChevronRight,
 } from 'lucide-react';
-import { staggerReveal, animateCounter } from '../lib/animations';
+import { motion } from 'framer-motion';
+
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+};
 
 export const AdminDashboardPage: React.FC = () => {
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
-  const metricsRef = useRef<HTMLDivElement>(null);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -26,22 +35,10 @@ export const AdminDashboardPage: React.FC = () => {
     fetchStats();
   }, []);
 
-  useEffect(() => {
-    if (stats && metricsRef.current) {
-      const counters = Array.from(metricsRef.current.querySelectorAll<HTMLElement>('[data-counter]'));
-      counters.forEach((el) => {
-        const target = parseInt(el.dataset.counter || '0', 10);
-        animateCounter(el, target);
-      });
-      const cards = Array.from(metricsRef.current.querySelectorAll<HTMLElement>('.metric-card'));
-      staggerReveal(cards);
-    }
-  }, [stats]);
-
   if (loading) {
     return (
       <div className="flex min-h-screen bg-brutal-cream">
-        <AdminSidebar />
+        <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
         <div className="flex-1 flex flex-col items-center justify-center gap-3">
           <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
           <p className="text-xs font-bold text-brutal-black/50">Loading metrics...</p>
@@ -61,37 +58,47 @@ export const AdminDashboardPage: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-brutal-cream">
-      <AdminSidebar />
+      <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        <AdminHeader title="Admin Dashboard" subtitle="System Overview & Event Management" />
+        <AdminHeader title="Admin Dashboard" subtitle="System Overview & Event Management" onMenuToggle={() => setMobileSidebarOpen(true)} />
 
-        <main className="p-8 space-y-8 flex-1" ref={metricsRef}>
+        <main className="p-4 sm:p-6 lg:p-8 space-y-6 lg:space-y-8 flex-1">
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
+          >
             {metricCards.map((card, idx) => {
               const Icon = card.icon;
               return (
-                <div key={idx} className="metric-card bg-white border-3 border-brutal-black shadow-brutal p-5 space-y-2" style={{ opacity: 0 }}>
+                <motion.div key={idx} variants={item} className="bg-white border-3 border-brutal-black shadow-brutal p-4 sm:p-5 space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-brutal-black/50">{card.label}</span>
-                    <div className={`w-9 h-9 flex items-center justify-center border-2 border-brutal-black ${card.color}`}>
+                    <div className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center border-2 border-brutal-black ${card.color}`}>
                       <Icon className="w-4 h-4" />
                     </div>
                   </div>
-                  <p className="font-display text-3xl font-bold text-brutal-black" data-counter={card.value}>0</p>
+                  <p className="font-display text-2xl sm:text-3xl font-bold text-brutal-black">{card.value.toLocaleString()}</p>
                   <div className="flex items-center gap-1 text-[10px] font-bold">
                     <TrendingUp className="w-3 h-3" />
                     <span className={card.subColor}>{card.sub}</span>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
 
           {/* Quick Actions & Category Breakdown */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Quick Actions */}
-            <div className="bg-brutal-black text-white border-3 border-brutal-black shadow-brutal p-5 space-y-4">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="bg-brutal-black text-white border-3 border-brutal-black shadow-brutal p-4 sm:p-5 space-y-4"
+            >
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-brutal-yellow" />
                 <h3 className="font-display text-sm font-bold">Quick Actions</h3>
@@ -113,10 +120,15 @@ export const AdminDashboardPage: React.FC = () => {
                   <ChevronRight className="w-4 h-4 text-white/40" />
                 </Link>
               </div>
-            </div>
+            </motion.div>
 
             {/* Category Breakdown */}
-            <div className="bg-white border-3 border-brutal-black shadow-brutal p-5 space-y-4 lg:col-span-2">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5, duration: 0.4 }}
+              className="bg-white border-3 border-brutal-black shadow-brutal p-4 sm:p-5 space-y-4 lg:col-span-2"
+            >
               <h3 className="font-display text-sm font-bold text-brutal-black border-b-3 border-brutal-black pb-3">
                 Conferences by Domain
               </h3>
@@ -136,25 +148,30 @@ export const AdminDashboardPage: React.FC = () => {
                   );
                 })}
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Recent Submissions Table */}
-          <div className="bg-white border-3 border-brutal-black shadow-brutal overflow-hidden">
-            <div className="flex items-center justify-between border-b-3 border-brutal-black p-5">
-              <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.4 }}
+            className="bg-white border-3 border-brutal-black shadow-brutal overflow-hidden"
+          >
+            <div className="flex items-center justify-between border-b-3 border-brutal-black p-4 sm:p-5">
+              <div className="min-w-0">
                 <h3 className="font-display text-sm font-bold text-brutal-black">Recent Submissions</h3>
                 <p className="text-[10px] text-brutal-black/50 font-medium">Latest events added to the system</p>
               </div>
-              <Link to="/admin/conferences" className="text-[11px] font-bold text-brutal-blue hover:underline">View All →</Link>
+              <Link to="/admin/conferences" className="text-[11px] font-bold text-brutal-blue hover:underline flex-shrink-0">View All →</Link>
             </div>
             <div className="overflow-x-auto">
               <table className="brutal-table">
                 <thead>
                   <tr>
                     <th>Conference</th>
-                    <th>Category</th>
-                    <th>Venue</th>
+                    <th className="hidden sm:table-cell">Category</th>
+                    <th className="hidden md:table-cell">Venue</th>
                     <th>Status</th>
                     <th className="text-right">Action</th>
                   </tr>
@@ -164,10 +181,10 @@ export const AdminDashboardPage: React.FC = () => {
                     <tr key={conf._id}>
                       <td>
                         <span className="font-bold text-brutal-black block text-sm">{conf.acronym}</span>
-                        <span className="text-brutal-black/50 truncate max-w-xs block text-[11px]">{conf.title}</span>
+                        <span className="text-brutal-black/50 truncate max-w-[200px] block text-[11px]">{conf.title}</span>
                       </td>
-                      <td className="font-medium text-brutal-black/70">{conf.category}</td>
-                      <td className="text-brutal-black/60 text-[11px]">{conf.venue?.city}, {conf.venue?.country}</td>
+                      <td className="hidden sm:table-cell font-medium text-brutal-black/70">{conf.category}</td>
+                      <td className="hidden md:table-cell text-brutal-black/60 text-[11px]">{conf.venue?.city}, {conf.venue?.country}</td>
                       <td>
                         <span className={`brutal-badge text-[9px] ${
                           conf.status === 'Published' ? 'bg-brutal-green/10 text-brutal-green border-brutal-green' :
@@ -183,7 +200,7 @@ export const AdminDashboardPage: React.FC = () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </motion.div>
         </main>
       </div>
     </div>

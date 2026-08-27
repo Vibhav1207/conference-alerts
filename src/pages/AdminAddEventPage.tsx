@@ -4,7 +4,17 @@ import { AdminSidebar } from '../components/AdminSidebar';
 import { AdminHeader } from '../components/AdminHeader';
 import { conferenceAPI } from '../services/api';
 import { EVENT_TYPES, CATEGORIES, CONTINENTS, LOCATION_HIERARCHY } from '../utils/locationData';
-import { Save, ChevronLeft, Plus, Trash2, Loader2, AlertCircle, Link as LinkIcon } from 'lucide-react';
+import { Save, Plus, Trash2, AlertCircle, Link as LinkIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const sectionVariant = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+  }),
+};
 
 export const AdminAddEventPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +24,7 @@ export const AdminAddEventPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -191,7 +202,7 @@ export const AdminAddEventPage: React.FC = () => {
   if (loading) {
     return (
       <div className="flex min-h-screen bg-brutal-cream">
-        <AdminSidebar />
+        <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
         <div className="flex-1 flex flex-col items-center justify-center gap-3">
           <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
           <p className="text-xs font-bold text-brutal-black/50">Loading form data...</p>
@@ -202,33 +213,38 @@ export const AdminAddEventPage: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-brutal-cream">
-      <AdminSidebar />
+      <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         <AdminHeader
           title={isEditing ? 'Edit Academic Opportunity' : 'Post New Academic Opportunity'}
-          subtitle="Publish Conferences, Research Internships, Journals, and Workshops with official redirect links"
+          subtitle="Publish Conferences, Research Internships, Journals, and Workshops"
+          onMenuToggle={() => setMobileSidebarOpen(true)}
         />
 
-        <main className="p-8 max-w-4xl space-y-8">
+        <main className="p-4 sm:p-6 lg:p-8 max-w-4xl space-y-6 sm:space-y-8">
           {error && (
-            <div className="p-4 bg-brutal-red/10 border-3 border-brutal-red text-xs text-brutal-red font-bold flex items-center gap-2">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="p-4 bg-brutal-red/10 border-3 border-brutal-red text-xs text-brutal-red font-bold flex items-center gap-2"
+            >
               <AlertCircle className="w-4 h-4 flex-shrink-0" />
               <span>{error}</span>
-            </div>
+            </motion.div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
             {/* General Information Section */}
-            <div className="bg-white border-3 border-brutal-black shadow-brutal p-6 space-y-4">
+            <motion.div custom={0} variants={sectionVariant} initial="hidden" animate="visible" className="bg-white border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-4">
               <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
                 <div className="w-3 h-6 bg-brutal-yellow" />
-                <h3 className="font-serif text-lg font-bold text-brutal-black">
+                <h3 className="font-serif text-base sm:text-lg font-bold text-brutal-black">
                   General Information & Type
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <div>
                   <label className="brutal-label">Listing Type</label>
                   <select
@@ -237,9 +253,7 @@ export const AdminAddEventPage: React.FC = () => {
                     className="brutal-select text-xs"
                   >
                     {EVENT_TYPES.filter((t) => t !== 'All').map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
+                      <option key={type} value={type}>{type}</option>
                     ))}
                   </select>
                 </div>
@@ -257,7 +271,7 @@ export const AdminAddEventPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <div>
                   <label className="brutal-label">Acronym / Code</label>
                   <input
@@ -271,16 +285,14 @@ export const AdminAddEventPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="brutal-label">Academic Category / Domain</label>
+                  <label className="brutal-label">Academic Category</label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
                     className="brutal-select text-xs"
                   >
                     {CATEGORIES.filter((c) => c !== 'All').map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat}
-                      </option>
+                      <option key={cat} value={cat}>{cat}</option>
                     ))}
                   </select>
                 </div>
@@ -337,15 +349,15 @@ export const AdminAddEventPage: React.FC = () => {
                   className="brutal-input resize-none"
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Official Redirect Link Section */}
-            <div className="bg-brutal-yellow/20 border-3 border-brutal-black shadow-brutal p-6 space-y-3">
+            <motion.div custom={1} variants={sectionVariant} initial="hidden" animate="visible" className="bg-brutal-yellow/20 border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-3">
               <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
                 <div className="w-3 h-6 bg-brutal-green" />
-                <h3 className="font-serif text-lg font-bold text-brutal-black flex items-center gap-2">
+                <h3 className="font-serif text-base sm:text-lg font-bold text-brutal-black flex items-center gap-2">
                   <LinkIcon className="w-5 h-5" />
-                  <span>Official External Application / Registration Link</span>
+                  <span>External Application / Registration Link</span>
                 </h3>
               </div>
               <p className="text-xs text-brutal-black/60 leading-relaxed">
@@ -359,18 +371,18 @@ export const AdminAddEventPage: React.FC = () => {
                 placeholder="https://official-conference-site.org/register"
                 className="brutal-input font-mono text-xs"
               />
-            </div>
+            </motion.div>
 
-            {/* Location Hierarchy Dropdowns Section */}
-            <div className="bg-white border-3 border-brutal-black shadow-brutal p-6 space-y-4">
+            {/* Location Section */}
+            <motion.div custom={2} variants={sectionVariant} initial="hidden" animate="visible" className="bg-white border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-4">
               <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
                 <div className="w-3 h-6 bg-brutal-blue" />
-                <h3 className="font-serif text-lg font-bold text-brutal-black">
-                  Location Hierarchy Dropdowns
+                <h3 className="font-serif text-base sm:text-lg font-bold text-brutal-black">
+                  Location Hierarchy
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <div>
                   <label className="brutal-label">Continent</label>
                   <select
@@ -379,9 +391,7 @@ export const AdminAddEventPage: React.FC = () => {
                     className="brutal-select text-xs"
                   >
                     {CONTINENTS.filter((c) => c !== 'All').map((cont) => (
-                      <option key={cont} value={cont}>
-                        {cont}
-                      </option>
+                      <option key={cont} value={cont}>{cont}</option>
                     ))}
                   </select>
                 </div>
@@ -394,9 +404,7 @@ export const AdminAddEventPage: React.FC = () => {
                     className="brutal-select text-xs"
                   >
                     {availableCountries.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
+                      <option key={c} value={c}>{c}</option>
                     ))}
                   </select>
                 </div>
@@ -409,9 +417,7 @@ export const AdminAddEventPage: React.FC = () => {
                     className="brutal-select text-xs"
                   >
                     {availableCities.map((ct) => (
-                      <option key={ct} value={ct}>
-                        {ct}
-                      </option>
+                      <option key={ct} value={ct}>{ct}</option>
                     ))}
                   </select>
                 </div>
@@ -427,18 +433,18 @@ export const AdminAddEventPage: React.FC = () => {
                   className="brutal-input"
                 />
               </div>
-            </div>
+            </motion.div>
 
             {/* Key Deadlines */}
-            <div className="bg-white border-3 border-brutal-black shadow-brutal p-6 space-y-4">
+            <motion.div custom={3} variants={sectionVariant} initial="hidden" animate="visible" className="bg-white border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-4">
               <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
                 <div className="w-3 h-6 bg-brutal-red" />
-                <h3 className="font-serif text-lg font-bold text-brutal-black">
+                <h3 className="font-serif text-base sm:text-lg font-bold text-brutal-black">
                   Key Deadlines & Dates
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <div>
                   <label className="brutal-label">Application / Paper Deadline</label>
                   <input
@@ -472,10 +478,10 @@ export const AdminAddEventPage: React.FC = () => {
                   />
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Submit Action Bar */}
-            <div className="flex items-center justify-end gap-3 pt-4">
+            <motion.div custom={4} variants={sectionVariant} initial="hidden" animate="visible" className="flex items-center justify-end gap-3 pt-4">
               <button
                 type="button"
                 onClick={() => navigate('/admin/conferences')}
@@ -496,7 +502,7 @@ export const AdminAddEventPage: React.FC = () => {
                 )}
                 <span>{isEditing ? 'Save Changes' : 'Publish Opportunity'}</span>
               </button>
-            </div>
+            </motion.div>
           </form>
         </main>
       </div>

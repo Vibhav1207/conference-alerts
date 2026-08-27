@@ -13,6 +13,7 @@ import {
   CheckCircle,
   FileCode,
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export const AdminResourcesPage: React.FC = () => {
   const [resources, setResources] = useState<Resource[]>([]);
@@ -27,6 +28,7 @@ export const AdminResourcesPage: React.FC = () => {
   const [fileUrl, setFileUrl] = useState('');
   const [fileSize, setFileSize] = useState('2.0 MB');
   const [submitting, setSubmitting] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const fetchResources = async () => {
     setLoading(true);
@@ -83,23 +85,29 @@ export const AdminResourcesPage: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-brutal-cream">
-      <AdminSidebar />
+      <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         <AdminHeader
           title="Admin Resource Library"
           subtitle="Manage downloadable academic paper templates, guidelines & Scopus links"
+          onMenuToggle={() => setMobileSidebarOpen(true)}
         />
 
-        <main className="p-8 space-y-8 flex-1">
+        <main className="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 flex-1">
           {/* Top Bar Banner & Scopus Batch Tool */}
-          <div className="bg-brutal-black text-white border-3 border-brutal-black shadow-brutal p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            className="bg-brutal-black text-white border-3 border-brutal-black shadow-brutal p-4 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6"
+          >
             <div className="space-y-2 text-center md:text-left">
               <span className="brutal-badge bg-brutal-green/20 text-brutal-green border-brutal-green text-[9px]">
                 <FileCode className="w-3 h-3" />
                 Scopus & WoS Batch Tool
               </span>
-              <h3 className="font-serif text-lg font-bold text-white">
+              <h3 className="font-serif text-base sm:text-lg font-bold text-white">
                 Scopus Journal Indexing Batch Updater
               </h3>
               <p className="text-xs text-white/50 max-w-xl leading-relaxed">
@@ -113,7 +121,7 @@ export const AdminResourcesPage: React.FC = () => {
               <LinkIcon className="w-4 h-4" />
               <span>Run Scopus Sync</span>
             </button>
-          </div>
+          </motion.div>
 
           {/* Resources Table Header */}
           <div className="flex items-center justify-between">
@@ -129,19 +137,25 @@ export const AdminResourcesPage: React.FC = () => {
 
           {/* Resources Data Grid */}
           {loading ? (
-            <div className="py-20 flex flex-col items-center justify-center gap-3">
+            <div className="py-16 sm:py-20 flex flex-col items-center justify-center gap-3">
               <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
               <p className="text-xs font-bold text-brutal-black/50">Loading resources...</p>
             </div>
           ) : (
-            <div className="bg-white border-3 border-brutal-black shadow-brutal overflow-hidden">
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.35 }}
+              className="bg-white border-3 border-brutal-black shadow-brutal overflow-hidden"
+            >
+              <div className="overflow-x-auto">
               <table className="brutal-table">
                 <thead>
                   <tr>
                     <th>Resource Title</th>
-                    <th>Category</th>
-                    <th>Format & Size</th>
-                    <th>Total Downloads</th>
+                    <th className="hidden sm:table-cell">Category</th>
+                    <th className="hidden md:table-cell">Format & Size</th>
+                    <th className="hidden sm:table-cell">Downloads</th>
                     <th className="text-right">Actions</th>
                   </tr>
                 </thead>
@@ -153,16 +167,16 @@ export const AdminResourcesPage: React.FC = () => {
                         <span className="text-brutal-black/50 line-clamp-1 text-[11px]">{item.description}</span>
                       </td>
 
-                      <td className="font-semibold text-brutal-black text-xs">{item.category}</td>
+                      <td className="hidden sm:table-cell font-semibold text-brutal-black text-xs">{item.category}</td>
 
-                      <td className="text-brutal-black/70 text-xs">
+                      <td className="hidden md:table-cell text-brutal-black/70 text-xs">
                         <span className="brutal-badge bg-brutal-cream text-brutal-black border-brutal-black/20 text-[9px] mr-2">
                           {item.fileFormat}
                         </span>
                         {item.fileSize}
                       </td>
 
-                      <td className="font-bold text-brutal-green text-xs">{item.downloadCount}</td>
+                      <td className="hidden sm:table-cell font-bold text-brutal-green text-xs">{item.downloadCount}</td>
 
                       <td className="text-right space-x-2">
                         <a
@@ -184,7 +198,8 @@ export const AdminResourcesPage: React.FC = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
+              </div>
+            </motion.div>
           )}
         </main>
       </div>
