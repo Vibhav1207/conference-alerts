@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard, CalendarCheck, PlusCircle, FileText, LogOut, ChevronRight, Menu, X,
+  LayoutDashboard, CalendarCheck, PlusCircle, FileText, LogOut, ChevronRight, Menu, X, Tag,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,6 +19,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
     { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
     { label: 'Conferences', path: '/admin/conferences', icon: CalendarCheck },
     { label: 'Add Event', path: '/admin/conferences/new', icon: PlusCircle },
+    { label: 'Categories', path: '/admin/categories', icon: Tag },
     { label: 'Resources', path: '/admin/resources', icon: FileText },
   ];
 

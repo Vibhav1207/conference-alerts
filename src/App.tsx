@@ -10,6 +10,7 @@ import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { AdminConferencesPage } from './pages/AdminConferencesPage';
 import { AdminAddEventPage } from './pages/AdminAddEventPage';
 import { AdminResourcesPage } from './pages/AdminResourcesPage';
+import { AdminCategoriesPage } from './pages/AdminCategoriesPage';
 
 // Protected Admin Route wrapper
 const ProtectedAdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -81,6 +82,14 @@ export const App: React.FC = () => {
             element={
               <ProtectedAdminRoute>
                 <AdminAddEventPage />
+              </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/admin/categories"
+            element={
+              <ProtectedAdminRoute>
+                <AdminCategoriesPage />
               </ProtectedAdminRoute>
             }
           />

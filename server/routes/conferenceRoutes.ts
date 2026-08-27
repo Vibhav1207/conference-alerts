@@ -7,12 +7,14 @@ import {
   updateConferenceStatus,
   deleteConference,
 } from '../controllers/conferenceController';
+import { getPublicCategories } from '../controllers/adminController';
 import { authenticate, requireAdmin } from '../middleware/auth';
 import { validate } from '../middleware/validate';
 import { conferenceSchema } from '../validators/schemas';
 
 const router = Router();
 
+router.get('/categories', getPublicCategories);
 router.get('/', getConferences);
 router.get('/admin', authenticate, requireAdmin, getConferences);
 router.get('/:id', getConferenceById);

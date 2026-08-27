@@ -62,6 +62,9 @@ export const conferenceAPI = {
 
   deleteConference: (id: string) =>
     API.delete<{ success: boolean; message: string }>(`/conferences/${id}`),
+
+  getCategories: () =>
+    API.get<{ success: boolean; data: Category[] }>('/conferences/categories'),
 };
 
 export const resourceAPI = {
@@ -81,9 +84,26 @@ export const resourceAPI = {
     API.delete<{ success: boolean; message: string }>(`/resources/${id}`),
 };
 
+export interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+  isActive: boolean;
+  createdAt: string;
+}
+
 export const adminAPI = {
   getStats: () =>
     API.get<{ success: boolean; data: AdminStats }>('/admin/stats'),
+
+  getCategories: () =>
+    API.get<{ success: boolean; data: Category[] }>('/admin/categories'),
+
+  createCategory: (name: string) =>
+    API.post<{ success: boolean; message: string; data: Category }>('/admin/categories', { name }),
+
+  deleteCategory: (id: string) =>
+    API.delete<{ success: boolean; message: string }>(`/admin/categories/${id}`),
 };
 
 export default API;

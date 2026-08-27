@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AdminSidebar } from '../components/AdminSidebar';
 import { AdminHeader } from '../components/AdminHeader';
-import { conferenceAPI } from '../services/api';
-import { EVENT_TYPES, CATEGORIES, CONTINENTS, LOCATION_HIERARCHY } from '../utils/locationData';
+import { conferenceAPI, Category } from '../services/api';
+import { EVENT_TYPES, CONTINENTS, LOCATION_HIERARCHY } from '../utils/locationData';
 import { Save, Plus, Trash2, AlertCircle, Link as LinkIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -25,6 +25,14 @@ export const AdminAddEventPage: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  // Fetch dynamic categories
+  useEffect(() => {
+    conferenceAPI.getCategories().then((res) => {
+      if (res.data.success) setCategories(res.data.data);
+    }).catch(() => {});
+  }, []);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -32,7 +40,7 @@ export const AdminAddEventPage: React.FC = () => {
     acronym: '',
     eventType: 'Conference' as typeof EVENT_TYPES[number],
     organizer: '',
-    category: 'Engineering & Tech' as typeof CATEGORIES[number],
+    category: 'Engineering & Tech',
     mode: 'In-Person' as 'Hybrid' | 'In-Person' | 'Online',
     conferenceScope: '' as '' | 'International' | 'National',
     continent: 'Asia' as typeof CONTINENTS[number],
@@ -291,9 +299,13 @@ export const AdminAddEventPage: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, category: e.target.value as any })}
                     className="brutal-select text-xs"
                   >
-                    {CATEGORIES.filter((c) => c !== 'All').map((cat) => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
+                    {categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <option key={cat._id} value={cat.name}>{cat.name}</option>
+                      ))
+                    ) : (
+                      <option value="Engineering & Tech">Engineering & Tech</option>
+                    )}
                   </select>
                 </div>
 
