@@ -9,7 +9,6 @@ const DEFAULT_CATEGORIES = [
   'Business & Management',
   'Arts & Humanities',
   'Social Sciences',
-  'FDP',
 ];
 
 export const autoSeedIfEmpty = async () => {

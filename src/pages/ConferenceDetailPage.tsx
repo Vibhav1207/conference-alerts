@@ -7,7 +7,7 @@ import { conferenceAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import {
   MapPin, Calendar, Clock, Bookmark, ExternalLink, ChevronLeft,
-  Cpu, Sparkles, ShieldCheck, Layers, ArrowRight,
+  ArrowRight,
 } from 'lucide-react';
 import { staggerReveal, revealElement } from '../lib/animations';
 
@@ -86,15 +86,6 @@ export const ConferenceDetailPage: React.FC = () => {
 
   const catMeta = getCategoryHeader();
 
-  const topicCards = conference.topics?.length > 0
-    ? conference.topics.map((t, idx) => ({ title: t, desc: `Developments and applications in ${t.toLowerCase()}.`, icon: [Cpu, Sparkles, ShieldCheck, Layers][idx % 4] }))
-    : [
-      { title: 'Quantum Algorithms', desc: 'Hybrid quantum-classical algorithm design.', icon: Cpu },
-      { title: 'AI Integration', desc: 'Bridging deep learning with quantum processors.', icon: Sparkles },
-      { title: 'Ethics in Computing', desc: 'Addressing bias and socio-economic impacts of AI.', icon: ShieldCheck },
-      { title: 'Quantum Cryptography', desc: 'Post-quantum cryptographic threats and defenses.', icon: Layers },
-    ];
-
   return (
     <div className="min-h-screen flex flex-col bg-brutal-cream font-sans">
       <Navbar />
@@ -170,28 +161,6 @@ export const ConferenceDetailPage: React.FC = () => {
               <p className="text-brutal-black/70 text-xs sm:text-sm leading-relaxed whitespace-pre-line bg-white border-3 border-brutal-black shadow-brutal-sm p-6">
                 {conference.description}
               </p>
-            </section>
-
-            {/* Topics */}
-            <section data-reveal className="space-y-5">
-              <div className="flex items-center gap-3">
-                <div className="w-6 h-1 bg-brutal-blue" />
-                <h2 className="font-serif text-xl font-bold text-brutal-black">{catMeta.topicsTitle}</h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {topicCards.map((topic, idx) => {
-                  const Icon = topic.icon;
-                  return (
-                    <div key={idx} className="bg-white border-3 border-brutal-black shadow-brutal-sm p-5 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all space-y-3">
-                      <div className="w-10 h-10 bg-brutal-black text-brutal-yellow flex items-center justify-center border-2 border-brutal-black">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <h3 className="font-bold text-brutal-black text-sm">{topic.title}</h3>
-                      <p className="text-[11px] text-brutal-black/60 leading-relaxed">{topic.desc}</p>
-                    </div>
-                  );
-                })}
-              </div>
             </section>
 
           </div>

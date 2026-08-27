@@ -13,7 +13,6 @@ export const CATEGORIES = [
   'Business & Management',
   'Arts & Humanities',
   'Social Sciences',
-  'FDP',
 ] as const;
 
 export const CONTINENTS = [
