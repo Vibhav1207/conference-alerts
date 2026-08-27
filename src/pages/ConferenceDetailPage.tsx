@@ -74,24 +74,17 @@ export const ConferenceDetailPage: React.FC = () => {
   const getCategoryHeader = () => {
     switch (conference.eventType) {
       case 'Internship':
-        return { badge: 'RESEARCH INTERNSHIP', aboutTitle: 'About the Internship', topicsTitle: 'Focus & Skills', speakersTitle: 'Program Directors', applyText: 'Apply for Internship', ctaSubtext: 'Full stipend & accommodation. Direct official application.' };
+        return { badge: 'RESEARCH INTERNSHIP', aboutTitle: 'About the Internship', topicsTitle: 'Focus & Skills', applyText: 'Apply for Internship', ctaSubtext: 'Full stipend & accommodation. Direct official application.' };
       case 'Journals':
-        return { badge: 'JOURNALS', aboutTitle: 'About the Journal', topicsTitle: 'Submission Tracks', speakersTitle: 'Editorial Board', applyText: 'Submit Paper', ctaSubtext: 'Peer-reviewed submission on official publisher site.' };
+        return { badge: 'JOURNALS', aboutTitle: 'About the Journal', topicsTitle: 'Submission Tracks', applyText: 'Submit Paper', ctaSubtext: 'Peer-reviewed submission on official publisher site.' };
       case 'Workshop / Seminar':
-        return { badge: 'WORKSHOP / SEMINAR', aboutTitle: 'About the Workshop', topicsTitle: 'Topics & Modules', speakersTitle: 'Instructors', applyText: 'Register', ctaSubtext: 'Interactive session with certificate included.' };
+        return { badge: 'WORKSHOP / SEMINAR', aboutTitle: 'About the Workshop', topicsTitle: 'Topics & Modules', applyText: 'Register', ctaSubtext: 'Interactive session with certificate included.' };
       default:
-        return { badge: 'ACADEMIC SYMPOSIUM', aboutTitle: 'About the Conference', topicsTitle: 'Conference Topics', speakersTitle: 'Keynote Speakers', applyText: 'Register Now', ctaSubtext: 'Early bird registration open. Limited capacity.' };
+        return { badge: 'ACADEMIC SYMPOSIUM', aboutTitle: 'About the Conference', topicsTitle: 'Conference Topics', applyText: 'Register Now', ctaSubtext: 'Early bird registration open. Limited capacity.' };
     }
   };
 
   const catMeta = getCategoryHeader();
-
-  const speakersList = conference.keynoteSpeakers?.length > 0 ? conference.keynoteSpeakers : [
-    { name: 'Dr. Elena Rostova', title: 'Quantum Architecture Lead', institution: 'Institute of Advanced Computation', avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80' },
-    { name: 'Prof. Amit Patel', title: 'Director of AI Ethics', institution: 'Global Tech University', avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80' },
-    { name: 'Sarah Jenkins, PhD', title: 'Senior ML Engineer', institution: 'Nexus Quantum Lab', avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80' },
-    { name: 'Dr. Chen Wei', title: 'Algorithmic Theory Pioneer', institution: 'Shanghai Institute of Tech', avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80' },
-  ];
 
   const topicCards = conference.topics?.length > 0
     ? conference.topics.map((t, idx) => ({ title: t, desc: `Developments and applications in ${t.toLowerCase()}.`, icon: [Cpu, Sparkles, ShieldCheck, Layers][idx % 4] }))
@@ -201,30 +194,6 @@ export const ConferenceDetailPage: React.FC = () => {
               </div>
             </section>
 
-            {/* Speakers */}
-            <section data-reveal className="space-y-5">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-1 bg-brutal-green" />
-                  <h2 className="font-serif text-xl font-bold text-brutal-black">{catMeta.speakersTitle}</h2>
-                </div>
-                <span className="text-[10px] text-brutal-black/40 font-bold">{speakersList.length} Leaders</span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                {speakersList.map((speaker, idx) => (
-                  <div key={idx} className="bg-white border-3 border-brutal-black shadow-brutal-sm p-4 text-center space-y-3 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all">
-                    <div className="relative w-20 h-20 mx-auto overflow-hidden border-3 border-brutal-black">
-                      <img src={speaker.avatarUrl} alt={speaker.name} className="w-full h-full object-cover" loading="lazy" />
-                    </div>
-                    <div className="space-y-1">
-                      <h4 className="font-bold text-brutal-black text-xs line-clamp-1">{speaker.name}</h4>
-                      <p className="text-[10px] font-bold text-brutal-blue line-clamp-1">{speaker.title}</p>
-                      <p className="text-[10px] text-brutal-black/50 line-clamp-2">{speaker.institution}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
           </div>
 
           {/* Right Column */}

@@ -13,13 +13,6 @@ export interface User {
   }>;
 }
 
-export interface KeynoteSpeaker {
-  name: string;
-  title?: string;
-  institution?: string;
-  avatarUrl?: string;
-}
-
 export interface RegistrationFee {
   category: string;
   amount: number;
@@ -51,7 +44,6 @@ export interface Conference {
   };
   description: string;
   topics: string[];
-  keynoteSpeakers: KeynoteSpeaker[];
   registrationFees: RegistrationFee[];
   externalApplyUrl: string;
   websiteUrl?: string;

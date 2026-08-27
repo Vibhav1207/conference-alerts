@@ -38,16 +38,6 @@ export const conferenceSchema = z.object({
   }),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   topics: z.array(z.string()).default([]),
-  keynoteSpeakers: z
-    .array(
-      z.object({
-        name: z.string(),
-        title: z.string().optional(),
-        institution: z.string().optional(),
-        avatarUrl: z.string().optional(),
-      })
-    )
-    .default([]),
   registrationFees: z
     .array(
       z.object({

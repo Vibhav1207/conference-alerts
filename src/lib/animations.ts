@@ -59,7 +59,7 @@ export const cardHoverIn = (el: HTMLElement) => {
   anime({
     targets: el,
     translateY: -4,
-    boxShadow: '8px 8px 0px 0px #0a0a0a',
+    boxShadow: '8px 8px 0px 0px #0f172a',
     duration: 200,
     easing: 'easeOutQuad',
   });
@@ -70,7 +70,7 @@ export const cardHoverOut = (el: HTMLElement) => {
   anime({
     targets: el,
     translateY: 0,
-    boxShadow: '4px 4px 0px 0px #0a0a0a',
+    boxShadow: '4px 4px 0px 0px #0f172a',
     duration: 200,
     easing: 'easeOutQuad',
   });
@@ -84,7 +84,7 @@ export const buttonPress = (el: HTMLElement) => {
     targets: el,
     translateX: 2,
     translateY: 2,
-    boxShadow: '2px 2px 0px 0px #0a0a0a',
+    boxShadow: '2px 2px 0px 0px #0f172a',
     duration: 80,
     easing: 'easeOutQuad',
     direction: 'alternate',

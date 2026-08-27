@@ -1,13 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 import { EVENT_TYPES, CATEGORIES, CONTINENTS } from '../utils/locationData';
 
-export interface IKeynoteSpeaker {
-  name: string;
-  title: string;
-  institution: string;
-  avatarUrl?: string;
-}
-
 export interface IRegistrationFee {
   category: string;
   amount: number;
@@ -38,7 +31,6 @@ export interface IConference extends Document {
   };
   description: string;
   topics: string[];
-  keynoteSpeakers: IKeynoteSpeaker[];
   registrationFees: IRegistrationFee[];
   externalApplyUrl: string; // Official external application/registration URL
   websiteUrl?: string;
@@ -87,14 +79,6 @@ const ConferenceSchema = new Schema<IConference>(
     },
     description: { type: String, required: true },
     topics: [{ type: String }],
-    keynoteSpeakers: [
-      {
-        name: { type: String, required: true },
-        title: { type: String, default: '' },
-        institution: { type: String, default: '' },
-        avatarUrl: { type: String, default: '' },
-      },
-    ],
     registrationFees: [
       {
         category: { type: String, required: true },

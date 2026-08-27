@@ -4,11 +4,11 @@
 
 @layer base {
   :root {
-    --brutal-border: 3px solid #0a0a0a;
-    --brutal-border-thick: 4px solid #0a0a0a;
-    --brutal-shadow: 4px 4px 0px 0px #0a0a0a;
-    --brutal-shadow-lg: 6px 6px 0px 0px #0a0a0a;
-    --brutal-shadow-hover: 6px 6px 0px 0px #0a0a0a;
+    --brutal-border: 3px solid #0f172a;
+    --brutal-border-thick: 4px solid #0f172a;
+    --brutal-shadow: 4px 4px 0px 0px #0f172a;
+    --brutal-shadow-lg: 6px 6px 0px 0px #0f172a;
+    --brutal-shadow-hover: 6px 6px 0px 0px #0f172a;
     --brutal-radius: 2px;
     --motion-fast: 150ms;
     --motion-medium: 250ms;
@@ -17,8 +17,8 @@
   }
 
   body {
-    background-color: #f5f0e8;
-    color: #0a0a0a;
+    background-color: #f8fafc;
+    color: #0f172a;
     font-family: 'Space Grotesk', 'Hanken Grotesk', sans-serif;
     -webkit-font-smoothing: antialiased;
   }
@@ -64,14 +64,14 @@
   }
   .brutal-btn:active {
     transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0px 0px #0a0a0a;
+    box-shadow: 1px 1px 0px 0px #0f172a;
   }
 
   .brutal-btn-primary {
     @apply brutal-btn bg-brutal-black text-brutal-white;
   }
   .brutal-btn-primary:hover {
-    @apply bg-navy-900;
+    @apply bg-navy-800;
   }
 
   .brutal-btn-secondary {
@@ -160,11 +160,11 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #f5f0e8;
+    background: #f8fafc;
   }
   ::-webkit-scrollbar-thumb {
-    background: #0a0a0a;
-    border: 2px solid #f5f0e8;
+    background: #0f172a;
+    border: 2px solid #f8fafc;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: #333;
@@ -201,7 +201,7 @@
     @apply px-4 py-3 border-b-2 border-brutal-black/10;
   }
   .brutal-table tbody tr:hover {
-    @apply bg-brutal-yellow/20;
+    @apply bg-brutal-blue/10;
   }
 }
 
