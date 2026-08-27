@@ -37,9 +37,19 @@ export const HomePage: React.FC = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const eventGridRef = useRef<HTMLDivElement>(null);
+  const listingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setFilters((prev) => ({ ...prev, eventType: eventTypeParam, category: categoryParam, page: 1 }));
+  }, [eventTypeParam, categoryParam]);
+
+  // Auto-scroll to listings when filters change from URL params
+  useEffect(() => {
+    if ((eventTypeParam !== 'All' || categoryParam !== 'All') && listingsRef.current) {
+      setTimeout(() => {
+        listingsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    }
   }, [eventTypeParam, categoryParam]);
 
   // Scroll reveal
@@ -273,7 +283,7 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* ═══ MAIN CONTENT ═══ */}
-      <section className="py-10 flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <section ref={listingsRef} className="py-10 flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1">
