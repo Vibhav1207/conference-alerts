@@ -4,6 +4,7 @@ import { AdminSidebar } from '../components/AdminSidebar';
 import { AdminHeader } from '../components/AdminHeader';
 import { conferenceAPI, Category } from '../services/api';
 import { EVENT_TYPES, CONTINENTS, LOCATION_HIERARCHY } from '../utils/locationData';
+import { PUBLISHER_LOGOS } from '../utils/logos';
 import { Save, Plus, Trash2, AlertCircle, Link as LinkIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -38,6 +39,7 @@ export const AdminAddEventPage: React.FC = () => {
   const [formData, setFormData] = useState({
     title: '',
     acronym: '',
+    publisherLogo: 'ieee',
     eventType: 'Conference' as typeof EVENT_TYPES[number],
     organizer: '',
     category: 'Engineering & Tech',
@@ -112,6 +114,7 @@ export const AdminAddEventPage: React.FC = () => {
             setFormData({
               title: conf.title,
               acronym: conf.acronym,
+              publisherLogo: conf.publisherLogo || 'ieee',
               eventType: conf.eventType || 'Conference',
               organizer: conf.organizer,
               category: (conf.category as any) || 'Engineering & Tech',
@@ -162,6 +165,7 @@ export const AdminAddEventPage: React.FC = () => {
     const payload = {
       title: formData.title,
       acronym: formData.acronym,
+      publisherLogo: formData.publisherLogo,
       eventType: formData.eventType,
       organizer: formData.organizer,
       category: formData.category,
@@ -336,6 +340,34 @@ export const AdminAddEventPage: React.FC = () => {
                     </select>
                   </div>
                 )}
+              </div>
+
+              {/* Publisher / Indexing Logo Picker */}
+              <div className="pt-2">
+                <label className="brutal-label">Publisher / Indexing Logo Top Banner</label>
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                  {PUBLISHER_LOGOS.map((logo) => {
+                    const isSelected = formData.publisherLogo === logo.id;
+                    return (
+                      <button
+                        type="button"
+                        key={logo.id}
+                        onClick={() => setFormData({ ...formData, publisherLogo: logo.id })}
+                        className={`p-3 border-3 border-brutal-black text-center transition-all flex flex-col items-center justify-between gap-1.5 ${
+                          isSelected
+                            ? 'bg-brutal-yellow shadow-brutal translate-y-[-2px]'
+                            : 'bg-white hover:bg-brutal-cream shadow-brutal-sm'
+                        }`}
+                      >
+                        <img src={logo.src} alt={logo.name} className="h-6 object-contain" />
+                        <span className="text-[10px] font-bold font-mono text-brutal-black">{logo.shortName}</span>
+                        {isSelected && (
+                          <span className="text-[9px] font-bold px-1 bg-brutal-black text-white uppercase">Chosen ✓</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               <div>

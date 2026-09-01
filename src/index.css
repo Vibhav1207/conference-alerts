@@ -209,4 +209,23 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  @keyframes marquee-right-to-left {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee-left {
+    display: flex;
+    width: max-content;
+    animation: marquee-right-to-left 25s linear infinite;
+  }
+
+  .animate-marquee-left:hover {
+    animation-play-state: paused;
+  }
 }

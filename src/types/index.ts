@@ -5,6 +5,11 @@ export interface User {
   role: 'user' | 'admin';
   institution?: string;
   country?: string;
+  photoURL?: string;
+  bio?: string;
+  fieldOfInterest?: string;
+  authProvider?: 'firebase-google' | 'firebase-email' | 'backend';
+  createdAt?: string;
   bookmarkedConferences?: string[];
   alertSubscriptions?: Array<{
     category: string;
@@ -48,6 +53,7 @@ export interface Conference {
   externalApplyUrl: string;
   websiteUrl?: string;
   contactEmail?: string;
+  publisherLogo?: string;
   status: 'Draft' | 'Pending' | 'Published' | 'Archived';
   featured: boolean;
   viewsCount: number;

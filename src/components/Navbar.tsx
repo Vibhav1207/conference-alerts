@@ -114,31 +114,46 @@ export const Navbar: React.FC = () => {
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2 px-3 py-2 border-2 border-white/20 hover:border-brutal-yellow transition-colors"
+                    className="flex items-center gap-2 px-3 py-1.5 border-2 border-white/20 hover:border-brutal-yellow transition-colors bg-white/5"
                   >
-                    <div className="w-7 h-7 bg-brutal-yellow text-brutal-black flex items-center justify-center font-bold text-xs border-2 border-brutal-black">
-                      {user?.name?.charAt(0) || 'U'}
+                    <div className="w-7 h-7 bg-brutal-yellow text-brutal-black flex items-center justify-center font-bold text-xs border-2 border-brutal-black overflow-hidden flex-shrink-0">
+                      {user?.photoURL ? (
+                        <img src={user.photoURL} alt={user.name} className="w-full h-full object-cover" />
+                      ) : (
+                        user?.name?.charAt(0) || 'U'
+                      )}
                     </div>
-                    <span className="text-xs font-bold hidden md:inline">{user?.name}</span>
+                    <span className="text-xs font-bold hidden md:inline truncate max-w-[120px]">{user?.name}</span>
                     <ChevronDown className="w-3 h-3" />
                   </button>
 
                   {userDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-56 bg-white border-3 border-brutal-black shadow-brutal-lg z-50 animate-slide-down">
                       <div className="px-4 py-3 border-b-2 border-brutal-black bg-brutal-yellow/10">
-                        <p className="text-xs font-bold text-brutal-black">{user?.name}</p>
+                        <p className="text-xs font-bold text-brutal-black truncate">{user?.name}</p>
                         <p className="text-[10px] text-brutal-black/60 truncate">{user?.email}</p>
                       </div>
+
+                      <Link
+                        to="/profile"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-black hover:bg-brutal-yellow/20 transition-colors border-b border-brutal-black/10"
+                      >
+                        <User className="w-4 h-4 text-brutal-black" />
+                        <span>My Academic Profile</span>
+                      </Link>
+
                       {isAdmin && (
                         <Link
                           to="/admin"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-black hover:bg-brutal-yellow/20 transition-colors"
+                          className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-black hover:bg-brutal-yellow/20 transition-colors border-b border-brutal-black/10"
                         >
                           <LayoutDashboard className="w-4 h-4" />
                           <span>Admin Dashboard</span>
                         </Link>
                       )}
+
                       <button
                         onClick={() => {
                           logout();
@@ -202,11 +217,19 @@ export const Navbar: React.FC = () => {
             })}
             {isAuthenticated ? (
               <>
+                <Link
+                  to="/profile"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-brutal-yellow"
+                >
+                  <User className="w-4 h-4" />
+                  My Academic Profile
+                </Link>
                 {isAdmin && (
                   <Link
                     to="/admin"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-brutal-yellow"
+                    className="flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-white/90"
                   >
                     <LayoutDashboard className="w-4 h-4" />
                     Admin Dashboard

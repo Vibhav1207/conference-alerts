@@ -1,9 +1,10 @@
 import React, { useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Conference } from '../types';
-import { MapPin, Calendar, Clock, Bookmark, ExternalLink, ChevronRight } from 'lucide-react';
+import { MapPin, Calendar, Clock, Bookmark, ExternalLink, ChevronRight, Award } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { cardHoverIn, cardHoverOut } from '../lib/animations';
+import { getLogoById } from '../utils/logos';
 
 interface ConferenceCardProps {
   conference: Conference;
@@ -13,6 +14,13 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
   const { toggleBookmark, isBookmarked, isAuthenticated } = useAuth();
   const bookmarked = isBookmarked(conference._id);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  // Match publisher logo from conference field or auto-detect title/organizer keyword
+  const logoItem =
+    getLogoById(conference.publisherLogo) ||
+    getLogoById(conference.acronym) ||
+    getLogoById(conference.title) ||
+    getLogoById(conference.organizer);
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return 'N/A';
@@ -25,10 +33,14 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
 
   const eventTypeStyle = (eventType: string) => {
     switch (eventType) {
-      case 'Internship': return 'bg-brutal-blue text-white border-brutal-blue';
-      case 'Journals': return 'bg-purple-600 text-white border-purple-600';
-      case 'Workshop / Seminar': return 'bg-brutal-orange text-white border-brutal-orange';
-      default: return 'bg-brutal-black text-white border-brutal-black';
+      case 'Internship':
+        return 'bg-brutal-blue text-white border-brutal-blue';
+      case 'Journals':
+        return 'bg-purple-600 text-white border-purple-600';
+      case 'Workshop / Seminar':
+        return 'bg-brutal-orange text-white border-brutal-orange';
+      default:
+        return 'bg-brutal-black text-white border-brutal-black';
     }
   };
 
@@ -47,27 +59,42 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
       onMouseLeave={handleMouseLeave}
       className="bg-white border-3 border-brutal-black shadow-brutal p-5 flex flex-col justify-between group relative overflow-hidden"
     >
+      {/* Publisher / Indexing Logo Top Banner */}
+      {logoItem && (
+        <div className="mb-3 p-2 bg-brutal-cream border-2 border-brutal-black flex items-center justify-between shadow-brutal-sm">
+          <div className="flex items-center gap-2">
+            <img src={logoItem.src} alt={logoItem.name} className="h-6 object-contain max-w-[100px]" />
+            <span className="text-[10px] font-bold font-mono text-brutal-black uppercase tracking-wider">
+              {logoItem.shortName} Indexed
+            </span>
+          </div>
+          <span className={`text-[9px] font-bold px-2 py-0.5 border border-brutal-black uppercase ${logoItem.badgeBg}`}>
+            Verified
+          </span>
+        </div>
+      )}
+
       {/* Top Tag Bar */}
       <div className="flex items-center justify-between gap-2 mb-3">
         <div className="flex flex-wrap items-center gap-1.5">
           <span className={`brutal-badge border-2 ${eventTypeStyle(conference.eventType)}`}>
             {conference.eventType || 'Conference'}
           </span>
-          <span className="brutal-badge bg-white text-brutal-black">
-            {conference.acronym}
-          </span>
+          <span className="brutal-badge bg-white text-brutal-black">{conference.acronym}</span>
           {conference.conferenceScope && (
             <span className="brutal-badge bg-brutal-blue/10 text-brutal-blue border-brutal-blue">
               {conference.conferenceScope}
             </span>
           )}
-          <span className={`brutal-badge ${
-            conference.mode === 'Hybrid'
-              ? 'bg-purple-100 text-purple-800 border-purple-400'
-              : conference.mode === 'Online'
-              ? 'bg-brutal-blue/10 text-brutal-blue border-brutal-blue'
-              : 'bg-brutal-yellow/20 text-brutal-black border-brutal-orange'
-          }`}>
+          <span
+            className={`brutal-badge ${
+              conference.mode === 'Hybrid'
+                ? 'bg-purple-100 text-purple-800 border-purple-400'
+                : conference.mode === 'Online'
+                ? 'bg-brutal-blue/10 text-brutal-blue border-brutal-blue'
+                : 'bg-brutal-yellow/20 text-brutal-black border-brutal-orange'
+            }`}
+          >
             {conference.mode}
           </span>
         </div>
@@ -121,12 +148,16 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
         </div>
         <div className="flex items-center gap-2">
           <Calendar className="w-3.5 h-3.5 text-brutal-black/40 flex-shrink-0" />
-          <span>{formatDate(conference.dates.startDate)} – {formatDate(conference.dates.endDate)}</span>
+          <span>
+            {formatDate(conference.dates.startDate)} – {formatDate(conference.dates.endDate)}
+          </span>
         </div>
         <div className="flex items-center justify-between pt-2 border-t-2 border-brutal-black/10">
           <div className="flex items-center gap-2">
             <Clock className="w-3.5 h-3.5 text-brutal-red flex-shrink-0" />
-            <span>Deadline: <strong className="text-brutal-black">{formatDate(conference.dates.submissionDeadline)}</strong></span>
+            <span>
+              Deadline: <strong className="text-brutal-black">{formatDate(conference.dates.submissionDeadline)}</strong>
+            </span>
           </div>
           {daysLeft > 0 ? (
             <span className="brutal-badge bg-brutal-yellow text-brutal-black border-brutal-black text-[9px]">
@@ -142,10 +173,7 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
 
       {/* Action Bar */}
       <div className="flex items-center justify-between gap-2 pt-3 border-t-2 border-brutal-black/10">
-        <Link
-          to={`/conference/${conference._id}`}
-          className="brutal-btn-ghost text-xs"
-        >
+        <Link to={`/conference/${conference._id}`} className="brutal-btn-ghost text-xs">
           View Overview
         </Link>
         {conference.externalApplyUrl ? (

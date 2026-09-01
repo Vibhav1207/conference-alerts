@@ -10,6 +10,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { staggerReveal, revealElement } from '../lib/animations';
+import { getLogoById } from '../utils/logos';
 
 export const ConferenceDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -101,6 +102,25 @@ export const ConferenceDetailPage: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             <div className="lg:col-span-2 space-y-4">
+              {(() => {
+                const logoItem =
+                  getLogoById(conference.publisherLogo) ||
+                  getLogoById(conference.acronym) ||
+                  getLogoById(conference.title) ||
+                  getLogoById(conference.organizer);
+                return logoItem ? (
+                  <div className="inline-flex items-center gap-3 px-3.5 py-2 bg-white text-brutal-black border-3 border-brutal-yellow shadow-brutal mb-1">
+                    <img src={logoItem.src} alt={logoItem.name} className="h-7 object-contain max-w-[120px]" />
+                    <div className="flex flex-col">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-brutal-black">
+                        {logoItem.name}
+                      </span>
+                      <span className="text-[9px] text-brutal-black/60 font-medium">{logoItem.tagline}</span>
+                    </div>
+                  </div>
+                ) : null;
+              })()}
+
               <div className="flex flex-wrap items-center gap-2">
                 <span className="brutal-badge bg-brutal-yellow/20 text-brutal-yellow border-brutal-yellow text-[9px]">
                   {catMeta.badge}

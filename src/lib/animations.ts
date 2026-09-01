@@ -255,5 +255,58 @@ export const skeletonPulse = (elements: HTMLElement[]) => {
   });
 };
 
+// ─── Badge Pulse & Glow ───
+
+export const pulseBadge = (el: HTMLElement | null) => {
+  if (!el || prefersReducedMotion()) return;
+  anime({
+    targets: el,
+    scale: [1, 1.08, 1],
+    rotate: ['0deg', '3deg', '-3deg', '0deg'],
+    duration: 600,
+    easing: 'easeOutElastic(1, .5)',
+  });
+};
+
+// ─── Profile Tab Switch ───
+
+export const animateProfileTabSwitch = (el: HTMLElement | null) => {
+  if (!el || prefersReducedMotion()) return;
+  anime({
+    targets: el,
+    opacity: [0, 1],
+    translateY: [15, 0],
+    scale: [0.98, 1],
+    duration: 350,
+    easing: 'cubicBezier(0.16, 1, 0.3, 1)',
+  });
+};
+
+// ─── Toast Slide-In ───
+
+export const toastSlideIn = (el: HTMLElement | null) => {
+  if (!el || prefersReducedMotion()) return;
+  anime({
+    targets: el,
+    translateY: [-50, 0],
+    opacity: [0, 1],
+    scale: [0.9, 1],
+    duration: 400,
+    easing: 'cubicBezier(0.16, 1, 0.3, 1)',
+  });
+};
+
+// ─── Google Button Micro Hover ───
+
+export const animateGoogleBtnHover = (el: HTMLElement | null) => {
+  if (!el || prefersReducedMotion()) return;
+  anime({
+    targets: el,
+    scale: [1, 1.02, 1],
+    duration: 250,
+    easing: 'easeInOutSine',
+  });
+};
+
 // ─── Export anime for direct use ───
 export { anime };

@@ -11,6 +11,7 @@ import {
   Layers, Briefcase, GraduationCap, FlaskConical, MapPin, Calendar, BookOpen, ArrowRight, Zap,
 } from 'lucide-react';
 import { staggerReveal, setupScrollReveal } from '../lib/animations';
+import { PUBLISHER_LOGOS } from '../utils/logos';
 
 export const HomePage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -198,6 +199,43 @@ export const HomePage: React.FC = () => {
         <span>
           Informational Portal: Click <strong>"Apply"</strong> to visit the official organizer portal.
         </span>
+      </section>
+
+      {/* ═══ PUBLISHER & INDEXING LOGOS SLIDER ═══ */}
+      <section className="bg-white border-b-3 border-brutal-black py-4 overflow-hidden relative shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-xs font-mono font-bold text-brutal-black uppercase tracking-wider">
+            <span className="w-2.5 h-2.5 bg-brutal-yellow border border-brutal-black inline-block animate-pulse" />
+            <span>Indexing & Publishing Index Partners</span>
+          </div>
+          <span className="text-[10px] font-bold text-brutal-black/50 uppercase font-mono hidden sm:inline">
+            Infinite Right to Left Card Slider • Hover to Pause
+          </span>
+        </div>
+
+        <div className="relative w-full overflow-hidden">
+          <div className="animate-marquee-left flex items-center gap-4 py-1.5 px-2">
+            {[...PUBLISHER_LOGOS, ...PUBLISHER_LOGOS, ...PUBLISHER_LOGOS].map((logo, idx) => (
+              <div
+                key={`${logo.id}-${idx}`}
+                className="w-60 flex-shrink-0 bg-brutal-cream border-3 border-brutal-black p-3 shadow-brutal-sm hover:shadow-brutal hover:bg-brutal-yellow/30 transition-all flex items-center gap-3 cursor-pointer group"
+              >
+                <div className="w-14 h-10 bg-white border-2 border-brutal-black p-1 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform shadow-brutal-sm">
+                  <img src={logo.src} alt={logo.name} className="max-h-full max-w-full object-contain" />
+                </div>
+                <div className="overflow-hidden min-w-0">
+                  <div className="flex items-center justify-between gap-1">
+                    <h4 className="font-bold text-xs text-brutal-black truncate">{logo.shortName}</h4>
+                    <span className="text-[8px] font-mono font-bold px-1 bg-brutal-black text-brutal-yellow uppercase flex-shrink-0">
+                      Verified
+                    </span>
+                  </div>
+                  <p className="text-[9px] font-mono text-brutal-black/60 truncate">{logo.tagline}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ═══ CONTINENTS ═══ */}

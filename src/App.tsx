@@ -6,6 +6,7 @@ import { ConferenceDetailPage } from './pages/ConferenceDetailPage';
 import { ResourceLibraryPage } from './pages/ResourceLibraryPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { ProfilePage } from './pages/ProfilePage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { AdminConferencesPage } from './pages/AdminConferencesPage';
 import { AdminAddEventPage } from './pages/AdminAddEventPage';
@@ -18,13 +19,34 @@ const ProtectedAdminRoute: React.FC<{ children: React.ReactNode }> = ({ children
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500 font-semibold text-xs">
-        Checking authentication permissions...
+      <div className="min-h-screen flex flex-col items-center justify-center bg-brutal-cream font-mono text-xs font-bold gap-3">
+        <div className="w-8 h-8 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+        <span>Verifying admin permissions...</span>
       </div>
     );
   }
 
   if (!isAuthenticated || !isAdmin) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
+};
+
+// Protected User Route wrapper
+const ProtectedUserRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-brutal-cream font-mono text-xs font-bold gap-3">
+        <div className="w-8 h-8 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+        <span>Syncing academic profile...</span>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
@@ -51,6 +73,16 @@ export const App: React.FC = () => {
           <Route path="/resources" element={<ResourceLibraryPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+
+          {/* Protected User Profile Route */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedUserRoute>
+                <ProfilePage />
+              </ProtectedUserRoute>
+            }
+          />
 
           {/* Admin Protected Routes */}
           <Route
