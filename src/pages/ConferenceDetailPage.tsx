@@ -10,7 +10,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 import { staggerReveal, revealElement } from '../lib/animations';
-import { getLogoById } from '../utils/logos';
+import { getLogosByIds } from '../utils/logos';
 
 export const ConferenceDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -103,20 +103,26 @@ export const ConferenceDetailPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             <div className="lg:col-span-2 space-y-4">
               {(() => {
-                const logoItem =
-                  getLogoById(conference.publisherLogo) ||
-                  getLogoById(conference.acronym) ||
-                  getLogoById(conference.title) ||
-                  getLogoById(conference.organizer);
-                return logoItem ? (
-                  <div className="inline-flex items-center gap-3 px-3.5 py-2 bg-white text-brutal-black border-3 border-brutal-yellow shadow-brutal mb-1">
-                    <img src={logoItem.src} alt={logoItem.name} className="h-7 object-contain max-w-[120px]" />
-                    <div className="flex flex-col">
-                      <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-brutal-black">
-                        {logoItem.name}
-                      </span>
-                      <span className="text-[9px] text-brutal-black/60 font-medium">{logoItem.tagline}</span>
-                    </div>
+                const logos = getLogosByIds(
+                  conference.publisherLogos || conference.publisherLogo,
+                  `${conference.acronym} ${conference.title} ${conference.organizer}`
+                );
+                return logos.length > 0 ? (
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    {logos.map((logo) => (
+                      <div
+                        key={logo.id}
+                        className="inline-flex items-center gap-2.5 px-3 py-1.5 bg-white text-brutal-black border-2 border-brutal-yellow shadow-brutal-sm"
+                      >
+                        <img src={logo.src} alt={logo.name} className="h-6 object-contain max-w-[100px]" />
+                        <div className="flex flex-col">
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-brutal-black leading-none">
+                            {logo.shortName}
+                          </span>
+                          <span className="text-[8px] text-brutal-black/60 font-mono font-medium">Indexed</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ) : null;
               })()}
@@ -171,8 +177,49 @@ export const ConferenceDetailPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full flex-1" ref={contentRef}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column */}
-          <div className="lg:col-span-2 space-y-10">
-            {/* About */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Indexing & Publisher Accreditation Section inside Info */}
+            {(() => {
+              const logos = getLogosByIds(
+                conference.publisherLogos || conference.publisherLogo,
+                `${conference.acronym} ${conference.title} ${conference.organizer}`
+              );
+              return logos.length > 0 ? (
+                <section data-reveal className="bg-white border-4 border-brutal-black shadow-brutal p-6 space-y-4">
+                  <div className="flex items-center justify-between border-b-3 border-brutal-black pb-3">
+                    <h3 className="font-serif text-base font-bold text-brutal-black flex items-center gap-2">
+                      <span className="w-3 h-3 bg-brutal-yellow border border-brutal-black" />
+                      Official Indexing & Publisher Accreditations
+                    </h3>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-brutal-black text-brutal-yellow uppercase">
+                      {logos.length} Verified Partner(s)
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {logos.map((logo) => (
+                      <div
+                        key={logo.id}
+                        className="p-3 bg-brutal-cream border-2 border-brutal-black flex items-center gap-3 shadow-brutal-sm"
+                      >
+                        <div className="w-16 h-12 bg-white border-2 border-brutal-black p-1 flex items-center justify-center flex-shrink-0">
+                          <img src={logo.src} alt={logo.name} className="max-h-full max-w-full object-contain" />
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="font-bold text-xs text-brutal-black truncate">{logo.name}</h4>
+                          <p className="text-[10px] text-brutal-black/60 truncate font-mono">{logo.tagline}</p>
+                          <span className={`inline-block mt-1 text-[8px] font-bold px-1.5 py-0.5 border border-brutal-black uppercase ${logo.badgeBg}`}>
+                            Official Indexing
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              ) : null;
+            })()}
+
+            {/* About Section */}
             <section data-reveal className="space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-6 h-1 bg-brutal-yellow" />

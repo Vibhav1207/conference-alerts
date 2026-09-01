@@ -39,7 +39,7 @@ export const AdminAddEventPage: React.FC = () => {
   const [formData, setFormData] = useState({
     title: '',
     acronym: '',
-    publisherLogo: 'ieee',
+    publisherLogos: ['ieee', 'scopus'] as string[],
     eventType: 'Conference' as typeof EVENT_TYPES[number],
     organizer: '',
     category: 'Engineering & Tech',
@@ -114,7 +114,7 @@ export const AdminAddEventPage: React.FC = () => {
             setFormData({
               title: conf.title,
               acronym: conf.acronym,
-              publisherLogo: conf.publisherLogo || 'ieee',
+              publisherLogos: conf.publisherLogos || (conf.publisherLogo ? conf.publisherLogo.split(',') : ['ieee', 'scopus']),
               eventType: conf.eventType || 'Conference',
               organizer: conf.organizer,
               category: (conf.category as any) || 'Engineering & Tech',
@@ -165,7 +165,8 @@ export const AdminAddEventPage: React.FC = () => {
     const payload = {
       title: formData.title,
       acronym: formData.acronym,
-      publisherLogo: formData.publisherLogo,
+      publisherLogos: formData.publisherLogos,
+      publisherLogo: formData.publisherLogos.join(','),
       eventType: formData.eventType,
       organizer: formData.organizer,
       category: formData.category,
@@ -342,28 +343,43 @@ export const AdminAddEventPage: React.FC = () => {
                 )}
               </div>
 
-              {/* Publisher / Indexing Logo Picker */}
+              {/* Publisher / Indexing Logo Multi-Picker */}
               <div className="pt-2">
-                <label className="brutal-label">Publisher / Indexing Logo Top Banner</label>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="brutal-label mb-0">Publisher & Indexing Logos (Select Multiple)</label>
+                  <span className="text-[10px] font-mono font-bold text-brutal-black/60">
+                    {formData.publisherLogos.length} Selected
+                  </span>
+                </div>
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                   {PUBLISHER_LOGOS.map((logo) => {
-                    const isSelected = formData.publisherLogo === logo.id;
+                    const isSelected = formData.publisherLogos.includes(logo.id);
                     return (
                       <button
                         type="button"
                         key={logo.id}
-                        onClick={() => setFormData({ ...formData, publisherLogo: logo.id })}
+                        onClick={() => {
+                          const exists = formData.publisherLogos.includes(logo.id);
+                          const updated = exists
+                            ? formData.publisherLogos.filter((id) => id !== logo.id)
+                            : [...formData.publisherLogos, logo.id];
+                          setFormData({ ...formData, publisherLogos: updated });
+                        }}
                         className={`p-3 border-3 border-brutal-black text-center transition-all flex flex-col items-center justify-between gap-1.5 ${
                           isSelected
                             ? 'bg-brutal-yellow shadow-brutal translate-y-[-2px]'
-                            : 'bg-white hover:bg-brutal-cream shadow-brutal-sm'
+                            : 'bg-white hover:bg-brutal-cream shadow-brutal-sm opacity-60'
                         }`}
                       >
                         <img src={logo.src} alt={logo.name} className="h-6 object-contain" />
                         <span className="text-[10px] font-bold font-mono text-brutal-black">{logo.shortName}</span>
-                        {isSelected && (
-                          <span className="text-[9px] font-bold px-1 bg-brutal-black text-white uppercase">Chosen ✓</span>
-                        )}
+                        <span
+                          className={`text-[9px] font-bold px-1.5 py-0.5 border border-brutal-black uppercase ${
+                            isSelected ? 'bg-brutal-black text-brutal-yellow' : 'bg-brutal-cream text-brutal-black/50'
+                          }`}
+                        >
+                          {isSelected ? 'Selected ✓' : '+ Add'}
+                        </span>
                       </button>
                     );
                   })}

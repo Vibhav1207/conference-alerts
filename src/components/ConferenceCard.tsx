@@ -4,7 +4,7 @@ import { Conference } from '../types';
 import { MapPin, Calendar, Clock, Bookmark, ExternalLink, ChevronRight, Award } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { cardHoverIn, cardHoverOut } from '../lib/animations';
-import { getLogoById } from '../utils/logos';
+import { getLogosByIds } from '../utils/logos';
 
 interface ConferenceCardProps {
   conference: Conference;
@@ -15,12 +15,11 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
   const bookmarked = isBookmarked(conference._id);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Match publisher logo from conference field or auto-detect title/organizer keyword
-  const logoItem =
-    getLogoById(conference.publisherLogo) ||
-    getLogoById(conference.acronym) ||
-    getLogoById(conference.title) ||
-    getLogoById(conference.organizer);
+  // Match all selected publisher logos or fallback keyword
+  const logos = getLogosByIds(
+    conference.publisherLogos || conference.publisherLogo,
+    `${conference.acronym} ${conference.title} ${conference.organizer}`
+  );
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return 'N/A';
@@ -59,17 +58,19 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
       onMouseLeave={handleMouseLeave}
       className="bg-white border-3 border-brutal-black shadow-brutal p-5 flex flex-col justify-between group relative overflow-hidden"
     >
-      {/* Publisher / Indexing Logo Top Banner */}
-      {logoItem && (
-        <div className="mb-3 p-2 bg-brutal-cream border-2 border-brutal-black flex items-center justify-between shadow-brutal-sm">
-          <div className="flex items-center gap-2">
-            <img src={logoItem.src} alt={logoItem.name} className="h-6 object-contain max-w-[100px]" />
-            <span className="text-[10px] font-bold font-mono text-brutal-black uppercase tracking-wider">
-              {logoItem.shortName} Indexed
-            </span>
+      {/* Publisher / Indexing Logos Top Banner */}
+      {logos.length > 0 && (
+        <div className="mb-3 p-2 bg-brutal-cream border-2 border-brutal-black flex flex-wrap items-center justify-between gap-2 shadow-brutal-sm">
+          <div className="flex flex-wrap items-center gap-2 overflow-hidden">
+            {logos.map((logo) => (
+              <div key={logo.id} className="flex items-center gap-1.5 bg-white border border-brutal-black px-1.5 py-0.5" title={logo.name}>
+                <img src={logo.src} alt={logo.name} className="h-4 object-contain" />
+                <span className="text-[9px] font-bold font-mono text-brutal-black">{logo.shortName}</span>
+              </div>
+            ))}
           </div>
-          <span className={`text-[9px] font-bold px-2 py-0.5 border border-brutal-black uppercase ${logoItem.badgeBg}`}>
-            Verified
+          <span className="text-[8px] font-bold px-1.5 py-0.5 bg-brutal-black text-brutal-yellow uppercase border border-brutal-black">
+            Indexed
           </span>
         </div>
       )}

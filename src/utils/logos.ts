@@ -44,7 +44,7 @@ export const PUBLISHER_LOGOS: PublisherLogoItem[] = [
     shortName: 'HCI',
     src: hciLogo,
     tagline: 'Human-Computer Interaction Symposia',
-    badgeBg: 'bg-brutal-purple text-white',
+    badgeBg: 'bg-purple-600 text-white',
   },
   {
     id: 'mdpi',
@@ -65,4 +65,50 @@ export const getLogoById = (id?: string): PublisherLogoItem | undefined => {
   return PUBLISHER_LOGOS.find(
     (l) => l.id === normalized || l.shortName.toLowerCase() === normalized || l.name.toLowerCase().includes(normalized)
   );
+};
+
+/**
+ * Returns multiple logo items matching array of IDs, string, or fallback keywords
+ */
+export const getLogosByIds = (
+  ids?: string[] | string,
+  fallbackText?: string
+): PublisherLogoItem[] => {
+  const result: PublisherLogoItem[] = [];
+  const seen = new Set<string>();
+
+  if (Array.isArray(ids)) {
+    ids.forEach((id) => {
+      const match = getLogoById(id);
+      if (match && !seen.has(match.id)) {
+        seen.add(match.id);
+        result.push(match);
+      }
+    });
+  } else if (typeof ids === 'string' && ids.trim()) {
+    // If comma separated string or single id
+    const parts = ids.split(',').map((p) => p.trim());
+    parts.forEach((p) => {
+      const match = getLogoById(p);
+      if (match && !seen.has(match.id)) {
+        seen.add(match.id);
+        result.push(match);
+      }
+    });
+  }
+
+  if (result.length > 0) return result;
+
+  // Try fallback text matching
+  if (fallbackText) {
+    const textLower = fallbackText.toLowerCase();
+    PUBLISHER_LOGOS.forEach((logo) => {
+      if ((textLower.includes(logo.id) || textLower.includes(logo.shortName.toLowerCase())) && !seen.has(logo.id)) {
+        seen.add(logo.id);
+        result.push(logo);
+      }
+    });
+  }
+
+  return result;
 };

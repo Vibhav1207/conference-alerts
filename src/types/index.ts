@@ -54,6 +54,7 @@ export interface Conference {
   websiteUrl?: string;
   contactEmail?: string;
   publisherLogo?: string;
+  publisherLogos?: string[];
   status: 'Draft' | 'Pending' | 'Published' | 'Archived';
   featured: boolean;
   viewsCount: number;
