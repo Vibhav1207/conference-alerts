@@ -1,4 +1,5 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
+import { getAnalytics, isSupported, Analytics } from 'firebase/analytics';
 import {
   getAuth,
   GoogleAuthProvider,
@@ -30,12 +31,13 @@ const getEnv = (key: string): string | undefined => {
 
 // Default configuration with fallbacks for development/testing
 const firebaseConfig = {
-  apiKey: getEnv('VITE_FIREBASE_API_KEY') || 'AIzaSyDemoKeyForConferenceAlertsHub2026',
-  authDomain: getEnv('VITE_FIREBASE_AUTH_DOMAIN') || 'conference-alerts-2026.firebaseapp.com',
-  projectId: getEnv('VITE_FIREBASE_PROJECT_ID') || 'conference-alerts-2026',
-  storageBucket: getEnv('VITE_FIREBASE_STORAGE_BUCKET') || 'conference-alerts-2026.appspot.com',
-  messagingSenderId: getEnv('VITE_FIREBASE_MESSAGING_SENDER_ID') || '1029384756',
-  appId: getEnv('VITE_FIREBASE_APP_ID') || '1:1029384756:web:abcdef123456789',
+  apiKey: getEnv('VITE_FIREBASE_API_KEY') || 'AIzaSyCvS1JCf5glFHnEmhn2bsJoKyqRXEJF7IQ',
+  authDomain: getEnv('VITE_FIREBASE_AUTH_DOMAIN') || 'alerts-facae.firebaseapp.com',
+  projectId: getEnv('VITE_FIREBASE_PROJECT_ID') || 'alerts-facae',
+  storageBucket: getEnv('VITE_FIREBASE_STORAGE_BUCKET') || 'alerts-facae.firebasestorage.app',
+  messagingSenderId: getEnv('VITE_FIREBASE_MESSAGING_SENDER_ID') || '705247100684',
+  appId: getEnv('VITE_FIREBASE_APP_ID') || '1:705247100684:web:5014622f77344146a85329',
+  measurementId: getEnv('VITE_FIREBASE_MEASUREMENT_ID') || 'G-5LQBGRVMW6',
 };
 
 // Initialize Firebase App singleton
@@ -43,14 +45,26 @@ export const app: FirebaseApp = getApps().length ? getApp() : initializeApp(fire
 export const auth: Auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
+// Initialize Analytics conditionally (supported in browser environment)
+export let analytics: Analytics | null = null;
+if (typeof window !== 'undefined') {
+  isSupported().then((supported) => {
+    if (supported) {
+      analytics = getAnalytics(app);
+    }
+  }).catch(() => {
+    // Analytics not supported in this environment
+  });
+}
+
 googleProvider.setCustomParameters({
   prompt: 'select_account',
 });
 
 // Check if current config is using real keys
 export const isFirebaseConfigured = (): boolean => {
-  const key = getEnv('VITE_FIREBASE_API_KEY');
-  return !!key && key !== 'AIzaSyDemoKeyForConferenceAlertsHub2026' && key.startsWith('AIzaSy');
+  const key = getEnv('VITE_FIREBASE_API_KEY') || firebaseConfig.apiKey;
+  return !!key && key.startsWith('AIzaSy');
 };
 
 // --- Firebase Authentication Helpers ---
