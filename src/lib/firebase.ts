@@ -50,7 +50,7 @@ googleProvider.setCustomParameters({
 // Check if current config is using real keys
 export const isFirebaseConfigured = (): boolean => {
   const key = getEnv('VITE_FIREBASE_API_KEY');
-  return !!key && key !== 'AIzaSyDemoKeyForConferenceAlertsHub2026';
+  return !!key && key !== 'AIzaSyDemoKeyForConferenceAlertsHub2026' && key.startsWith('AIzaSy');
 };
 
 // --- Firebase Authentication Helpers ---
@@ -59,69 +59,74 @@ export const isFirebaseConfigured = (): boolean => {
  * 1-Click Sign-In with Google Popup
  */
 export const signInWithGoogle = async (): Promise<FirebaseUser> => {
-  try {
-    const result = await signInWithPopup(auth, googleProvider);
-    return result.user;
-  } catch (error: any) {
-    console.warn('Firebase Google Auth popup skipped or unavailable, initiating quick demo Google sign-in:', error?.message);
-    // Graceful fallback for local development without active Firebase backend credentials
-    if (error?.code === 'auth/api-key-not-valid' || error?.code === 'auth/invalid-api-key' || !isFirebaseConfigured()) {
-      return {
-        uid: 'demo-google-user-777',
-        displayName: 'Dr. Alex Rivera (Google Auth)',
-        email: 'alex.rivera@stanford.edu',
-        photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-        emailVerified: true,
-      } as unknown as FirebaseUser;
+  if (isFirebaseConfigured()) {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      return result.user;
+    } catch (error: any) {
+      console.error('Firebase Google Auth Error:', error);
+      if (error?.code === 'auth/unauthorized-domain') {
+        throw new Error(
+          `Unauthorized Domain: Please add your domain (${window.location.hostname}) in Firebase Console -> Authentication -> Settings -> Authorized Domains.`
+        );
+      } else if (error?.code === 'auth/operation-not-allowed') {
+        throw new Error(
+          'Google Sign-in not enabled: Please enable Google provider in Firebase Console -> Authentication -> Sign-in method.'
+        );
+      } else if (error?.code === 'auth/popup-closed-by-user') {
+        throw new Error('Google Sign-in popup was closed before completing.');
+      }
+      throw error;
     }
-    throw error;
   }
+
+  // Demo fallback only when VITE_FIREBASE_API_KEY is not configured
+  return {
+    uid: 'demo-google-user-777',
+    displayName: 'Dr. Alex Rivera (Google Auth)',
+    email: 'alex.rivera@stanford.edu',
+    photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    emailVerified: true,
+  } as unknown as FirebaseUser;
 };
 
 /**
  * Sign In with Email & Password
  */
 export const loginWithEmail = async (email: string, pass: string): Promise<FirebaseUser> => {
-  try {
+  if (isFirebaseConfigured()) {
     const result = await signInWithEmailAndPassword(auth, email, pass);
     return result.user;
-  } catch (error: any) {
-    if (error?.code === 'auth/api-key-not-valid' || error?.code === 'auth/user-not-found' || !isFirebaseConfigured()) {
-      // Demo fallback response
-      return {
-        uid: 'demo-email-user-888',
-        displayName: email.split('@')[0].replace('.', ' ').toUpperCase(),
-        email: email,
-        photoURL: '',
-        emailVerified: true,
-      } as unknown as FirebaseUser;
-    }
-    throw error;
   }
+
+  return {
+    uid: 'demo-email-user-888',
+    displayName: email.split('@')[0].replace('.', ' ').toUpperCase(),
+    email: email,
+    photoURL: '',
+    emailVerified: true,
+  } as unknown as FirebaseUser;
 };
 
 /**
  * Register with Email & Password
  */
 export const registerWithEmail = async (name: string, email: string, pass: string): Promise<FirebaseUser> => {
-  try {
+  if (isFirebaseConfigured()) {
     const result = await createUserWithEmailAndPassword(auth, email, pass);
     if (result.user) {
       await firebaseUpdateProfile(result.user, { displayName: name });
     }
     return result.user;
-  } catch (error: any) {
-    if (error?.code === 'auth/api-key-not-valid' || !isFirebaseConfigured()) {
-      return {
-        uid: 'demo-registered-user-999',
-        displayName: name,
-        email: email,
-        photoURL: '',
-        emailVerified: true,
-      } as unknown as FirebaseUser;
-    }
-    throw error;
   }
+
+  return {
+    uid: 'demo-registered-user-999',
+    displayName: name,
+    email: email,
+    photoURL: '',
+    emailVerified: true,
+  } as unknown as FirebaseUser;
 };
 
 /**
