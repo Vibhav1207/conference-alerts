@@ -36,6 +36,8 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
         return 'bg-brutal-blue text-white border-brutal-blue';
       case 'Journals':
         return 'bg-purple-600 text-white border-purple-600';
+      case 'FDP':
+        return 'bg-brutal-green text-white border-brutal-green';
       case 'Workshop / Seminar':
         return 'bg-brutal-orange text-white border-brutal-orange';
       default:

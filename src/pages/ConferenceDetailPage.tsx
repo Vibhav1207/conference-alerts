@@ -78,6 +78,8 @@ export const ConferenceDetailPage: React.FC = () => {
         return { badge: 'RESEARCH INTERNSHIP', aboutTitle: 'About the Internship', topicsTitle: 'Focus & Skills', applyText: 'Apply for Internship', ctaSubtext: 'Full stipend & accommodation. Direct official application.' };
       case 'Journals':
         return { badge: 'JOURNALS', aboutTitle: 'About the Journal', topicsTitle: 'Submission Tracks', applyText: 'Submit Paper', ctaSubtext: 'Peer-reviewed submission on official publisher site.' };
+      case 'FDP':
+        return { badge: 'FACULTY DEVELOPMENT PROGRAM', aboutTitle: 'About the FDP', topicsTitle: 'FDP Modules & Tracks', applyText: 'Register for FDP', ctaSubtext: 'Certified faculty & professional development training.' };
       case 'Workshop / Seminar':
         return { badge: 'WORKSHOP / SEMINAR', aboutTitle: 'About the Workshop', topicsTitle: 'Topics & Modules', applyText: 'Register', ctaSubtext: 'Interactive session with certificate included.' };
       default:

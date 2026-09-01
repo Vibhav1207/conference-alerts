@@ -24,7 +24,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
   ];
 
   const sidebarContent = (
-    <aside className="w-64 bg-brutal-black text-white min-h-screen flex flex-col border-r-4 border-brutal-yellow">
+    <aside className="w-64 bg-brutal-black text-white h-screen flex flex-col justify-between border-r-4 border-brutal-yellow overflow-y-auto">
       {/* Brand */}
       <div className="p-5 border-b-2 border-white/10 flex items-center justify-between">
         <Link to="/admin" className="flex items-center gap-3" onClick={onToggle}>
@@ -107,8 +107,8 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
 
   return (
     <>
-      {/* Desktop sidebar */}
-      <div className="hidden lg:block">{sidebarContent}</div>
+      {/* Desktop fixed sidebar */}
+      <div className="hidden lg:block sticky top-0 h-screen flex-shrink-0 z-30">{sidebarContent}</div>
 
       {/* Mobile overlay + drawer */}
       <AnimatePresence>

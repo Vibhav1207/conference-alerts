@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import {
   Bell, User, LogOut, Bookmark, LayoutDashboard, Menu, X,
   FileText, Briefcase, GraduationCap, CalendarCheck, CheckCircle2,
-  ChevronDown,
+  ChevronDown, Award,
 } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
@@ -52,6 +52,7 @@ export const Navbar: React.FC = () => {
     { to: '/?eventType=Journals', label: 'Journals', icon: GraduationCap, query: 'eventType=Journals' },
     { to: '/?eventType=Conference', label: 'Conferences', icon: CalendarCheck, query: 'eventType=Conference' },
     { to: '/?eventType=Internship', label: 'Internships', icon: Briefcase, query: 'eventType=Internship' },
+    { to: '/?eventType=FDP', label: 'FDPs', icon: Award, query: 'eventType=FDP' },
     { to: '/resources', label: 'Resources', icon: FileText, query: 'resources' },
   ];
 
