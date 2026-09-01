@@ -1,7 +1,7 @@
 import React from 'react';
 import { FilterState } from '../types';
-import { EVENT_TYPES, CATEGORIES, CONTINENTS, LOCATION_HIERARCHY } from '../utils/locationData';
-import { Filter, RotateCcw, MapPin, Globe, Layers, Briefcase } from 'lucide-react';
+import { EVENT_TYPES, CATEGORIES, CONTINENTS, MONTHS, LOCATION_HIERARCHY } from '../utils/locationData';
+import { Filter, RotateCcw, MapPin, Globe, Layers, Briefcase, Calendar } from 'lucide-react';
 
 interface FilterSidebarProps {
   filters: FilterState;
@@ -52,6 +52,25 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, onFilterC
           {EVENT_TYPES.map((type) => (
             <option key={type} value={type}>
               {type === 'All' ? 'All Event Types' : type}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Event Month */}
+      <div className="space-y-1.5">
+        <label className="brutal-label flex items-center gap-1.5">
+          <Calendar className="w-3 h-3 text-brutal-black" />
+          <span>Event Month</span>
+        </label>
+        <select
+          value={filters.month || 'All'}
+          onChange={(e) => onFilterChange({ month: e.target.value, page: 1 })}
+          className="brutal-select text-xs font-medium"
+        >
+          {MONTHS.map((m) => (
+            <option key={m} value={m}>
+              {m === 'All' ? 'All Months' : m}
             </option>
           ))}
         </select>

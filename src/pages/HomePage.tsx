@@ -30,6 +30,7 @@ export const HomePage: React.FC = () => {
     country: 'All',
     city: 'All',
     mode: 'All',
+    month: 'All',
     page: 1,
     limit: 6,
     sortBy: 'createdAt',
@@ -94,7 +95,7 @@ export const HomePage: React.FC = () => {
     setSearchParams({});
     setFilters({
       search: '', category: 'All', eventType: 'All', continent: 'All', country: 'All',
-      city: 'All', mode: 'All', page: 1, limit: 6, sortBy: 'createdAt', order: 'desc',
+      city: 'All', mode: 'All', month: 'All', page: 1, limit: 6, sortBy: 'createdAt', order: 'desc',
     });
   };
 

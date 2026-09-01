@@ -82,6 +82,7 @@ export interface FilterState {
   country: string;
   city: string;
   mode: string;
+  month?: string;
   status?: string;
   featured?: boolean;
   page: number;

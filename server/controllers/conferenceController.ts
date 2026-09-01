@@ -12,6 +12,7 @@ export const getConferences = async (req: Request, res: Response, next: NextFunc
       country,
       city,
       mode,
+      month,
       status,
       featured,
       page = 1,
@@ -55,6 +56,19 @@ export const getConferences = async (req: Request, res: Response, next: NextFunc
 
     if (mode && mode !== 'All') {
       query.mode = mode;
+    }
+
+    if (month && month !== 'All') {
+      const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      const monthIndex = monthNames.indexOf(month as string) + 1;
+      if (monthIndex > 0) {
+        query.$expr = {
+          $eq: [{ $month: '$dates.startDate' }, monthIndex],
+        };
+      }
     }
 
     if (search) {

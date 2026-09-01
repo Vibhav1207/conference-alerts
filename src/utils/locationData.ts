@@ -28,6 +28,22 @@ export const CONTINENTS = [
   'Australia / Oceania',
 ] as const;
 
+export const MONTHS = [
+  'All',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+] as const;
+
 export interface CountryCityMap {
   [country: string]: string[];
 }
