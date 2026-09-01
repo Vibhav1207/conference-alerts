@@ -5,7 +5,7 @@ import { Conference } from '../types';
 import { conferenceAPI } from '../services/api';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Search, Edit, Trash2, CheckCircle, Archive, Eye, Filter,
+  Search, Edit, Trash2, CheckCircle, Archive, Eye, Filter, Layers, Briefcase, GraduationCap, CalendarCheck, Award,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -17,7 +17,8 @@ const rowVariant = {
 export const AdminConferencesPage: React.FC = () => {
   const [conferences, setConferences] = useState<Conference[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<string>('All');
+  const [activeStatusTab, setActiveStatusTab] = useState<string>('All');
+  const [activeEventTypeTab, setActiveEventTypeTab] = useState<string>('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +27,8 @@ export const AdminConferencesPage: React.FC = () => {
     setLoading(true);
     try {
       const res = await conferenceAPI.getAdminConferences({
-        status: activeTab === 'All' ? undefined : activeTab,
+        status: activeStatusTab === 'All' ? undefined : activeStatusTab,
+        eventType: activeEventTypeTab === 'All' ? undefined : activeEventTypeTab,
         search: searchTerm,
         limit: 50,
       });
@@ -40,7 +42,7 @@ export const AdminConferencesPage: React.FC = () => {
 
   useEffect(() => {
     fetchConferences();
-  }, [activeTab, searchTerm]);
+  }, [activeStatusTab, activeEventTypeTab, searchTerm]);
 
   const handleStatusUpdate = async (id: string, status: 'Draft' | 'Pending' | 'Published' | 'Archived') => {
     try {
@@ -62,56 +64,106 @@ export const AdminConferencesPage: React.FC = () => {
     }
   };
 
+  const getEventTypeBadgeStyle = (eventType: string) => {
+    switch (eventType) {
+      case 'Internship':
+        return 'bg-brutal-blue text-white border-brutal-blue';
+      case 'Journals':
+        return 'bg-purple-600 text-white border-purple-600';
+      case 'FDP':
+        return 'bg-brutal-green text-white border-brutal-green';
+      case 'Workshop / Seminar':
+        return 'bg-brutal-orange text-white border-brutal-orange';
+      default:
+        return 'bg-brutal-black text-white border-brutal-black';
+    }
+  };
+
+  const eventTypesList = ['All', 'Conference', 'Internship', 'Journals', 'FDP', 'Workshop / Seminar'];
+  const statusList = ['All', 'Published', 'Pending', 'Draft', 'Archived'];
+
   return (
     <div className="flex min-h-screen bg-brutal-cream">
       <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         <AdminHeader
-          title="Manage Conferences"
-          subtitle="Review, approve, edit, and publish academic conference listings"
+          title="Manage All Listings"
+          subtitle="Filter, review, approve, edit, and publish Conferences, FDPs, Internships, Journals & Workshops"
           onMenuToggle={() => setMobileSidebarOpen(true)}
         />
 
         <main className="p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 flex-1">
-          {/* Top Bar: Tabs & Search */}
+          {/* Top Toolbar: Dual Filters & Search */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white border-3 border-brutal-black shadow-brutal p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4"
+            className="bg-white border-3 border-brutal-black shadow-brutal p-4 space-y-4"
           >
-            {/* Status Filter Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-              {['All', 'Published', 'Pending', 'Draft', 'Archived'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-3 sm:px-4 py-2 text-xs font-bold transition-all whitespace-nowrap border-2 border-brutal-black ${
-                    activeTab === tab
-                      ? 'bg-brutal-black text-brutal-yellow shadow-brutal-sm'
-                      : 'bg-white text-brutal-black hover:bg-brutal-cream'
-                  }`}
-                >
-                  {tab}
-                </button>
-              ))}
+            {/* Event Type Filter Row */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-2 border-brutal-black/10 pb-3">
+              <div className="flex items-center gap-2">
+                <Layers className="w-4 h-4 text-brutal-black/60" />
+                <span className="text-xs font-bold font-mono text-brutal-black uppercase">Filter by Type:</span>
+              </div>
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+                {eventTypesList.map((type) => {
+                  const isSelected = activeEventTypeTab === type;
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => setActiveEventTypeTab(type)}
+                      className={`px-3 py-1.5 text-xs font-bold transition-all whitespace-nowrap border-2 border-brutal-black ${
+                        isSelected
+                          ? 'bg-brutal-yellow text-brutal-black shadow-brutal-sm'
+                          : 'bg-white text-brutal-black hover:bg-brutal-cream'
+                      }`}
+                    >
+                      {type === 'All' ? 'All Types' : type}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Search Input */}
-            <div className="relative w-full md:w-72">
-              <Search className="w-4 h-4 text-brutal-black/40 absolute left-3 top-2.5" />
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search acronym, title..."
-                className="brutal-input pl-9 pr-3.5 py-2 text-xs"
-              />
+            {/* Status Filter Row & Search */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+                <span className="text-xs font-bold font-mono text-brutal-black/60 uppercase">Status:</span>
+                {statusList.map((status) => {
+                  const isSelected = activeStatusTab === status;
+                  return (
+                    <button
+                      key={status}
+                      onClick={() => setActiveStatusTab(status)}
+                      className={`px-3 py-1.5 text-xs font-bold transition-all whitespace-nowrap border-2 border-brutal-black ${
+                        isSelected
+                          ? 'bg-brutal-black text-brutal-yellow shadow-brutal-sm'
+                          : 'bg-white text-brutal-black hover:bg-brutal-cream'
+                      }`}
+                    >
+                      {status === 'All' ? 'All Statuses' : status}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Search Input */}
+              <div className="relative w-full md:w-72">
+                <Search className="w-4 h-4 text-brutal-black/40 absolute left-3 top-2.5" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search title, acronym, organizer..."
+                  className="brutal-input pl-9 pr-3.5 py-2 text-xs"
+                />
+              </div>
             </div>
           </motion.div>
 
-          {/* Conferences Data Table */}
+          {/* Listings Data Table */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -121,15 +173,15 @@ export const AdminConferencesPage: React.FC = () => {
             {loading ? (
               <div className="py-16 sm:py-20 flex flex-col items-center justify-center gap-3">
                 <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
-                <p className="text-xs font-bold text-brutal-black/50">Loading conference records...</p>
+                <p className="text-xs font-bold text-brutal-black/50">Loading opportunity records...</p>
               </div>
             ) : conferences.length === 0 ? (
               <div className="p-8 sm:p-12 text-center">
                 <div className="w-14 h-14 sm:w-16 sm:h-16 border-3 border-brutal-black bg-brutal-cream flex items-center justify-center mx-auto mb-4">
                   <Filter className="w-7 h-7 sm:w-8 sm:h-8 text-brutal-black/30" />
                 </div>
-                <p className="text-sm font-bold text-brutal-black">No conferences found</p>
-                <p className="text-xs text-brutal-black/50 mt-1">No results match the current filter status.</p>
+                <p className="text-sm font-bold text-brutal-black">No opportunity listings found</p>
+                <p className="text-xs text-brutal-black/50 mt-1">No results match the current type & status criteria.</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -137,6 +189,7 @@ export const AdminConferencesPage: React.FC = () => {
                   <thead>
                     <tr>
                       <th>Acronym & Title</th>
+                      <th>Type</th>
                       <th className="hidden lg:table-cell">Category & Mode</th>
                       <th className="hidden md:table-cell">Location</th>
                       <th className="hidden sm:table-cell">Deadline</th>
@@ -158,6 +211,12 @@ export const AdminConferencesPage: React.FC = () => {
                           <td>
                             <span className="font-bold text-brutal-black block text-sm">{conf.acronym}</span>
                             <span className="text-brutal-black/50 line-clamp-1 max-w-[200px] lg:max-w-sm block text-[11px]">{conf.title}</span>
+                          </td>
+
+                          <td>
+                            <span className={`brutal-badge text-[9px] ${getEventTypeBadgeStyle(conf.eventType)}`}>
+                              {conf.eventType}
+                            </span>
                           </td>
 
                           <td className="hidden lg:table-cell">

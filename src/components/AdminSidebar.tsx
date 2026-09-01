@@ -17,7 +17,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
 
   const navItems = [
     { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
-    { label: 'Conferences', path: '/admin/conferences', icon: CalendarCheck },
+    { label: 'All Listings', path: '/admin/conferences', icon: CalendarCheck },
     { label: 'Add Event', path: '/admin/conferences/new', icon: PlusCircle },
     { label: 'Categories', path: '/admin/categories', icon: Tag },
     { label: 'Resources', path: '/admin/resources', icon: FileText },
