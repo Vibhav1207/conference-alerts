@@ -206,7 +206,11 @@ export const AdminAddEventPage: React.FC = () => {
       }
       navigate('/admin/conferences');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to save listing. Please verify all dropdown selections.');
+      const fieldErrors = err.response?.data?.errors
+        ? err.response.data.errors.map((e: any) => `${e.field}: ${e.message}`).join(' | ')
+        : '';
+      const mainMsg = err.response?.data?.message || 'Failed to save listing.';
+      setError(fieldErrors ? `${mainMsg}: ${fieldErrors}` : mainMsg);
     } finally {
       setSubmitting(false);
     }

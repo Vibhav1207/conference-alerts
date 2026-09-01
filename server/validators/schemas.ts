@@ -47,9 +47,11 @@ export const conferenceSchema = z.object({
       })
     )
     .default([]),
-  externalApplyUrl: z.string().min(1, 'Official apply link is required'),
-  websiteUrl: z.string().optional(),
-  contactEmail: z.string().optional(),
+  externalApplyUrl: z.string().optional().default(''),
+  websiteUrl: z.string().optional().default(''),
+  contactEmail: z.string().optional().default(''),
+  publisherLogo: z.string().optional().default(''),
+  publisherLogos: z.array(z.string()).optional().default([]),
   status: z.enum(['Draft', 'Pending', 'Published', 'Archived']).default('Published'),
   featured: z.boolean().default(false),
 });

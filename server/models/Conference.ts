@@ -35,6 +35,8 @@ export interface IConference extends Document {
   externalApplyUrl: string; // Official external application/registration URL
   websiteUrl?: string;
   contactEmail?: string;
+  publisherLogo?: string;
+  publisherLogos?: string[];
   status: 'Draft' | 'Pending' | 'Published' | 'Archived';
   featured: boolean;
   viewsCount: number;
@@ -86,9 +88,11 @@ const ConferenceSchema = new Schema<IConference>(
         currency: { type: String, default: 'USD' },
       },
     ],
-    externalApplyUrl: { type: String, required: true, trim: true },
+    externalApplyUrl: { type: String, default: '', trim: true },
     websiteUrl: { type: String, default: '' },
     contactEmail: { type: String, default: '' },
+    publisherLogo: { type: String, default: '' },
+    publisherLogos: [{ type: String }],
     status: {
       type: String,
       enum: ['Draft', 'Pending', 'Published', 'Archived'],
