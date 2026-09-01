@@ -258,14 +258,14 @@ export const ProfilePage: React.FC = () => {
 
             <p className="text-white/70 text-xs sm:text-sm font-medium flex items-center justify-center md:justify-start gap-2">
               <Building2 className="w-4 h-4 text-brutal-yellow flex-shrink-0" />
-              <span>{user?.institution || 'Massachusetts Institute of Technology'}</span>
+              <span>{user?.institution || 'Institution Not Added'}</span>
               <span className="text-white/30">•</span>
               <Globe className="w-4 h-4 text-brutal-green flex-shrink-0" />
-              <span>{user?.country || 'United States'}</span>
+              <span>{user?.country || 'Country Not Added'}</span>
             </p>
 
             <p className="text-xs text-white/50 max-w-2xl leading-relaxed italic pt-1">
-              "{user?.bio || 'Passionate about international academic conferences, computer science research, and joint publication opportunities.'}"
+              "{user?.bio || 'Add your academic bio & research interests below.'}"
             </p>
           </div>
 
@@ -329,6 +329,24 @@ export const ProfilePage: React.FC = () => {
 
       {/* ═══ MAIN TAB CONTENT ═══ */}
       <main className="flex-1 max-w-6xl mx-auto px-4 py-10 w-full" ref={tabContainerRef}>
+        {/* Onboarding Banner when Institution or Country is Missing */}
+        {(!user?.institution || !user?.country) && (
+          <div className="bg-brutal-yellow border-4 border-brutal-black shadow-brutal-xl p-6 mb-8 text-brutal-black">
+            <div className="flex items-start gap-4">
+              <div className="bg-brutal-black text-brutal-yellow p-3 border-2 border-brutal-black flex-shrink-0">
+                <Building2 className="w-6 h-6" />
+              </div>
+              <div className="space-y-1">
+                <h3 className="font-display text-lg font-bold uppercase tracking-wide">
+                  ⚡ Complete Your Academic Profile
+                </h3>
+                <p className="text-xs font-medium max-w-3xl leading-relaxed">
+                  You signed in via Firebase! Please enter your <strong>University / Institution</strong> and <strong>Country / Region</strong> in the form below and click <strong>Save Profile Changes</strong> to complete your scholar account setup.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
         {/* TAB 1: OVERVIEW & EDIT PROFILE */}
         {activeTab === 'overview' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -382,28 +400,30 @@ export const ProfilePage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="brutal-label">University / Institution</label>
+                    <label className="brutal-label">University / Institution *</label>
                     <div className="relative">
                       <Building2 className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
                       <input
                         type="text"
+                        required
                         value={institution}
                         onChange={(e) => setInstitution(e.target.value)}
-                        placeholder="Stanford University"
+                        placeholder="e.g. Stanford University, Oxford, IIT..."
                         className="brutal-input pl-10"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="brutal-label">Country / Region</label>
+                    <label className="brutal-label">Country / Region *</label>
                     <div className="relative">
                       <Globe className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
                       <input
                         type="text"
+                        required
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
-                        placeholder="United States"
+                        placeholder="e.g. United States, United Kingdom, India..."
                         className="brutal-input pl-10"
                       />
                     </div>

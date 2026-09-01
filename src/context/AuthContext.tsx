@@ -41,7 +41,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const loadLocalProfile = (): User | null => {
     try {
       const saved = localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY);
-      return saved ? JSON.parse(saved) : null;
+      if (!saved) return null;
+      const parsed: User = JSON.parse(saved);
+      // Clean legacy demo bookmarks
+      if (parsed.bookmarkedConferences && parsed.bookmarkedConferences.some((id) => id.startsWith('6659f1a2b3c4d5e6f7a8b9c'))) {
+        parsed.bookmarkedConferences = [];
+      }
+      return parsed;
     } catch {
       return null;
     }
@@ -86,23 +92,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       unsubFirebase = onAuthStateChanged(firebaseAuth, (fbUser) => {
         if (fbUser) {
           setUser((prev) => {
+            const isSameUser = prev?.id === fbUser.uid;
             const updated: User = {
               id: fbUser.uid || prev?.id || 'user-fb-1',
               name: fbUser.displayName || prev?.name || fbUser.email?.split('@')[0] || 'Academic Scholar',
               email: fbUser.email || prev?.email || 'scholar@university.edu',
               role: prev?.role || (fbUser.email?.includes('admin') ? 'admin' : 'user'),
               photoURL: fbUser.photoURL || prev?.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-              institution: prev?.institution || 'MIT - Massachusetts Institute of Technology',
-              country: prev?.country || 'United States',
-              bio: prev?.bio || 'Senior AI Researcher studying deep learning architectures for academic alerting.',
-              fieldOfInterest: prev?.fieldOfInterest || 'Engineering & Tech',
-              authProvider: prev?.authProvider || (fbUser.providerData[0]?.providerId === 'google.com' ? 'firebase-google' : 'firebase-email'),
-              createdAt: prev?.createdAt || new Date().toISOString(),
-              bookmarkedConferences: prev?.bookmarkedConferences || ['6659f1a2b3c4d5e6f7a8b9c0', '6659f1a2b3c4d5e6f7a8b9c1'],
-              alertSubscriptions: prev?.alertSubscriptions || [
-                { category: 'Engineering & Tech', frequency: 'weekly' },
-                { category: 'Physical & Life Sciences', frequency: 'monthly' },
-              ],
+              institution: isSameUser ? (prev?.institution || '') : '',
+              country: isSameUser ? (prev?.country || '') : '',
+              bio: isSameUser ? (prev?.bio || '') : '',
+              fieldOfInterest: isSameUser ? (prev?.fieldOfInterest || 'Engineering & Tech') : 'Engineering & Tech',
+              authProvider: isSameUser ? (prev?.authProvider || 'firebase-email') : (fbUser.providerData[0]?.providerId === 'google.com' ? 'firebase-google' : 'firebase-email'),
+              createdAt: isSameUser ? (prev?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+              bookmarkedConferences: isSameUser ? (prev?.bookmarkedConferences || []) : [],
+              alertSubscriptions: isSameUser ? (prev?.alertSubscriptions || [{ category: 'Engineering & Tech', frequency: 'weekly' }]) : [{ category: 'Engineering & Tech', frequency: 'weekly' }],
             };
             saveLocalProfile(updated);
             return updated;
@@ -146,13 +150,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email: fbUser.email || 'scholar.google@university.edu',
       role: fbUser.email?.includes('admin') ? 'admin' : 'user',
       photoURL: fbUser.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      institution: 'Stanford University',
-      country: 'United States',
-      bio: 'Verified Academic Scholar signed in via Firebase Google Auth.',
+      institution: '',
+      country: '',
+      bio: '',
       fieldOfInterest: 'Engineering & Tech',
       authProvider: 'firebase-google',
       createdAt: new Date().toISOString(),
-      bookmarkedConferences: ['6659f1a2b3c4d5e6f7a8b9c0'],
+      bookmarkedConferences: [],
       alertSubscriptions: [
         { category: 'Engineering & Tech', frequency: 'weekly' }
       ]
@@ -170,10 +174,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email: fbUser.email || email,
       role: email.includes('admin') ? 'admin' : 'user',
       photoURL: fbUser.photoURL || '',
-      institution: 'Harvard University',
-      country: 'United States',
-      bio: 'Research Scholar authenticated via Firebase Email & Password.',
-      fieldOfInterest: 'Medical & Health Sciences',
+      institution: '',
+      country: '',
+      bio: '',
+      fieldOfInterest: 'Engineering & Tech',
       authProvider: 'firebase-email',
       createdAt: new Date().toISOString(),
       bookmarkedConferences: [],
@@ -191,9 +195,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email: data.email,
       role: 'user',
       photoURL: '',
-      institution: data.institution || 'Global Research Institute',
-      country: data.country || 'International',
-      bio: 'Newly registered academic scholar.',
+      institution: data.institution || '',
+      country: data.country || '',
+      bio: '',
       fieldOfInterest: 'Engineering & Tech',
       authProvider: 'firebase-email',
       createdAt: new Date().toISOString(),
