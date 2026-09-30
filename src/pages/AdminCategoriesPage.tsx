@@ -128,8 +128,8 @@ export const AdminCategoriesPage: React.FC = () => {
           >
             {loading ? (
               <div className="py-16 flex flex-col items-center justify-center gap-3">
-                <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
-                <p className="text-xs font-bold text-brutal-black/50">Loading categories...</p>
+                <div className="w-10 h-10 border-4 border-[#0B1F33]/20 border-t-[#D9A441] rounded-full animate-spin" />
+                <p className="text-xs font-semibold text-[#5F6B7A]">Loading categories...</p>
               </div>
             ) : categories.length === 0 ? (
               <div className="p-12 text-center">

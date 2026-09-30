@@ -4,40 +4,40 @@ import { Mail, Globe, ShieldCheck, BookOpen } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-brutal-black text-white border-t-4 border-blue-600">
+    <footer className="bg-[#0B1F33] text-white border-t-2 border-[#D9A441]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 py-12 border-b-2 border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 py-12 border-b border-white/10">
           {/* Brand */}
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-600 text-white flex items-center justify-center font-display text-xl font-bold border-2 border-white">
+              <div className="w-10 h-10 bg-[#132B45] text-[#EBCB8B] flex items-center justify-center font-display text-xl font-bold border border-[#D9A441]/40 rounded-lg shadow-sm">
                 PT
               </div>
               <div>
-                <span className="font-display text-lg font-bold text-white block leading-tight">
+                <span className="font-display text-lg font-bold text-[#FAF8F3] block leading-tight">
                   Publication Track
                 </span>
-                <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">
+                <span className="text-[10px] font-bold text-[#D9A441] uppercase tracking-widest">
                   Academic Alerts 2026
                 </span>
               </div>
             </div>
-            <p className="text-xs text-white/60 leading-relaxed">
+            <p className="text-xs text-[#8A94A3] leading-relaxed">
               The premier platform for verified academic conference alerts, Scopus indexed journal updates, and research resources.
             </p>
-            <span className="brutal-badge bg-brutal-green/20 text-brutal-green border-brutal-green">
-              <ShieldCheck className="w-3 h-3" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold rounded bg-[#132B45] text-[#EBCB8B] border border-[#D9A441]/30">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#D9A441]" />
               Scopus & WOS Verified
             </span>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-3">
-            <h4 className="font-display text-xs font-bold text-blue-400 uppercase tracking-widest border-b-2 border-blue-500/30 pb-2">
+            <h4 className="font-display text-xs font-bold text-[#EBCB8B] uppercase tracking-widest border-b border-white/10 pb-2">
               Navigation
             </h4>
-            <ul className="space-y-2 text-xs text-white/60">
+            <ul className="space-y-2 text-xs text-[#8A94A3]">
               {[
                 { to: '/', label: 'Browse All Conferences' },
                 { to: '/resources', label: 'Templates & Resources' },
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
                 { to: '/register', label: 'Register Account' },
               ].map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to} className="hover:text-blue-400 transition-colors font-medium">
+                  <Link to={link.to} className="hover:text-[#D9A441] transition-colors font-medium">
                     {link.label}
                   </Link>
                 </li>
@@ -55,10 +55,10 @@ export const Footer: React.FC = () => {
 
           {/* Disciplines */}
           <div className="space-y-3">
-            <h4 className="font-display text-xs font-bold text-blue-400 uppercase tracking-widest border-b-2 border-blue-500/30 pb-2">
+            <h4 className="font-display text-xs font-bold text-[#EBCB8B] uppercase tracking-widest border-b border-white/10 pb-2">
               Disciplines
             </h4>
-            <ul className="space-y-2 text-xs text-white/60">
+            <ul className="space-y-2 text-xs text-[#8A94A3]">
               {[
                 { to: '/?category=Computer Science', label: 'Computer Science & AI' },
                 { to: '/?category=Medical & Healthcare', label: 'Medical & Bio-Engineering' },
@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
                 { to: '/?category=Business & Mgmt', label: 'FinTech & Digital Economy' },
               ].map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to} className="hover:text-blue-400 transition-colors font-medium">
+                  <Link to={link.to} className="hover:text-[#D9A441] transition-colors font-medium">
                     {link.label}
                   </Link>
                 </li>
@@ -77,15 +77,15 @@ export const Footer: React.FC = () => {
 
           {/* Admin */}
           <div className="space-y-3">
-            <h4 className="font-display text-xs font-bold text-blue-400 uppercase tracking-widest border-b-2 border-blue-500/30 pb-2">
+            <h4 className="font-display text-xs font-bold text-[#EBCB8B] uppercase tracking-widest border-b border-white/10 pb-2">
               For Organizers
             </h4>
-            <p className="text-xs text-white/60 leading-relaxed">
+            <p className="text-xs text-[#8A94A3] leading-relaxed">
               Conference organizer? Submit your event for verification and global listing.
             </p>
             <Link
               to="/admin"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-blue-600 hover:text-white text-white font-bold text-xs border-2 border-white/20 hover:border-blue-600 transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#132B45] hover:bg-[#D9A441] hover:text-[#0B1F33] text-[#FAF8F3] font-bold text-xs rounded-lg border border-white/10 hover:border-[#D9A441] transition-all"
             >
               <BookOpen className="w-4 h-4" />
               <span>Admin Dashboard</span>
@@ -94,12 +94,12 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4">
+        <div className="py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8A94A3] gap-4">
           <p>© {new Date().getFullYear()} Publication Track Academic Portal. All Rights Reserved.</p>
           <div className="flex items-center gap-6 font-medium">
-            <span className="hover:text-white/70 cursor-pointer transition-colors">Privacy Policy</span>
-            <span className="hover:text-white/70 cursor-pointer transition-colors">Terms of Service</span>
-            <span className="hover:text-white/70 cursor-pointer transition-colors">Scopus Guidelines</span>
+            <span className="hover:text-[#FAF8F3] cursor-pointer transition-colors">Privacy Policy</span>
+            <span className="hover:text-[#FAF8F3] cursor-pointer transition-colors">Terms of Service</span>
+            <span className="hover:text-[#FAF8F3] cursor-pointer transition-colors">Scopus Guidelines</span>
           </div>
         </div>
       </div>

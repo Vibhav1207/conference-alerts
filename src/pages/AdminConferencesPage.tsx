@@ -114,10 +114,10 @@ export const AdminConferencesPage: React.FC = () => {
                     <button
                       key={type}
                       onClick={() => setActiveEventTypeTab(type)}
-                      className={`px-3 py-1.5 text-xs font-bold transition-all whitespace-nowrap border-2 border-brutal-black ${
+                      className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap border ${
                         isSelected
-                          ? 'bg-blue-600 text-white shadow-brutal-sm'
-                          : 'bg-white text-brutal-black hover:bg-brutal-cream'
+                          ? 'bg-[#F5E8CD] text-[#10243A] border-[#D9A441] shadow-sm'
+                          : 'bg-white text-[#10243A] border-[#DDE2E7] hover:bg-[#FAF2DF]'
                       }`}
                     >
                       {type === 'All' ? 'All Types' : type}
@@ -130,17 +130,17 @@ export const AdminConferencesPage: React.FC = () => {
             {/* Status Filter Row & Search */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
-                <span className="text-xs font-bold font-mono text-brutal-black/60 uppercase">Status:</span>
+                <span className="text-xs font-bold text-[#5F6B7A] uppercase">Status:</span>
                 {statusList.map((status) => {
                   const isSelected = activeStatusTab === status;
                   return (
                     <button
                       key={status}
                       onClick={() => setActiveStatusTab(status)}
-                      className={`px-3 py-1.5 text-xs font-bold transition-all whitespace-nowrap border-2 border-brutal-black ${
+                      className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap border ${
                         isSelected
-                          ? 'bg-blue-600 text-white shadow-brutal-sm'
-                          : 'bg-white text-brutal-black hover:bg-brutal-cream'
+                          ? 'bg-[#F5E8CD] text-[#10243A] border-[#D9A441] shadow-sm'
+                          : 'bg-white text-[#10243A] border-[#DDE2E7] hover:bg-[#FAF2DF]'
                       }`}
                     >
                       {status === 'All' ? 'All Statuses' : status}
@@ -151,7 +151,7 @@ export const AdminConferencesPage: React.FC = () => {
 
               {/* Search Input */}
               <div className="relative w-full md:w-72">
-                <Search className="w-4 h-4 text-brutal-black/40 absolute left-3 top-2.5" />
+                <Search className="w-4 h-4 text-[#8A94A3] absolute left-3 top-2.5" />
                 <input
                   type="text"
                   value={searchTerm}
@@ -168,12 +168,12 @@ export const AdminConferencesPage: React.FC = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.35 }}
-            className="bg-white border-3 border-brutal-black shadow-brutal overflow-hidden"
+            className="bg-white border border-[#DDE2E7] shadow-sm rounded-xl overflow-hidden"
           >
             {loading ? (
               <div className="py-16 sm:py-20 flex flex-col items-center justify-center gap-3">
-                <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
-                <p className="text-xs font-bold text-brutal-black/50">Loading opportunity records...</p>
+                <div className="w-10 h-10 border-4 border-[#0B1F33]/20 border-t-[#D9A441] rounded-full animate-spin" />
+                <p className="text-xs font-semibold text-[#5F6B7A]">Loading opportunity records...</p>
               </div>
             ) : conferences.length === 0 ? (
               <div className="p-8 sm:p-12 text-center">

@@ -20,7 +20,7 @@ export const PUBLISHER_LOGOS: PublisherLogoItem[] = [
     shortName: 'IEEE',
     src: ieeeLogo,
     tagline: 'IEEE Indexed Conference & Journal',
-    badgeBg: 'bg-brutal-blue text-white',
+    badgeBg: 'bg-[#0B1F33] text-[#FAF8F3]',
   },
   {
     id: 'scopus',
@@ -28,7 +28,7 @@ export const PUBLISHER_LOGOS: PublisherLogoItem[] = [
     shortName: 'Scopus',
     src: scopusLogo,
     tagline: 'Scopus Bibliographic Database',
-    badgeBg: 'bg-blue-600 text-white',
+    badgeBg: 'bg-[#132B45] text-[#FAF8F3]',
   },
   {
     id: 'wos',
@@ -36,7 +36,7 @@ export const PUBLISHER_LOGOS: PublisherLogoItem[] = [
     shortName: 'Web of Science',
     src: wosLogo,
     tagline: 'Web of Science Master Journal List',
-    badgeBg: 'bg-brutal-black text-white',
+    badgeBg: 'bg-[#0B1F33] text-[#FAF8F3]',
   },
   {
     id: 'hci',
@@ -44,7 +44,7 @@ export const PUBLISHER_LOGOS: PublisherLogoItem[] = [
     shortName: 'HCI',
     src: hciLogo,
     tagline: 'Human-Computer Interaction Symposia',
-    badgeBg: 'bg-purple-600 text-white',
+    badgeBg: 'bg-[#132B45] text-[#FAF8F3]',
   },
   {
     id: 'mdpi',
@@ -52,7 +52,7 @@ export const PUBLISHER_LOGOS: PublisherLogoItem[] = [
     shortName: 'MDPI',
     src: mdpiLogo,
     tagline: 'MDPI Academic Peer-Reviewed',
-    badgeBg: 'bg-brutal-green text-white',
+    badgeBg: 'bg-[#0B1F33] text-[#FAF8F3]',
   },
 ];
 

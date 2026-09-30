@@ -19,8 +19,8 @@ const ProtectedAdminRoute: React.FC<{ children: React.ReactNode }> = ({ children
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-brutal-cream font-mono text-xs font-bold gap-3">
-        <div className="w-8 h-8 border-4 border-brutal-black border-t-blue-600 animate-spin" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FAF8F3] font-sans text-xs font-semibold text-[#5F6B7A] gap-3">
+        <div className="w-8 h-8 border-3 border-[#0B1F33]/20 border-t-[#D9A441] rounded-full animate-spin" />
         <span>Verifying admin permissions...</span>
       </div>
     );
@@ -39,8 +39,8 @@ const ProtectedUserRoute: React.FC<{ children: React.ReactNode }> = ({ children 
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-brutal-cream font-mono text-xs font-bold gap-3">
-        <div className="w-8 h-8 border-4 border-brutal-black border-t-blue-600 animate-spin" />
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#FAF8F3] font-sans text-xs font-semibold text-[#5F6B7A] gap-3">
+        <div className="w-8 h-8 border-3 border-[#0B1F33]/20 border-t-[#D9A441] rounded-full animate-spin" />
         <span>Syncing academic profile...</span>
       </div>
     );

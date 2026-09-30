@@ -116,7 +116,7 @@ export const AdminResourcesPage: React.FC = () => {
             </div>
             <button
               onClick={() => alert('Scopus links successfully synchronized across all active conferences!')}
-              className="inline-flex items-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider border-2 border-white/20 shadow-brutal-sm hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-brutal transition-all whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-[#D9A441] hover:bg-[#EBCB8B] text-[#0B1F33] font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm transition-all whitespace-nowrap"
             >
               <LinkIcon className="w-4 h-4" />
               <span>Run Scopus Sync</span>
@@ -125,7 +125,7 @@ export const AdminResourcesPage: React.FC = () => {
 
           {/* Resources Table Header */}
           <div className="flex items-center justify-between">
-            <h3 className="font-serif text-xl font-bold text-brutal-black">Downloadable Resources</h3>
+            <h3 className="font-serif text-xl font-bold text-[#10243A]">Downloadable Resources</h3>
             <button
               onClick={() => setShowAddModal(true)}
               className="brutal-btn-primary text-xs"
@@ -138,8 +138,8 @@ export const AdminResourcesPage: React.FC = () => {
           {/* Resources Data Grid */}
           {loading ? (
             <div className="py-16 sm:py-20 flex flex-col items-center justify-center gap-3">
-              <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
-              <p className="text-xs font-bold text-brutal-black/50">Loading resources...</p>
+              <div className="w-10 h-10 border-4 border-[#0B1F33]/20 border-t-[#D9A441] rounded-full animate-spin" />
+              <p className="text-xs font-semibold text-[#5F6B7A]">Loading resources...</p>
             </div>
           ) : (
             <motion.div

@@ -24,18 +24,18 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
   ];
 
   const sidebarContent = (
-    <aside className="w-64 bg-brutal-black text-white h-screen flex flex-col justify-between border-r-4 border-blue-600 overflow-y-auto">
+    <aside className="w-64 bg-[#0B1F33] text-white h-screen flex flex-col justify-between border-r border-white/10 overflow-y-auto">
       {/* Brand */}
-      <div className="p-5 border-b-2 border-white/10 flex items-center justify-between">
+      <div className="p-5 border-b border-white/10 flex items-center justify-between">
         <Link to="/admin" className="flex items-center gap-3" onClick={onToggle}>
-          <div className="w-9 h-9 bg-blue-600 text-white flex items-center justify-center font-display font-bold text-sm border-2 border-white">
+          <div className="w-9 h-9 bg-[#132B45] text-[#EBCB8B] flex items-center justify-center font-display font-bold text-sm border border-[#D9A441]/40 rounded-lg shadow-sm">
             PT
           </div>
           <div>
-            <span className="font-display font-bold text-white text-sm block leading-tight">
+            <span className="font-display font-bold text-[#FAF8F3] text-sm block leading-tight">
               Publication Track Admin
             </span>
-            <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">
+            <span className="text-[9px] font-bold text-[#D9A441] uppercase tracking-widest">
               Control Center
             </span>
           </div>
@@ -58,17 +58,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
               key={item.path}
               to={item.path}
               onClick={onToggle}
-              className={`flex items-center justify-between px-3.5 py-2.5 font-bold text-xs transition-all border-l-4 ${
+              className={`flex items-center justify-between px-3.5 py-2.5 font-bold text-xs rounded-lg transition-all border-l-4 ${
                 isActive
-                  ? 'bg-blue-600 text-white border-blue-400'
-                  : 'text-white/60 hover:text-white hover:bg-white/5 border-transparent'
+                  ? 'bg-[#132B45] text-[#FAF8F3] border-[#D9A441]'
+                  : 'text-[#8A94A3] hover:text-[#FAF8F3] hover:bg-white/5 border-transparent'
               }`}
             >
               <div className="flex items-center gap-3">
-                <Icon className="w-4 h-4" />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-[#D9A441]' : ''}`} />
                 <span>{item.label}</span>
               </div>
-              {isActive && <ChevronRight className="w-3.5 h-3.5" />}
+              {isActive && <ChevronRight className="w-3.5 h-3.5 text-[#D9A441]" />}
             </Link>
           );
         })}

@@ -49,21 +49,21 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-brutal-cream font-sans">
+    <div className="min-h-screen flex flex-col bg-[#FAF8F3] font-sans">
       <Navbar />
       <div className="flex-1 flex items-center justify-center py-16 px-4">
-        <div className="bg-white border-4 border-brutal-black shadow-brutal-xl max-w-md w-full p-8 space-y-6 animate-scale-in">
+        <div className="bg-white border border-[#DDE2E7] shadow-academic rounded-2xl max-w-md w-full p-8 space-y-6 animate-scale-in">
           <div className="text-center space-y-2">
-            <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center mx-auto font-display text-2xl font-bold border-2 border-brutal-black shadow-brutal-sm">
+            <div className="w-14 h-14 bg-[#0B1F33] text-[#FAF8F3] flex items-center justify-center mx-auto font-display text-2xl font-bold border border-[#D9A441]/40 rounded-xl shadow-sm">
               PT
             </div>
-            <h2 className="font-serif text-2xl font-bold text-brutal-black">Welcome Back Scholar</h2>
-            <p className="text-xs text-brutal-black/60 font-medium">Access your saved alerts, bookmarks & profile</p>
+            <h2 className="font-serif text-2xl font-bold text-[#10243A]">Welcome Back Scholar</h2>
+            <p className="text-xs text-[#5F6B7A] font-medium">Access your saved alerts, bookmarks & profile</p>
           </div>
 
           {error && (
-            <div className="p-3 bg-brutal-red/10 border-3 border-brutal-red text-xs text-brutal-red font-bold flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <div className="p-3 bg-red-50 border border-red-200 text-xs text-red-700 font-medium rounded-lg flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-600" />
               <span>{error}</span>
             </div>
           )}
@@ -75,10 +75,10 @@ export const LoginPage: React.FC = () => {
             onClick={handleGoogleSignIn}
             onMouseEnter={() => animateGoogleBtnHover(googleBtnRef.current)}
             disabled={googleLoading}
-            className="w-full py-3 px-4 bg-white text-brutal-black font-bold text-xs border-3 border-brutal-black shadow-brutal hover:bg-brutal-cream transition-all flex items-center justify-center gap-3 relative group"
+            className="w-full py-3 px-4 bg-white text-[#10243A] font-semibold text-xs border border-[#DDE2E7] rounded-xl shadow-sm hover:bg-[#FAF8F3] hover:border-[#0B1F33] transition-all flex items-center justify-center gap-3 relative group"
           >
             {googleLoading ? (
-              <div className="w-4 h-4 border-2 border-brutal-black border-t-transparent rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-[#0B1F33] border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
                 {/* SVG Google Logo */}
@@ -101,7 +101,7 @@ export const LoginPage: React.FC = () => {
                   />
                 </svg>
                 <span>Continue with Firebase Google Auth</span>
-                <span className="ml-auto bg-blue-50 text-blue-700 text-[9px] px-1.5 py-0.5 border border-blue-200 font-mono">
+                <span className="ml-auto bg-[#F5E8CD] text-[#10243A] text-[9px] px-1.5 py-0.5 rounded border border-[#D9A441]/40 font-mono font-medium">
                   1-Click
                 </span>
               </>
@@ -109,16 +109,16 @@ export const LoginPage: React.FC = () => {
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="flex-1 h-[2px] bg-brutal-black/20" />
-            <span className="text-[10px] font-mono font-bold text-brutal-black/40 uppercase">OR EMAIL LOGIN</span>
-            <div className="flex-1 h-[2px] bg-brutal-black/20" />
+            <div className="flex-1 h-[1px] bg-[#DDE2E7]" />
+            <span className="text-[10px] font-mono font-bold text-[#8A94A3] uppercase">OR EMAIL LOGIN</span>
+            <div className="flex-1 h-[1px] bg-[#DDE2E7]" />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="brutal-label">Email Address</label>
+              <label className="brutal-label text-xs font-semibold text-[#10243A]">Email Address</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
+                <Mail className="w-4 h-4 text-[#8A94A3] absolute left-3.5 top-3.5" />
                 <input
                   type="email"
                   required
@@ -130,9 +130,9 @@ export const LoginPage: React.FC = () => {
               </div>
             </div>
             <div>
-              <label className="brutal-label">Password</label>
+              <label className="brutal-label text-xs font-semibold text-[#10243A]">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
+                <Lock className="w-4 h-4 text-[#8A94A3] absolute left-3.5 top-3.5" />
                 <input
                   type="password"
                   required
@@ -153,9 +153,9 @@ export const LoginPage: React.FC = () => {
             </button>
           </form>
 
-          <div className="text-center text-xs text-brutal-black/60 font-medium">
+          <div className="text-center text-xs text-[#5F6B7A] font-medium">
             Don't have an account?{' '}
-            <Link to="/register" className="font-bold text-brutal-blue hover:underline">
+            <Link to="/register" className="font-bold text-[#0B1F33] hover:text-[#D9A441] hover:underline">
               Create Account
             </Link>
           </div>

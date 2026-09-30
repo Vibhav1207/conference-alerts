@@ -52,21 +52,21 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-brutal-cream font-sans">
+    <div className="min-h-screen flex flex-col bg-[#FAF8F3] font-sans">
       <Navbar />
       <div className="flex-1 flex items-center justify-center py-16 px-4">
-        <div className="bg-white border-4 border-brutal-black shadow-brutal-xl max-w-md w-full p-8 space-y-6 animate-scale-in">
+        <div className="bg-white border border-[#DDE2E7] shadow-academic rounded-2xl max-w-md w-full p-8 space-y-6 animate-scale-in">
           <div className="text-center space-y-2">
-            <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center mx-auto font-display text-2xl font-bold border-2 border-brutal-black shadow-brutal-sm">
+            <div className="w-14 h-14 bg-[#0B1F33] text-[#FAF8F3] flex items-center justify-center mx-auto font-display text-2xl font-bold border border-[#D9A441]/40 rounded-xl shadow-sm">
               PT
             </div>
-            <h2 className="font-serif text-2xl font-bold text-brutal-black">Create Scholar Profile</h2>
-            <p className="text-xs text-brutal-black/60 font-medium">Subscribe to verified call-for-papers & bookmarks</p>
+            <h2 className="font-serif text-2xl font-bold text-[#10243A]">Create Scholar Profile</h2>
+            <p className="text-xs text-[#5F6B7A] font-medium">Subscribe to verified call-for-papers & bookmarks</p>
           </div>
 
           {error && (
-            <div className="p-3 bg-brutal-red/10 border-3 border-brutal-red text-xs text-brutal-red font-bold flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <div className="p-3 bg-red-50 border border-red-200 text-xs text-red-700 font-medium rounded-lg flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 flex-shrink-0 text-red-600" />
               <span>{error}</span>
             </div>
           )}
@@ -78,10 +78,10 @@ export const RegisterPage: React.FC = () => {
             onClick={handleGoogleRegister}
             onMouseEnter={() => animateGoogleBtnHover(googleBtnRef.current)}
             disabled={googleLoading}
-            className="w-full py-3 px-4 bg-white text-brutal-black font-bold text-xs border-3 border-brutal-black shadow-brutal hover:bg-brutal-cream transition-all flex items-center justify-center gap-3 relative"
+            className="w-full py-3 px-4 bg-white text-[#10243A] font-semibold text-xs border border-[#DDE2E7] rounded-xl shadow-sm hover:bg-[#FAF8F3] hover:border-[#0B1F33] transition-all flex items-center justify-center gap-3 relative"
           >
             {googleLoading ? (
-              <div className="w-4 h-4 border-2 border-brutal-black border-t-transparent rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-[#0B1F33] border-t-transparent rounded-full animate-spin" />
             ) : (
               <>
                 <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
@@ -103,7 +103,7 @@ export const RegisterPage: React.FC = () => {
                   />
                 </svg>
                 <span>Quick Register with Google</span>
-                <span className="ml-auto bg-brutal-green text-white text-[9px] px-1.5 py-0.5 font-mono uppercase font-bold">
+                <span className="ml-auto bg-[#F5E8CD] text-[#10243A] text-[9px] px-1.5 py-0.5 rounded border border-[#D9A441]/40 font-mono font-medium">
                   Fast
                 </span>
               </>
@@ -111,16 +111,16 @@ export const RegisterPage: React.FC = () => {
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="flex-1 h-[2px] bg-brutal-black/20" />
-            <span className="text-[10px] font-mono font-bold text-brutal-black/40 uppercase">OR REGISTER WITH EMAIL</span>
-            <div className="flex-1 h-[2px] bg-brutal-black/20" />
+            <div className="flex-1 h-[1px] bg-[#DDE2E7]" />
+            <span className="text-[10px] font-mono font-bold text-[#8A94A3] uppercase">OR REGISTER WITH EMAIL</span>
+            <div className="flex-1 h-[1px] bg-[#DDE2E7]" />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="brutal-label">Full Name</label>
+              <label className="brutal-label text-xs font-semibold text-[#10243A]">Full Name</label>
               <div className="relative">
-                <User className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
+                <User className="w-4 h-4 text-[#8A94A3] absolute left-3.5 top-3.5" />
                 <input
                   type="text"
                   required
@@ -132,9 +132,9 @@ export const RegisterPage: React.FC = () => {
               </div>
             </div>
             <div>
-              <label className="brutal-label">Email Address</label>
+              <label className="brutal-label text-xs font-semibold text-[#10243A]">Email Address</label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
+                <Mail className="w-4 h-4 text-[#8A94A3] absolute left-3.5 top-3.5" />
                 <input
                   type="email"
                   required
@@ -146,9 +146,9 @@ export const RegisterPage: React.FC = () => {
               </div>
             </div>
             <div>
-              <label className="brutal-label">Password</label>
+              <label className="brutal-label text-xs font-semibold text-[#10243A]">Password</label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
+                <Lock className="w-4 h-4 text-[#8A94A3] absolute left-3.5 top-3.5" />
                 <input
                   type="password"
                   required
@@ -161,9 +161,9 @@ export const RegisterPage: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="brutal-label">Institution</label>
+                <label className="brutal-label text-xs font-semibold text-[#10243A]">Institution</label>
                 <div className="relative">
-                  <Building className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
+                  <Building className="w-4 h-4 text-[#8A94A3] absolute left-3.5 top-3.5" />
                   <input
                     type="text"
                     value={institution}
@@ -174,9 +174,9 @@ export const RegisterPage: React.FC = () => {
                 </div>
               </div>
               <div>
-                <label className="brutal-label">Country</label>
+                <label className="brutal-label text-xs font-semibold text-[#10243A]">Country</label>
                 <div className="relative">
-                  <Globe className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
+                  <Globe className="w-4 h-4 text-[#8A94A3] absolute left-3.5 top-3.5" />
                   <input
                     type="text"
                     value={country}
@@ -187,7 +187,7 @@ export const RegisterPage: React.FC = () => {
                 </div>
               </div>
             </div>
-            <button type="submit" disabled={loading} className="w-full brutal-btn-primary py-3 bg-brutal-green text-white border-brutal-black hover:bg-brutal-green/90">
+            <button type="submit" disabled={loading} className="w-full brutal-btn-primary py-3">
               {loading ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               ) : (
@@ -197,9 +197,9 @@ export const RegisterPage: React.FC = () => {
             </button>
           </form>
 
-          <div className="text-center text-xs text-brutal-black/60 font-medium">
+          <div className="text-center text-xs text-[#5F6B7A] font-medium">
             Already registered?{' '}
-            <Link to="/login" className="font-bold text-brutal-blue hover:underline">
+            <Link to="/login" className="font-bold text-[#0B1F33] hover:text-[#D9A441] hover:underline">
               Log In
             </Link>
           </div>

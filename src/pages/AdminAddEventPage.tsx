@@ -218,18 +218,18 @@ export const AdminAddEventPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen bg-brutal-cream">
+      <div className="flex min-h-screen bg-[#FAF8F3]">
         <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
         <div className="flex-1 flex flex-col items-center justify-center gap-3">
-          <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
-          <p className="text-xs font-bold text-brutal-black/50">Loading form data...</p>
+          <div className="w-10 h-10 border-4 border-[#0B1F33]/20 border-t-[#D9A441] rounded-full animate-spin" />
+          <p className="text-xs font-semibold text-[#5F6B7A]">Loading form data...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-brutal-cream">
+    <div className="flex min-h-screen bg-[#FAF8F3]">
       <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
 
       <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
@@ -253,10 +253,10 @@ export const AdminAddEventPage: React.FC = () => {
 
           <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
             {/* General Information Section */}
-            <motion.div custom={0} variants={sectionVariant} initial="hidden" animate="visible" className="bg-white border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-4">
-              <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
-                <div className="w-3 h-6 bg-blue-600" />
-                <h3 className="font-serif text-base sm:text-lg font-bold text-brutal-black">
+            <motion.div custom={0} variants={sectionVariant} initial="hidden" animate="visible" className="bg-white border border-[#DDE2E7] shadow-sm rounded-xl p-4 sm:p-6 space-y-4">
+              <div className="flex items-center gap-3 pb-3 border-b border-[#DDE2E7]">
+                <div className="w-3 h-6 bg-[#0B1F33] rounded-sm" />
+                <h3 className="font-serif text-base sm:text-lg font-bold text-[#10243A]">
                   General Information & Type
                 </h3>
               </div>
@@ -369,17 +369,17 @@ export const AdminAddEventPage: React.FC = () => {
                             : [...formData.publisherLogos, logo.id];
                           setFormData({ ...formData, publisherLogos: updated });
                         }}
-                        className={`p-3 border-3 border-brutal-black text-center transition-all flex flex-col items-center justify-between gap-1.5 ${
+                        className={`p-3 rounded-lg border text-center transition-all flex flex-col items-center justify-between gap-1.5 ${
                           isSelected
-                            ? 'bg-blue-50 border-blue-600 shadow-brutal translate-y-[-2px]'
-                            : 'bg-white hover:bg-brutal-cream shadow-brutal-sm opacity-60'
+                            ? 'bg-[#F5E8CD] border-[#D9A441] shadow-sm translate-y-[-1px]'
+                            : 'bg-white border-[#DDE2E7] hover:bg-[#FAF8F3] opacity-70'
                         }`}
                       >
                         <img src={logo.src} alt={logo.name} className="h-6 object-contain" />
-                        <span className="text-[10px] font-bold font-mono text-brutal-black">{logo.shortName}</span>
+                        <span className="text-[10px] font-bold text-[#10243A]">{logo.shortName}</span>
                         <span
-                          className={`text-[9px] font-bold px-1.5 py-0.5 border border-brutal-black uppercase ${
-                            isSelected ? 'bg-blue-600 text-white' : 'bg-brutal-cream text-brutal-black/50'
+                          className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase ${
+                            isSelected ? 'bg-[#0B1F33] text-[#FAF8F3]' : 'bg-[#FAF8F3] text-[#5F6B7A]'
                           }`}
                         >
                           {isSelected ? 'Selected ✓' : '+ Add'}
@@ -416,11 +416,11 @@ export const AdminAddEventPage: React.FC = () => {
             </motion.div>
 
             {/* Official Redirect Link Section */}
-            <motion.div custom={1} variants={sectionVariant} initial="hidden" animate="visible" className="bg-blue-50/60 border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-3">
-              <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
-                <div className="w-3 h-6 bg-brutal-green" />
-                <h3 className="font-serif text-base sm:text-lg font-bold text-brutal-black flex items-center gap-2">
-                  <LinkIcon className="w-5 h-5" />
+            <motion.div custom={1} variants={sectionVariant} initial="hidden" animate="visible" className="bg-[#FAF2DF]/40 border border-[#D9A441]/40 rounded-xl shadow-sm p-4 sm:p-6 space-y-3">
+              <div className="flex items-center gap-3 pb-3 border-b border-[#D9A441]/30">
+                <div className="w-3 h-6 bg-[#D9A441] rounded-sm" />
+                <h3 className="font-serif text-base sm:text-lg font-bold text-[#10243A] flex items-center gap-2">
+                  <LinkIcon className="w-5 h-5 text-[#0B1F33]" />
                   <span>External Application / Registration Link</span>
                 </h3>
               </div>

@@ -4,12 +4,23 @@
 
 @layer base {
   :root {
-    --brutal-border: 3px solid #111827;
-    --brutal-border-thick: 4px solid #111827;
-    --brutal-shadow: 4px 4px 0px 0px #111827;
-    --brutal-shadow-lg: 6px 6px 0px 0px #111827;
-    --brutal-shadow-hover: 6px 6px 0px 0px #111827;
-    --brutal-radius: 2px;
+    --color-deep-navy: #0B1F33;
+    --color-dark-navy: #132B45;
+    --color-navy-text: #10243A;
+    --color-warm-ivory: #FAF8F3;
+    --color-pure-white: #FFFFFF;
+    --color-academic-gold: #D9A441;
+    --color-champagne-gold: #EBCB8B;
+    --color-muted-gold: #F5E8CD;
+    --color-slate-gray: #5F6B7A;
+    --color-border-gray: #DDE2E7;
+
+    --brutal-border: 1px solid #DDE2E7;
+    --brutal-border-thick: 2px solid #0B1F33;
+    --brutal-shadow: 0 4px 16px -2px rgba(11, 31, 51, 0.05);
+    --brutal-shadow-lg: 0 10px 30px -4px rgba(11, 31, 51, 0.08);
+    --brutal-shadow-hover: 0 12px 32px -4px rgba(11, 31, 51, 0.1);
+    --brutal-radius: 8px;
     --motion-fast: 150ms;
     --motion-medium: 250ms;
     --motion-slow: 400ms;
@@ -17,8 +28,8 @@
   }
 
   body {
-    background-color: #f9fafb;
-    color: #111827;
+    background-color: #FAF8F3;
+    color: #10243A;
     font-family: 'Space Grotesk', 'Hanken Grotesk', sans-serif;
     -webkit-font-smoothing: antialiased;
   }
@@ -38,173 +49,253 @@
 }
 
 @layer components {
-  /* ─── Neo-Brutalist Card ─── */
+  /* ─── Academic Card ─── */
   .brutal-card {
-    @apply bg-white border-3 border-brutal-black shadow-brutal;
-    border-radius: var(--brutal-radius);
-    transition: transform 150ms ease, box-shadow 150ms ease;
+    background-color: #FFFFFF;
+    border: 1px solid #DDE2E7;
+    box-shadow: 0 4px 20px -2px rgba(11, 31, 51, 0.05);
+    border-radius: 12px;
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
   }
   .brutal-card:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--brutal-shadow-lg);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -4px rgba(11, 31, 51, 0.09);
+    border-color: #D9A441;
   }
 
-  /* ─── Neo-Brutalist Button ─── */
+  /* ─── Academic Editorial Button ─── */
   .brutal-btn {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border-3 border-brutal-black font-bold text-sm uppercase tracking-wider;
-    border-radius: var(--brutal-radius);
-    box-shadow: var(--brutal-shadow);
-    transition: transform 80ms ease, box-shadow 80ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    border-radius: 8px;
+    transition: all 180ms ease;
     cursor: pointer;
     user-select: none;
   }
   .brutal-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: var(--brutal-shadow-lg);
+    transform: translateY(-1px);
   }
   .brutal-btn:active {
-    transform: translate(2px, 2px);
-    box-shadow: 1px 1px 0px 0px #111827;
+    transform: translateY(1px);
   }
 
   .brutal-btn-primary {
-    @apply brutal-btn bg-brutal-black text-brutal-white;
+    @apply brutal-btn;
+    background-color: #0B1F33;
+    color: #FFFFFF;
+    border: 1px solid #0B1F33;
+    box-shadow: 0 2px 8px -1px rgba(11, 31, 51, 0.15);
   }
   .brutal-btn-primary:hover {
-    @apply bg-navy-800;
+    background-color: #132B45;
+    border-color: #132B45;
   }
 
   .brutal-btn-secondary {
-    @apply brutal-btn bg-blue-600 text-white;
+    @apply brutal-btn;
+    background-color: #D9A441;
+    color: #0B1F33;
+    border: 1px solid #D9A441;
   }
   .brutal-btn-secondary:hover {
-    @apply bg-blue-700;
+    background-color: #EBCB8B;
+    border-color: #EBCB8B;
   }
 
   .brutal-btn-danger {
-    @apply brutal-btn bg-brutal-red text-brutal-white;
+    @apply brutal-btn;
+    background-color: #C53030;
+    color: #FFFFFF;
+    border: 1px solid #C53030;
   }
 
   .brutal-btn-outline {
-    @apply brutal-btn bg-white text-brutal-black;
+    @apply brutal-btn;
+    background-color: #FFFFFF;
+    color: #10243A;
+    border: 1px solid #DDE2E7;
   }
   .brutal-btn-outline:hover {
-    @apply bg-brutal-black text-brutal-white;
+    background-color: #FAF8F3;
+    border-color: #8A94A3;
   }
 
   .brutal-btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-4 py-2 font-bold text-sm;
-    border-radius: var(--brutal-radius);
-    transition: background-color var(--motion-fast) ease, transform var(--motion-fast) ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    color: #10243A;
+    border-radius: 6px;
+    transition: all var(--motion-fast) ease;
   }
   .brutal-btn-ghost:hover {
-    @apply bg-brutal-black/5;
-    transform: translate(-1px, -1px);
-  }
-  .brutal-btn-ghost:active {
-    transform: translate(1px, 1px);
+    background-color: #FAF2DF;
+    color: #0B1F33;
   }
 
-  /* ─── Neo-Brutalist Input ─── */
+  /* ─── Academic Input ─── */
   .brutal-input {
-    @apply w-full px-4 py-3 border-3 border-brutal-black bg-white font-medium text-sm;
-    border-radius: var(--brutal-radius);
-    transition: box-shadow 150ms ease, transform 150ms ease;
+    width: 100%;
+    padding: 0.65rem 0.875rem;
+    border: 1px solid #DDE2E7;
+    background-color: #FFFFFF;
+    color: #10243A;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
     outline: none;
   }
   .brutal-input:focus {
-    box-shadow: var(--brutal-shadow);
-    transform: translate(-1px, -1px);
+    border-color: #0B1F33;
+    box-shadow: 0 0 0 2px rgba(11, 31, 51, 0.08);
   }
   .brutal-input::placeholder {
-    @apply text-brutal-black/40;
+    color: #8A94A3;
   }
 
-  /* ─── Neo-Brutalist Select ─── */
+  /* ─── Academic Select ─── */
   .brutal-select {
-    @apply w-full px-4 py-3 border-3 border-brutal-black bg-white font-medium text-sm appearance-none;
-    border-radius: var(--brutal-radius);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230a0a0a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    width: 100%;
+    padding: 0.65rem 0.875rem;
+    border: 1px solid #DDE2E7;
+    background-color: #FFFFFF;
+    color: #10243A;
+    font-weight: 500;
+    font-size: 0.875rem;
+    appearance: none;
+    border-radius: 8px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2310243A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     padding-right: 36px;
     outline: none;
-    transition: box-shadow 150ms ease, transform 150ms ease;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
   }
   .brutal-select:focus {
-    box-shadow: var(--brutal-shadow);
-    transform: translate(-1px, -1px);
+    border-color: #0B1F33;
+    box-shadow: 0 0 0 2px rgba(11, 31, 51, 0.08);
   }
 
-  /* ─── Neo-Brutalist Badge ─── */
+  /* ─── Academic Badge ─── */
   .brutal-badge {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 border-2 border-brutal-black font-bold text-[11px] uppercase tracking-wider;
-    border-radius: var(--brutal-radius);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    background-color: #F5E8CD;
+    color: #10243A;
+    border: 1px solid rgba(217, 164, 65, 0.35);
+    font-weight: 700;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    border-radius: 6px;
   }
 
-  /* ─── Neo-Brutalist Label ─── */
+  /* ─── Academic Label ─── */
   .brutal-label {
-    @apply block text-[11px] font-bold uppercase tracking-widest text-brutal-black/60 mb-2;
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #5F6B7A;
+    margin-bottom: 0.4rem;
   }
 
-  /* ─── Neo-Brutalist Section Divider ─── */
+  /* ─── Academic Section Divider ─── */
   .brutal-divider {
-    @apply w-full h-1 bg-brutal-black my-8;
+    width: 100%;
+    height: 1px;
+    background-color: #DDE2E7;
+    margin: 2rem 0;
   }
 
-  /* ─── Neo-Brutalist Container ─── */
+  /* ─── Container ─── */
   .brutal-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   /* ─── Scrollbar ─── */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #f9fafb;
+    background: #FAF8F3;
   }
   ::-webkit-scrollbar-thumb {
-    background: #111827;
-    border: 2px solid #f9fafb;
+    background: #8A94A3;
+    border-radius: 4px;
+    border: 2px solid #FAF8F3;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #333;
+    background: #5F6B7A;
   }
 
   /* ─── Loading Skeleton ─── */
   .brutal-skeleton {
-    @apply bg-brutal-black/10 border-2 border-brutal-black/20;
-    border-radius: var(--brutal-radius);
+    background-color: #F3F5F7;
+    border: 1px solid #DDE2E7;
+    border-radius: 8px;
     animation: skeleton-pulse 1.5s ease-in-out infinite;
   }
 
   @keyframes skeleton-pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.7; }
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
   }
 
   /* ─── Modal Overlay ─── */
   .brutal-overlay {
-    @apply fixed inset-0 z-50 bg-brutal-black/70 backdrop-blur-sm flex items-center justify-center p-4;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background-color: rgba(11, 31, 51, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
   }
 
   /* ─── Table Styles ─── */
   .brutal-table {
-    @apply w-full text-left text-sm;
+    width: 100%;
+    text-align: left;
+    font-size: 0.875rem;
   }
   .brutal-table thead {
-    @apply bg-brutal-black text-brutal-white;
+    background-color: #0B1F33;
+    color: #FFFFFF;
   }
   .brutal-table th {
-    @apply px-4 py-3 font-bold text-[11px] uppercase tracking-wider;
+    padding: 0.75rem 1rem;
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
   .brutal-table td {
-    @apply px-4 py-3 border-b-2 border-brutal-black/10;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #DDE2E7;
   }
   .brutal-table tbody tr:hover {
-    @apply bg-brutal-blue/10;
+    background-color: #FAF2DF;
   }
 }
 

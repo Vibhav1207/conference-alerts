@@ -33,15 +33,15 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
   const eventTypeStyle = (eventType: string) => {
     switch (eventType) {
       case 'Internship':
-        return 'bg-brutal-blue text-white border-brutal-blue';
+        return 'bg-[#0B1F33] text-white border-[#0B1F33]';
       case 'Journals':
-        return 'bg-purple-600 text-white border-purple-600';
+        return 'bg-[#F5E8CD] text-[#10243A] border-[#D9A441]/40 font-bold';
       case 'FDP':
-        return 'bg-brutal-green text-white border-brutal-green';
+        return 'bg-[#FAF2DF] text-[#10243A] border-[#D9A441]/30';
       case 'Workshop / Seminar':
-        return 'bg-brutal-orange text-white border-brutal-orange';
+        return 'bg-[#F3F5F7] text-[#10243A] border-[#DDE2E7]';
       default:
-        return 'bg-brutal-black text-white border-brutal-black';
+        return 'bg-[#F3F5F7] text-[#10243A] border-[#DDE2E7]';
     }
   };
 
@@ -58,20 +58,20 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
       ref={cardRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="bg-white border-3 border-brutal-black shadow-brutal p-5 flex flex-col justify-between group relative overflow-hidden"
+      className="bg-white border border-[#DDE2E7] hover:border-[#D9A441]/60 rounded-xl shadow-subtle hover:shadow-academic p-5 flex flex-col justify-between group relative overflow-hidden transition-all duration-200"
     >
       {/* Publisher / Indexing Logos Top Banner */}
       {logos.length > 0 && (
-        <div className="mb-3 p-2 bg-brutal-cream border-2 border-brutal-black flex flex-wrap items-center justify-between gap-2 shadow-brutal-sm">
+        <div className="mb-3 p-2 bg-[#FAF8F3] border border-[#DDE2E7] rounded-lg flex flex-wrap items-center justify-between gap-2 shadow-none">
           <div className="flex flex-wrap items-center gap-2 overflow-hidden">
             {logos.map((logo) => (
-              <div key={logo.id} className="flex items-center gap-1.5 bg-white border border-brutal-black px-1.5 py-0.5" title={logo.name}>
+              <div key={logo.id} className="flex items-center gap-1.5 bg-white border border-[#DDE2E7] rounded px-1.5 py-0.5" title={logo.name}>
                 <img src={logo.src} alt={logo.name} className="h-4 object-contain" />
-                <span className="text-[9px] font-bold font-mono text-brutal-black">{logo.shortName}</span>
+                <span className="text-[9px] font-bold font-mono text-[#10243A]">{logo.shortName}</span>
               </div>
             ))}
           </div>
-          <span className="text-[8px] font-bold px-1.5 py-0.5 bg-slate-900 text-blue-300 uppercase border border-brutal-black">
+          <span className="text-[8px] font-bold px-1.5 py-0.5 bg-[#0B1F33] text-[#EBCB8B] uppercase rounded">
             Indexed
           </span>
         </div>
@@ -80,24 +80,16 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
       {/* Top Tag Bar */}
       <div className="flex items-center justify-between gap-2 mb-3">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className={`brutal-badge border-2 ${eventTypeStyle(conference.eventType)}`}>
+          <span className={`brutal-badge border ${eventTypeStyle(conference.eventType)}`}>
             {conference.eventType || 'Conference'}
           </span>
-          <span className="brutal-badge bg-white text-brutal-black">{conference.acronym}</span>
+          <span className="brutal-badge bg-white text-[#10243A] border border-[#DDE2E7]">{conference.acronym}</span>
           {conference.conferenceScope && (
-            <span className="brutal-badge bg-brutal-blue/10 text-brutal-blue border-brutal-blue">
+            <span className="brutal-badge bg-[#F5E8CD] text-[#10243A] border border-[#D9A441]/30">
               {conference.conferenceScope}
             </span>
           )}
-          <span
-            className={`brutal-badge ${
-              conference.mode === 'Hybrid'
-                ? 'bg-purple-100 text-purple-800 border-purple-400'
-                : conference.mode === 'Online'
-                ? 'bg-brutal-blue/10 text-brutal-blue border-brutal-blue'
-                : 'bg-slate-100 text-slate-800 border-slate-300'
-            }`}
-          >
+          <span className="brutal-badge bg-[#F3F5F7] text-[#5F6B7A] border border-[#DDE2E7]">
             {conference.mode}
           </span>
         </div>
@@ -111,10 +103,10 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
             }
             toggleBookmark(conference._id);
           }}
-          className={`p-1.5 border-2 transition-all ${
+          className={`p-1.5 border rounded-lg transition-all ${
             bookmarked
-              ? 'bg-blue-600 border-brutal-black text-white'
-              : 'bg-white border-brutal-black/20 text-brutal-black/40 hover:border-brutal-black hover:text-brutal-black'
+              ? 'bg-[#0B1F33] border-[#0B1F33] text-white shadow-sm'
+              : 'bg-white border-[#DDE2E7] text-[#8A94A3] hover:border-[#0B1F33] hover:text-[#0B1F33]'
           }`}
           title={bookmarked ? 'Remove Bookmark' : 'Save'}
         >
@@ -124,50 +116,50 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
 
       {/* Title & Organizer */}
       <div className="space-y-1.5 mb-3">
-        <Link to={`/conference/${conference._id}`} className="block group-hover:text-brutal-blue transition-colors">
-          <h3 className="font-serif text-base font-bold text-brutal-black leading-snug line-clamp-2">
+        <Link to={`/conference/${conference._id}`} className="block group-hover:text-[#D9A441] transition-colors">
+          <h3 className="font-serif text-base font-bold text-[#10243A] leading-snug line-clamp-2">
             {conference.title}
           </h3>
         </Link>
-        <p className="text-[11px] text-brutal-black/50 font-medium">
-          by <strong className="text-brutal-black/70">{conference.organizer}</strong>
+        <p className="text-[11px] text-[#5F6B7A] font-medium">
+          by <strong className="text-[#10243A]">{conference.organizer}</strong>
         </p>
       </div>
 
       {/* Category Badge */}
       <div className="mb-3">
-        <span className="brutal-badge bg-brutal-cream text-brutal-black border-brutal-black/20">
+        <span className="brutal-badge bg-[#FAF8F3] text-[#10243A] border border-[#DDE2E7]">
           {conference.category}
         </span>
       </div>
 
       {/* Details */}
-      <div className="bg-brutal-cream border-2 border-brutal-black/10 p-3 space-y-2 text-[11px] text-brutal-black/70 mb-4">
+      <div className="bg-[#FAF8F3] border border-[#DDE2E7] rounded-lg p-3 space-y-2 text-[11px] text-[#5F6B7A] mb-4">
         <div className="flex items-center gap-2">
-          <MapPin className="w-3.5 h-3.5 text-brutal-black/40 flex-shrink-0" />
-          <span className="font-medium truncate">
+          <MapPin className="w-3.5 h-3.5 text-[#8A94A3] flex-shrink-0" />
+          <span className="font-medium truncate text-[#10243A]">
             {conference.venue.city}, {conference.venue.country}
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <Calendar className="w-3.5 h-3.5 text-brutal-black/40 flex-shrink-0" />
+          <Calendar className="w-3.5 h-3.5 text-[#8A94A3] flex-shrink-0" />
           <span>
             {formatDate(conference.dates.startDate)} – {formatDate(conference.dates.endDate)}
           </span>
         </div>
-        <div className="flex items-center justify-between pt-2 border-t-2 border-brutal-black/10">
+        <div className="flex items-center justify-between pt-2 border-t border-[#DDE2E7]">
           <div className="flex items-center gap-2">
-            <Clock className="w-3.5 h-3.5 text-brutal-red flex-shrink-0" />
+            <Clock className="w-3.5 h-3.5 text-[#D9A441] flex-shrink-0" />
             <span>
-              Deadline: <strong className="text-brutal-black">{formatDate(conference.dates.submissionDeadline)}</strong>
+              Deadline: <strong className="text-[#10243A]">{formatDate(conference.dates.submissionDeadline)}</strong>
             </span>
           </div>
           {daysLeft > 0 ? (
-            <span className="brutal-badge bg-blue-50 text-blue-700 border-blue-300 text-[9px]">
+            <span className="brutal-badge bg-[#F5E8CD] text-[#10243A] border border-[#D9A441]/40 text-[9px] font-bold">
               {daysLeft}d left
             </span>
           ) : (
-            <span className="brutal-badge bg-brutal-black/10 text-brutal-black/50 border-brutal-black/20 text-[9px]">
+            <span className="brutal-badge bg-[#F3F5F7] text-[#8A94A3] border border-[#DDE2E7] text-[9px]">
               Closed
             </span>
           )}
@@ -175,8 +167,8 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
       </div>
 
       {/* Action Bar */}
-      <div className="flex items-center justify-between gap-2 pt-3 border-t-2 border-brutal-black/10">
-        <Link to={`/conference/${conference._id}`} className="brutal-btn-ghost text-xs">
+      <div className="flex items-center justify-between gap-2 pt-3 border-t border-[#DDE2E7]">
+        <Link to={`/conference/${conference._id}`} className="text-xs font-bold text-[#10243A] hover:text-[#D9A441] transition-colors py-1">
           View Overview
         </Link>
         {conference.externalApplyUrl ? (
@@ -184,7 +176,7 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
             href={conference.externalApplyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-brutal-green border-2 border-brutal-black shadow-brutal-sm hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-brutal transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-[#0B1F33] hover:bg-[#132B45] rounded-lg shadow-sm transition-all"
           >
             <span>Apply</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -192,7 +184,7 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
         ) : (
           <Link
             to={`/conference/${conference._id}`}
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-brutal-black border-2 border-brutal-black shadow-brutal-sm hover:bg-navy-900 hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-brutal transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-[#0B1F33] hover:bg-[#132B45] rounded-lg shadow-sm transition-all"
           >
             <span>Details</span>
             <ChevronRight className="w-3.5 h-3.5" />

@@ -178,12 +178,12 @@ export const ProfilePage: React.FC = () => {
       {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
 
       {/* ═══ PROFILE HERO BANNER ═══ */}
-      <section className="bg-brutal-black text-white border-b-4 border-blue-600 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-72 h-72 bg-blue-500/10 -rotate-12 translate-x-20 -translate-y-20" />
+      <section className="bg-[#0B1F33] text-white border-b border-[#D9A441]/30 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-72 h-72 bg-[#D9A441]/5 rounded-full blur-3xl -translate-y-20 translate-x-20" />
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
           {/* Avatar Container */}
           <div className="relative group flex-shrink-0">
-            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-slate-800 border-4 border-white shadow-brutal-lg overflow-hidden flex items-center justify-center font-display text-4xl font-bold text-white">
+            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-[#132B45] border-4 border-white/20 shadow-academic overflow-hidden flex items-center justify-center font-display text-4xl font-bold text-white">
               {photoURL ? (
                 <img src={photoURL} alt={user?.name} className="w-full h-full object-cover" />
               ) : (
@@ -192,7 +192,7 @@ export const ProfilePage: React.FC = () => {
             </div>
             <button
               onClick={() => setIsAvatarPickerOpen(!isAvatarPickerOpen)}
-              className="absolute -bottom-1 -right-1 bg-blue-600 text-white p-2 rounded-full border-2 border-white shadow-brutal-sm hover:scale-110 transition-transform"
+              className="absolute -bottom-1 -right-1 bg-[#D9A441] text-[#0B1F33] hover:bg-[#EBCB8B] p-2 rounded-full border-2 border-white shadow-sm hover:scale-110 transition-transform"
               title="Change Profile Photo"
             >
               <Camera className="w-4 h-4" />
@@ -226,9 +226,9 @@ export const ProfilePage: React.FC = () => {
                         }
                         setIsAvatarPickerOpen(false);
                       }}
-                      className="w-full flex items-center gap-2 px-2.5 py-1.5 border-2 border-blue-600 bg-blue-50 text-blue-900 text-xs font-bold hover:bg-blue-100 transition-colors"
+                      className="w-full flex items-center gap-2 px-2.5 py-1.5 border border-[#D9A441]/40 bg-[#F5E8CD] text-[#10243A] text-xs font-bold hover:bg-[#FAF2DF] transition-colors rounded-lg"
                     >
-                      <Globe className="w-4 h-4 text-blue-600" />
+                      <Globe className="w-4 h-4 text-[#D9A441]" />
                       <span>Sync with Google Account ID</span>
                     </button>
                   )}
@@ -270,9 +270,9 @@ export const ProfilePage: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
               <span
                 ref={badgeRef}
-                className="px-3 py-1 bg-blue-600 text-white border-2 border-blue-400 font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-brutal-sm"
+                className="px-3 py-1 bg-[#F5E8CD] text-[#10243A] border border-[#D9A441]/40 rounded-full font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-sm"
               >
-                <ShieldCheck className="w-3 h-3 text-blue-200" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#D9A441]" />
                 {user?.authProvider === 'firebase-google'
                   ? 'Firebase Google Auth'
                   : user?.authProvider === 'firebase-email'
@@ -336,10 +336,10 @@ export const ProfilePage: React.FC = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`px-4 py-2.5 text-xs font-bold font-mono transition-all flex items-center gap-2 border-2 ${
+                  className={`px-4 py-2.5 text-xs font-semibold rounded-lg transition-all flex items-center gap-2 border ${
                     active
-                      ? 'bg-blue-600 text-white border-blue-600 shadow-brutal-sm translate-y-[-1px]'
-                      : 'bg-white text-brutal-black/70 border-transparent hover:bg-brutal-cream hover:border-brutal-black/20'
+                      ? 'bg-[#F5E8CD] text-[#10243A] border-[#D9A441] shadow-sm'
+                      : 'bg-white text-[#5F6B7A] border-[#DDE2E7] hover:bg-[#FAF2DF] hover:text-[#10243A]'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -354,7 +354,7 @@ export const ProfilePage: React.FC = () => {
               logout();
               navigate('/');
             }}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-brutal-red border-2 border-brutal-red/30 hover:bg-brutal-red hover:text-white transition-colors"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-red-600 border border-red-200 hover:bg-red-50 rounded-lg transition-colors"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Sign Out</span>
@@ -366,16 +366,16 @@ export const ProfilePage: React.FC = () => {
       <main className="flex-1 max-w-6xl mx-auto px-4 py-10 w-full" ref={tabContainerRef}>
         {/* Onboarding Banner when Institution or Country is Missing */}
         {(!user?.institution || !user?.country) && (
-          <div className="bg-blue-50 border-3 border-blue-600 shadow-brutal-xl p-6 mb-8 text-blue-950">
+          <div className="bg-[#FAF2DF] border border-[#D9A441]/50 rounded-xl shadow-sm p-6 mb-8 text-[#10243A]">
             <div className="flex items-start gap-4">
-              <div className="bg-blue-600 text-white p-3 border-2 border-blue-700 flex-shrink-0">
-                <Building2 className="w-6 h-6" />
+              <div className="bg-[#0B1F33] text-[#FAF8F3] p-3 rounded-lg flex-shrink-0">
+                <Building2 className="w-6 h-6 text-[#D9A441]" />
               </div>
               <div className="space-y-1">
-                <h3 className="font-display text-lg font-bold uppercase tracking-wide">
-                  ⚡ Complete Your Academic Profile
+                <h3 className="font-display text-base font-bold uppercase tracking-wide text-[#10243A]">
+                  Complete Your Academic Profile
                 </h3>
-                <p className="text-xs font-medium max-w-3xl leading-relaxed">
+                <p className="text-xs font-normal text-[#5F6B7A] max-w-3xl leading-relaxed">
                   You signed in via Firebase! Please enter your <strong>University / Institution</strong> and <strong>Country / Region</strong> in the form below and click <strong>Save Profile Changes</strong> to complete your scholar account setup.
                 </p>
               </div>
@@ -397,7 +397,7 @@ export const ProfilePage: React.FC = () => {
                     Update your scholar credentials and research preferences.
                   </p>
                 </div>
-                <span className="px-2.5 py-1 bg-blue-600 text-white border-2 border-blue-700 font-bold text-[10px] uppercase">
+                <span className="px-2.5 py-1 bg-[#0B1F33] text-[#FAF8F3] rounded text-[10px] font-semibold uppercase tracking-wider">
                   Firebase Sync Active
                 </span>
               </div>
@@ -493,7 +493,7 @@ export const ProfilePage: React.FC = () => {
                         <button
                           type="button"
                           onClick={() => setPhotoURL('')}
-                          className="text-[10px] text-blue-600 hover:underline font-mono"
+                          className="text-[10px] text-[#0B1F33] hover:text-[#D9A441] hover:underline font-medium"
                         >
                           Clear to Default
                         </button>
@@ -547,7 +547,7 @@ export const ProfilePage: React.FC = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-white/60">Auth Provider:</span>
-                    <span className="uppercase text-blue-400">{user?.authProvider || 'Firebase'}</span>
+                    <span className="uppercase text-[#D9A441]">{user?.authProvider || 'Firebase'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-white/60">Member Since:</span>
@@ -556,25 +556,25 @@ export const ProfilePage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-white border-4 border-brutal-black shadow-brutal p-6 space-y-3">
-                <h3 className="font-display text-base font-bold text-brutal-black flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-blue-600" />
+              <div className="bg-white border border-[#DDE2E7] shadow-sm rounded-xl p-6 space-y-3">
+                <h3 className="font-display text-base font-bold text-[#10243A] flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-[#D9A441]" />
                   Quick Actions
                 </h3>
-                <div className="space-y-2 text-xs font-bold">
+                <div className="space-y-2 text-xs font-medium">
                   <Link
                     to="/"
-                    className="w-full flex items-center justify-between p-3 border-2 border-brutal-black hover:bg-brutal-cream transition-colors"
+                    className="w-full flex items-center justify-between p-3 border border-[#DDE2E7] rounded-lg hover:bg-[#FAF8F3] hover:border-[#D9A441]/40 transition-colors"
                   >
                     <span>Browse All Conferences</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-4 h-4 text-[#5F6B7A]" />
                   </Link>
                   <Link
                     to="/resources"
-                    className="w-full flex items-center justify-between p-3 border-2 border-brutal-black hover:bg-brutal-cream transition-colors"
+                    className="w-full flex items-center justify-between p-3 border border-[#DDE2E7] rounded-lg hover:bg-[#FAF8F3] hover:border-[#D9A441]/40 transition-colors"
                   >
                     <span>LaTeX & Paper Templates</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-4 h-4 text-[#5F6B7A]" />
                   </Link>
                 </div>
               </div>
@@ -585,13 +585,13 @@ export const ProfilePage: React.FC = () => {
         {/* TAB 2: BOOKMARKED CONFERENCES */}
         {activeTab === 'bookmarks' && (
           <div className="space-y-6">
-            <div className="bg-white border-4 border-brutal-black shadow-brutal-lg p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="bg-white border border-[#DDE2E7] shadow-sm rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                <h2 className="font-serif text-xl font-bold text-brutal-black flex items-center gap-2">
-                  <Bookmark className="w-5 h-5 text-blue-600 fill-blue-600" />
+                <h2 className="font-serif text-xl font-bold text-[#10243A] flex items-center gap-2">
+                  <Bookmark className="w-5 h-5 text-[#D9A441] fill-[#D9A441]" />
                   Your Bookmarked Academic Events
                 </h2>
-                <p className="text-xs text-brutal-black/60 font-medium">
+                <p className="text-xs text-[#5F6B7A] font-medium">
                   {bookmarkedConferences.length} saved conference(s) in your personal academic list.
                 </p>
               </div>
@@ -610,16 +610,16 @@ export const ProfilePage: React.FC = () => {
 
             {loadingBookmarks ? (
               <div className="py-16 text-center space-y-2">
-                <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin mx-auto" />
-                <p className="text-xs font-bold text-brutal-black/50">Fetching your saved events...</p>
+                <div className="w-10 h-10 border-4 border-[#0B1F33]/20 border-t-[#D9A441] rounded-full animate-spin mx-auto" />
+                <p className="text-xs font-semibold text-[#5F6B7A]">Fetching your saved events...</p>
               </div>
             ) : filteredBookmarks.length === 0 ? (
-              <div className="bg-white border-4 border-brutal-black shadow-brutal p-12 text-center space-y-4">
-                <div className="w-16 h-16 bg-brutal-cream border-3 border-brutal-black flex items-center justify-center mx-auto">
-                  <Bookmark className="w-8 h-8 text-brutal-black/30" />
+              <div className="bg-white border border-[#DDE2E7] shadow-sm rounded-xl p-12 text-center space-y-4">
+                <div className="w-16 h-16 bg-[#FAF8F3] border border-[#DDE2E7] rounded-full flex items-center justify-center mx-auto">
+                  <Bookmark className="w-8 h-8 text-[#8A94A3]" />
                 </div>
-                <h3 className="font-serif text-lg font-bold text-brutal-black">No Bookmarks Saved Yet</h3>
-                <p className="text-xs text-brutal-black/60 max-w-sm mx-auto">
+                <h3 className="font-serif text-lg font-bold text-[#10243A]">No Bookmarks Saved Yet</h3>
+                <p className="text-xs text-[#5F6B7A] max-w-sm mx-auto">
                   Click the bookmark star icon on any conference card across the portal to save it here for offline viewing and deadline reminders.
                 </p>
                 <Link to="/" className="brutal-btn-primary inline-flex items-center gap-2 text-xs py-2.5 px-4">
@@ -641,19 +641,19 @@ export const ProfilePage: React.FC = () => {
 
         {/* TAB 3: ALERT PREFERENCES */}
         {activeTab === 'alerts' && (
-          <div className="bg-white border-4 border-brutal-black shadow-brutal-xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
-            <div className="border-b-3 border-brutal-black pb-4">
-              <h2 className="font-serif text-xl font-bold text-brutal-black flex items-center gap-2">
-                <Bell className="w-5 h-5 text-blue-600" />
+          <div className="bg-white border border-[#DDE2E7] shadow-academic rounded-xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
+            <div className="border-b border-[#DDE2E7] pb-4">
+              <h2 className="font-serif text-xl font-bold text-[#10243A] flex items-center gap-2">
+                <Bell className="w-5 h-5 text-[#0B1F33]" />
                 Academic Notification & Alert Settings
               </h2>
-              <p className="text-xs text-brutal-black/60 font-medium">
+              <p className="text-xs text-[#5F6B7A] font-medium">
                 Manage automated call-for-papers digest emails and submission deadline alerts.
               </p>
             </div>
 
             <div className="space-y-4">
-              <p className="text-xs font-bold text-brutal-black uppercase tracking-wider">
+              <p className="text-xs font-bold text-[#10243A] uppercase tracking-wider">
                 Subscribed Field Notifications:
               </p>
 
@@ -670,21 +670,21 @@ export const ProfilePage: React.FC = () => {
                 return (
                   <div
                     key={category}
-                    className={`p-4 border-3 border-brutal-black flex items-center justify-between transition-colors ${
-                      isSubscribed ? 'bg-blue-50' : 'bg-brutal-cream/50'
+                    className={`p-4 border rounded-xl flex items-center justify-between transition-colors ${
+                      isSubscribed ? 'bg-[#FAF2DF] border-[#D9A441]/40' : 'bg-[#FAF8F3] border-[#DDE2E7]'
                     }`}
                   >
                     <div>
-                      <h4 className="font-bold text-xs text-brutal-black">{category}</h4>
-                      <p className="text-[10px] text-brutal-black/50">Verified call for papers & deadines</p>
+                      <h4 className="font-bold text-xs text-[#10243A]">{category}</h4>
+                      <p className="text-[10px] text-[#5F6B7A]">Verified call for papers & deadines</p>
                     </div>
 
                     <button
                       onClick={() => handleToggleSubscription(category)}
-                      className={`px-3 py-1.5 text-xs font-bold border-2 border-brutal-black shadow-brutal-sm ${
+                      className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${
                         isSubscribed
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-white text-brutal-black hover:bg-blue-50'
+                          ? 'bg-[#0B1F33] text-white shadow-sm'
+                          : 'bg-white text-[#10243A] border border-[#DDE2E7] hover:bg-[#FAF2DF]'
                       }`}
                     >
                       {isSubscribed ? 'Subscribed ✓' : '+ Subscribe'}
