@@ -9,6 +9,7 @@ import { Conference } from '../types';
 import { conferenceAPI } from '../services/api';
 import {
   User as UserIcon,
+  CircleUser,
   Mail,
   Building2,
   Globe,
@@ -182,16 +183,16 @@ export const ProfilePage: React.FC = () => {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
           {/* Avatar Container */}
           <div className="relative group flex-shrink-0">
-            <div className="w-28 h-28 sm:w-32 sm:h-32 bg-blue-600 border-4 border-white shadow-brutal-lg overflow-hidden flex items-center justify-center font-display text-4xl font-bold text-white">
+            <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-slate-800 border-4 border-white shadow-brutal-lg overflow-hidden flex items-center justify-center font-display text-4xl font-bold text-white">
               {photoURL ? (
                 <img src={photoURL} alt={user?.name} className="w-full h-full object-cover" />
               ) : (
-                <span>{user?.name?.charAt(0) || 'A'}</span>
+                <CircleUser className="w-20 h-20 text-slate-300" strokeWidth={1.5} />
               )}
             </div>
             <button
               onClick={() => setIsAvatarPickerOpen(!isAvatarPickerOpen)}
-              className="absolute -bottom-2 -right-2 bg-blue-600 text-white p-2 border-2 border-white shadow-brutal-sm hover:scale-110 transition-transform"
+              className="absolute -bottom-1 -right-1 bg-blue-600 text-white p-2 rounded-full border-2 border-white shadow-brutal-sm hover:scale-110 transition-transform"
               title="Change Profile Photo"
             >
               <Camera className="w-4 h-4" />
@@ -199,31 +200,65 @@ export const ProfilePage: React.FC = () => {
 
             {/* Quick Avatar Preset Modal */}
             {isAvatarPickerOpen && (
-              <div className="absolute top-full left-0 mt-3 bg-white text-brutal-black border-3 border-brutal-black shadow-brutal-xl p-3 z-50 w-64 animate-scale-in">
+              <div className="absolute top-full left-0 mt-3 bg-white text-brutal-black border-3 border-brutal-black shadow-brutal-xl p-3 z-50 w-72 animate-scale-in">
                 <p className="text-[11px] font-bold uppercase tracking-wider border-b-2 border-brutal-black pb-1 mb-2">
-                  Choose Academic Avatar
+                  Profile Photo Settings
                 </p>
-                <div className="grid grid-cols-5 gap-1.5 mb-2">
-                  {PRESET_AVATARS.map((av) => (
+                <div className="space-y-2 mb-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPhotoURL('');
+                      setIsAvatarPickerOpen(false);
+                    }}
+                    className="w-full flex items-center gap-2 px-2.5 py-1.5 border-2 border-brutal-black text-xs font-bold hover:bg-slate-100 transition-colors"
+                  >
+                    <CircleUser className="w-4 h-4 text-slate-600" />
+                    <span>Use Default Circle Avatar</span>
+                  </button>
+
+                  {user?.authProvider === 'firebase-google' && (
                     <button
-                      key={av.name}
+                      type="button"
                       onClick={() => {
-                        setPhotoURL(av.url);
+                        if (user?.photoURL) {
+                          setPhotoURL(user.photoURL);
+                        }
                         setIsAvatarPickerOpen(false);
                       }}
-                      className="w-10 h-10 border-2 border-brutal-black overflow-hidden hover:scale-110 transition-transform"
-                      title={av.name}
+                      className="w-full flex items-center gap-2 px-2.5 py-1.5 border-2 border-blue-600 bg-blue-50 text-blue-900 text-xs font-bold hover:bg-blue-100 transition-colors"
                     >
-                      <img src={av.url} alt={av.name} className="w-full h-full object-cover" />
+                      <Globe className="w-4 h-4 text-blue-600" />
+                      <span>Sync with Google Account ID</span>
                     </button>
-                  ))}
+                  )}
                 </div>
-                <label className="text-[10px] font-bold block mb-1">Or Photo URL:</label>
+
+                <div className="border-t border-brutal-black/20 pt-2 mb-2">
+                  <p className="text-[10px] font-bold text-slate-500 mb-1.5 uppercase">Academic Presets</p>
+                  <div className="grid grid-cols-5 gap-1.5 mb-2">
+                    {PRESET_AVATARS.map((av) => (
+                      <button
+                        key={av.name}
+                        onClick={() => {
+                          setPhotoURL(av.url);
+                          setIsAvatarPickerOpen(false);
+                        }}
+                        className="w-10 h-10 rounded-full border-2 border-brutal-black overflow-hidden hover:scale-110 transition-transform"
+                        title={av.name}
+                      >
+                        <img src={av.url} alt={av.name} className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <label className="text-[10px] font-bold block mb-1">Custom Photo URL:</label>
                 <input
                   type="url"
                   value={photoURL}
                   onChange={(e) => setPhotoURL(e.target.value)}
-                  placeholder="https://..."
+                  placeholder="https://... or leave blank"
                   className="brutal-input text-xs py-1 px-2"
                 />
               </div>
@@ -452,14 +487,25 @@ export const ProfilePage: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="brutal-label">Profile Photo URL</label>
+                    <div className="flex items-center justify-between">
+                      <label className="brutal-label">Profile Photo URL</label>
+                      {photoURL && (
+                        <button
+                          type="button"
+                          onClick={() => setPhotoURL('')}
+                          className="text-[10px] text-blue-600 hover:underline font-mono"
+                        >
+                          Clear to Default
+                        </button>
+                      )}
+                    </div>
                     <div className="relative">
                       <Camera className="w-4 h-4 text-brutal-black/30 absolute left-3.5 top-3.5" />
                       <input
                         type="url"
                         value={photoURL}
                         onChange={(e) => setPhotoURL(e.target.value)}
-                        placeholder="https://images.unsplash.com/..."
+                        placeholder="Leave empty for default circle avatar, or enter image URL"
                         className="brutal-input pl-10"
                       />
                     </div>

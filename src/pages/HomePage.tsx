@@ -8,7 +8,7 @@ import { Conference, FilterState } from '../types';
 import { conferenceAPI } from '../services/api';
 import {
   Search, Globe, Loader2, CheckCircle2, Bell, Cpu, HeartPulse, Leaf,
-  Layers, Briefcase, GraduationCap, FlaskConical, MapPin, Calendar, BookOpen, ArrowRight, Zap,
+  Layers, Briefcase, GraduationCap, FlaskConical, MapPin, Calendar, BookOpen, ArrowRight,
 } from 'lucide-react';
 import { staggerReveal, setupScrollReveal } from '../lib/animations';
 import { PUBLISHER_LOGOS } from '../utils/logos';
@@ -132,11 +132,6 @@ export const HomePage: React.FC = () => {
         <div className="absolute top-1/3 left-1/6 w-3 h-3 bg-brutal-red rotate-45" />
 
         <div className="max-w-5xl mx-auto text-center relative z-10 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-600/30 text-blue-200 border border-blue-400/40 rounded-sm font-bold text-[10px] uppercase tracking-widest backdrop-blur-sm shadow-sm">
-            <Zap className="w-3.5 h-3.5 text-blue-400" />
-            <span>Publication Track — Academic Information Hub 2026</span>
-          </div>
-
           <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] max-w-4xl mx-auto text-balance">
             Discover Verified{' '}
             <span className="bg-blue-600 text-white px-2.5 py-0.5 rounded-sm inline-block -rotate-1 font-sans">Academic</span>{' '}

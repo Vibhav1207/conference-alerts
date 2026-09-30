@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
-  Bell, User, LogOut, Bookmark, LayoutDashboard, Menu, X,
+  Bell, User, CircleUser, LogOut, Bookmark, LayoutDashboard, Menu, X,
   FileText, Briefcase, GraduationCap, CalendarCheck, CheckCircle2,
   ChevronDown, Award,
 } from 'lucide-react';
@@ -117,11 +117,11 @@ export const Navbar: React.FC = () => {
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                     className="flex items-center gap-2 px-3 py-1.5 border-2 border-white/20 hover:border-blue-400 transition-colors bg-white/5"
                   >
-                    <div className="w-7 h-7 bg-blue-600 text-white flex items-center justify-center font-bold text-xs border-2 border-brutal-black overflow-hidden flex-shrink-0">
+                    <div className="w-7 h-7 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs border border-white/30 overflow-hidden flex-shrink-0 shadow-inner">
                       {user?.photoURL ? (
                         <img src={user.photoURL} alt={user.name} className="w-full h-full object-cover" />
                       ) : (
-                        user?.name?.charAt(0) || 'U'
+                        <CircleUser className="w-5 h-5 text-slate-300" />
                       )}
                     </div>
                     <span className="text-xs font-bold hidden md:inline truncate max-w-[120px]">{user?.name}</span>
@@ -218,6 +218,19 @@ export const Navbar: React.FC = () => {
             })}
             {isAuthenticated ? (
               <>
+                <div className="flex items-center gap-2.5 px-3 py-2 border-b border-white/10 mb-1">
+                  <div className="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs border border-white/20 overflow-hidden flex-shrink-0">
+                    {user?.photoURL ? (
+                      <img src={user.photoURL} alt={user.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <CircleUser className="w-6 h-6 text-slate-300" />
+                    )}
+                  </div>
+                  <div className="truncate">
+                    <p className="text-xs font-bold text-white truncate">{user?.name}</p>
+                    <p className="text-[10px] text-white/50 truncate">{user?.email}</p>
+                  </div>
+                </div>
                 <Link
                   to="/profile"
                   onClick={() => setMobileMenuOpen(false)}

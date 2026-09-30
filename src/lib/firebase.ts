@@ -99,7 +99,7 @@ export const signInWithGoogle = async (): Promise<FirebaseUser> => {
     uid: 'demo-google-user-777',
     displayName: 'Dr. Alex Rivera (Google Auth)',
     email: 'alex.rivera@stanford.edu',
-    photoURL: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    photoURL: '',
     emailVerified: true,
   } as unknown as FirebaseUser;
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard, CalendarCheck, PlusCircle, FileText, LogOut, ChevronRight, Menu, X, Tag,
+  LayoutDashboard, CalendarCheck, PlusCircle, FileText, LogOut, ChevronRight, Menu, X, Tag, CircleUser,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -85,8 +85,12 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
         </Link>
         <div className="flex items-center justify-between p-3 border-2 border-white/10">
           <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="w-8 h-8 bg-blue-600 text-white flex items-center justify-center font-bold text-xs border-2 border-white/20 flex-shrink-0">
-              {user?.name?.charAt(0) || 'A'}
+            <div className="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs border border-white/20 overflow-hidden flex-shrink-0">
+              {user?.photoURL ? (
+                <img src={user.photoURL} alt={user.name} className="w-full h-full object-cover" />
+              ) : (
+                <CircleUser className="w-6 h-6 text-slate-300" />
+              )}
             </div>
             <div className="truncate text-xs">
               <p className="font-bold text-white truncate">{user?.name}</p>

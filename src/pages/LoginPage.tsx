@@ -2,8 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Navbar } from '../components/Navbar';
-import { Footer } from '../components/Footer';
-import { LogIn, Mail, Lock, AlertCircle, Sparkles } from 'lucide-react';
+import { LogIn, Mail, Lock, AlertCircle } from 'lucide-react';
 import { animateGoogleBtnHover } from '../lib/animations';
 
 export const LoginPage: React.FC = () => {
@@ -113,15 +112,6 @@ export const LoginPage: React.FC = () => {
             <div className="flex-1 h-[2px] bg-brutal-black/20" />
             <span className="text-[10px] font-mono font-bold text-brutal-black/40 uppercase">OR EMAIL LOGIN</span>
             <div className="flex-1 h-[2px] bg-brutal-black/20" />
-          </div>
-
-          <div className="p-3 bg-brutal-cream border-2 border-brutal-black/20 text-[11px] text-brutal-black/70 space-y-1 font-medium">
-            <p className="font-bold text-brutal-black flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-blue-600 fill-blue-600" />
-              Demo Credentials Available:
-            </p>
-            <p>Admin: <code className="font-mono text-blue-600">admin@publicationtrack.org</code> / <code className="font-mono text-blue-600">AdminPassword123!</code></p>
-            <p>User: <code className="font-mono text-blue-600">sarah.jenkins@university.edu</code> / <code className="font-mono text-blue-600">UserPassword123!</code></p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

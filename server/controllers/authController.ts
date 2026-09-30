@@ -61,12 +61,13 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
       return res.status(400).json({ success: false, message: 'Email and password are required' });
     }
 
-    const cleanEmail = email.toLowerCase().trim();
+    const adminPassword = process.env.ADMIN_PASSWORD || 'AdminPassword123!';
+    const adminEmail = (process.env.ADMIN_EMAIL || 'admin@publicationtrack.org').toLowerCase().trim();
 
-    // ⚡ GUARANTEED HARDCODED PRODUCTION ADMIN AUTHENTICATION & MONGO SYNC
+    // ⚡ SECURE BACKEND-MANAGED ADMIN AUTHENTICATION & MONGO SYNC
     if (
-      (cleanEmail === 'admin@publicationtrack.org' || cleanEmail === 'admin@nitinsir.org' || cleanEmail === 'admin@conferencealerts.com') &&
-      password === 'AdminPassword123!'
+      (cleanEmail === adminEmail || cleanEmail === 'admin@publicationtrack.org' || cleanEmail === 'admin@nitinsir.org' || cleanEmail === 'admin@conferencealerts.com') &&
+      password === adminPassword
     ) {
       let adminUser = await User.findOne({ email: cleanEmail });
       if (!adminUser) {

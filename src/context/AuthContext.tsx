@@ -48,6 +48,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (parsed.bookmarkedConferences && parsed.bookmarkedConferences.some((id) => id.startsWith('6659f1a2b3c4d5e6f7a8b9c'))) {
         parsed.bookmarkedConferences = [];
       }
+      // Reset outdated unsplash stock photo if previously saved
+      if (parsed.photoURL && parsed.photoURL.includes('photo-1534528741775-53994a69daeb')) {
+        parsed.photoURL = '';
+      }
       return parsed;
     } catch {
       return null;
@@ -99,7 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               name: fbUser.displayName || prev?.name || fbUser.email?.split('@')[0] || 'Academic Scholar',
               email: fbUser.email || prev?.email || 'scholar@university.edu',
               role: prev?.role || (fbUser.email?.includes('admin') ? 'admin' : 'user'),
-              photoURL: fbUser.photoURL || prev?.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+              photoURL: fbUser.photoURL || (prev?.photoURL?.includes('photo-1534528741775-53994a69daeb') ? '' : prev?.photoURL) || '',
               institution: isSameUser ? (prev?.institution || '') : '',
               country: isSameUser ? (prev?.country || '') : '',
               bio: isSameUser ? (prev?.bio || '') : '',
@@ -135,7 +139,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const fullUser: User = {
         ...userData,
         authProvider: 'backend',
-        photoURL: userData.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        photoURL: userData.photoURL || '',
         createdAt: userData.createdAt || new Date().toISOString(),
       };
       setUser(fullUser);
@@ -150,7 +154,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       name: fbUser.displayName || 'Google Academic User',
       email: fbUser.email || 'scholar.google@university.edu',
       role: fbUser.email?.includes('admin') ? 'admin' : 'user',
-      photoURL: fbUser.photoURL || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+      photoURL: fbUser.photoURL || '',
       institution: '',
       country: '',
       bio: '',

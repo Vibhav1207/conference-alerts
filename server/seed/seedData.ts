@@ -37,7 +37,7 @@ const clearMockDataAndEnsureAdmin = async () => {
 
     console.log('==================================================');
     console.log('[Clean] All mock data removed! System is clean & production-ready.');
-    console.log('[Clean] Admin User: admin@publicationtrack.org / AdminPassword123!');
+    console.log('[Clean] Admin User initialized: admin@publicationtrack.org');
     console.log('==================================================');
 
     await closeDB();
