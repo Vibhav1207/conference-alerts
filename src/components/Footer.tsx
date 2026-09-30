@@ -91,7 +91,21 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-[#8A94A3] gap-4">
-          <p>© {new Date().getFullYear()} Publication Track Academic Portal. All Rights Reserved.</p>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+            <p>© {new Date().getFullYear()} Publication Track Academic Portal. All Rights Reserved.</p>
+            <span className="hidden sm:inline text-white/20">•</span>
+            <p>
+              Developed by{' '}
+              <a
+                href="https://vibhavpatel.site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#EBCB8B] hover:text-[#FAF8F3] font-semibold underline decoration-[#D9A441]/50 underline-offset-4 hover:decoration-[#FAF8F3] transition-colors"
+              >
+                Vibhav Patel
+              </a>
+            </p>
+          </div>
           <div className="flex items-center gap-6 font-medium">
             <span className="hover:text-[#FAF8F3] cursor-pointer transition-colors">Privacy Policy</span>
             <span className="hover:text-[#FAF8F3] cursor-pointer transition-colors">Terms of Service</span>

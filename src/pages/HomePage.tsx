@@ -156,12 +156,6 @@ export const HomePage: React.FC = () => {
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-20 space-y-6">
-          {/* Subtle Champagne Gold Hub Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#F5E8CD] text-[#10243A] border border-[#D9A441]/40 rounded-md font-bold text-[10px] uppercase tracking-widest shadow-sm">
-            <Zap className="w-3.5 h-3.5 text-[#D9A441] fill-[#D9A441]" />
-            <span>Publication Track — Academic Information Hub 2026</span>
-          </div>
-
           {/* Large Editorial Headline */}
           <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-[#10243A] tracking-tight leading-[1.15] max-w-4xl mx-auto text-balance">
             Discover Verified{' '}
