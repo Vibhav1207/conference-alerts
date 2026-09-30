@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Globe, ShieldCheck, BookOpen } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -26,10 +26,6 @@ export const Footer: React.FC = () => {
             <p className="text-xs text-[#8A94A3] leading-relaxed">
               The premier platform for verified academic conference alerts, Scopus indexed journal updates, and research resources.
             </p>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-semibold rounded bg-[#132B45] text-[#EBCB8B] border border-[#D9A441]/30">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#D9A441]" />
-              Scopus & WOS Verified
-            </span>
           </div>
 
           {/* Quick Links */}

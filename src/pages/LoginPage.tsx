@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
 import { LogIn, Mail, Lock, AlertCircle } from 'lucide-react';
 import { animateGoogleBtnHover } from '../lib/animations';
 
@@ -12,9 +13,15 @@ export const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  const { login, loginGoogle, loginFirebase } = useAuth();
+  const { login, loginGoogle, loginFirebase, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const googleBtnRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/profile', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
