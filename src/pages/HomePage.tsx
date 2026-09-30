@@ -8,7 +8,7 @@ import { Conference, FilterState } from '../types';
 import { conferenceAPI } from '../services/api';
 import {
   Search, Globe, Loader2, CheckCircle2, Bell, Cpu, HeartPulse, Leaf,
-  Layers, Briefcase, GraduationCap, FlaskConical, MapPin, Calendar, BookOpen, ArrowRight, Zap,
+  Layers, Briefcase, GraduationCap, FlaskConical, MapPin, Calendar, BookOpen, ArrowRight,
 } from 'lucide-react';
 import { staggerReveal, setupScrollReveal } from '../lib/animations';
 import { PUBLISHER_LOGOS } from '../utils/logos';
@@ -112,7 +112,7 @@ export const HomePage: React.FC = () => {
   ];
 
   const eventTabs = [
-    { label: 'All', icon: Zap },
+    { label: 'All', icon: Layers },
     { label: 'Journals', icon: GraduationCap },
     { label: 'Conference', icon: Calendar },
     { label: 'Internship', icon: Briefcase },

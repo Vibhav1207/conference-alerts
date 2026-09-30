@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0B1F33" />
+  <rect x="2" y="2" width="60" height="60" rx="12" stroke="#D9A441" stroke-width="2" stroke-opacity="0.4" />
+  <text x="32" y="42" font-family="'Space Grotesk', system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#FAF8F3" text-anchor="middle" letter-spacing="-0.5">PT</text>
+  <circle cx="50" cy="18" r="3" fill="#D9A441" />
+</svg>

@@ -21,8 +21,7 @@ import {
   Camera,
   CheckCircle2,
   Calendar,
-  Sparkles,
-  Zap,
+  Compass,
   Lock,
   Search,
   ExternalLink,
@@ -397,9 +396,6 @@ export const ProfilePage: React.FC = () => {
                     Update your scholar credentials and research preferences.
                   </p>
                 </div>
-                <span className="px-2.5 py-1 bg-[#0B1F33] text-[#FAF8F3] rounded text-[10px] font-semibold uppercase tracking-wider">
-                  Firebase Sync Active
-                </span>
               </div>
 
               <form onSubmit={handleProfileSubmit} className="space-y-4">
@@ -532,33 +528,9 @@ export const ProfilePage: React.FC = () => {
 
             {/* Sidebar Info Card */}
             <div className="space-y-6">
-              <div className="bg-slate-900 border-4 border-brutal-black shadow-brutal p-6 space-y-4 text-white">
-                <div className="flex items-center gap-2 font-display text-lg font-bold text-blue-400">
-                  <Sparkles className="w-5 h-5 text-blue-400" />
-                  <span>Scholar Status</span>
-                </div>
-                <p className="text-xs leading-relaxed font-medium text-white/70">
-                  Your academic profile enables 1-click bookmarks, custom conference submission reminders, and verified call for papers subscriptions.
-                </p>
-                <div className="space-y-2 border-t-2 border-white/20 pt-3 text-xs font-mono font-bold">
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Account ID:</span>
-                    <span className="truncate max-w-[120px] text-white">{user?.id || 'FB-88219'}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Auth Provider:</span>
-                    <span className="uppercase text-[#D9A441]">{user?.authProvider || 'Firebase'}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-white/60">Member Since:</span>
-                    <span className="text-white">2026</span>
-                  </div>
-                </div>
-              </div>
-
               <div className="bg-white border border-[#DDE2E7] shadow-sm rounded-xl p-6 space-y-3">
                 <h3 className="font-display text-base font-bold text-[#10243A] flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-[#D9A441]" />
+                  <Compass className="w-4 h-4 text-[#D9A441]" />
                   Quick Actions
                 </h3>
                 <div className="space-y-2 text-xs font-medium">
