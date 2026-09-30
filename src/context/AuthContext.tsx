@@ -30,7 +30,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const LOCAL_STORAGE_PROFILE_KEY = 'nitin_academic_user_profile_2026';
+const LOCAL_STORAGE_PROFILE_KEY = 'publication_track_user_profile_2026';
+const LEGACY_STORAGE_PROFILE_KEY = 'nitin_academic_user_profile_2026';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -40,7 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Restore saved local profile if present
   const loadLocalProfile = (): User | null => {
     try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY);
+      const saved = localStorage.getItem(LOCAL_STORAGE_PROFILE_KEY) || localStorage.getItem(LEGACY_STORAGE_PROFILE_KEY);
       if (!saved) return null;
       const parsed: User = JSON.parse(saved);
       // Clean legacy demo bookmarks

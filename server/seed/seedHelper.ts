@@ -27,19 +27,19 @@ export const autoSeedIfEmpty = async () => {
     // Ensure Admin Accounts exist without duplicate key errors on concurrent cold starts
     const adminAccounts = [
       {
-        name: 'Nitin Sir (Admin)',
-        email: 'admin@nitinsir.org',
+        name: 'Publication Track (Admin)',
+        email: 'admin@publicationtrack.org',
         password: 'AdminPassword123!',
         role: 'admin' as const,
-        institution: 'Global Academic Research Institute',
-        country: 'India',
+        institution: 'Publication Track Academic Portal',
+        country: 'Global',
       },
       {
         name: 'Portal Administrator',
         email: 'admin@conferencealerts.com',
         password: 'AdminPassword123!',
         role: 'admin' as const,
-        institution: 'Nitin Sir Academic Portal',
+        institution: 'Publication Track Academic Portal',
         country: 'Global',
       },
     ];

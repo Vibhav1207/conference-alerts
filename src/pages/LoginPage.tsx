@@ -55,8 +55,8 @@ export const LoginPage: React.FC = () => {
       <div className="flex-1 flex items-center justify-center py-16 px-4">
         <div className="bg-white border-4 border-brutal-black shadow-brutal-xl max-w-md w-full p-8 space-y-6 animate-scale-in">
           <div className="text-center space-y-2">
-            <div className="w-14 h-14 bg-brutal-yellow text-brutal-black flex items-center justify-center mx-auto font-display text-3xl font-bold border-3 border-brutal-black shadow-brutal-sm">
-              N
+            <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center mx-auto font-display text-2xl font-bold border-2 border-brutal-black shadow-brutal-sm">
+              PT
             </div>
             <h2 className="font-serif text-2xl font-bold text-brutal-black">Welcome Back Scholar</h2>
             <p className="text-xs text-brutal-black/60 font-medium">Access your saved alerts, bookmarks & profile</p>
@@ -102,7 +102,7 @@ export const LoginPage: React.FC = () => {
                   />
                 </svg>
                 <span>Continue with Firebase Google Auth</span>
-                <span className="ml-auto bg-brutal-yellow text-brutal-black text-[9px] px-1.5 py-0.5 border border-brutal-black font-mono">
+                <span className="ml-auto bg-blue-50 text-blue-700 text-[9px] px-1.5 py-0.5 border border-blue-200 font-mono">
                   1-Click
                 </span>
               </>
@@ -117,11 +117,11 @@ export const LoginPage: React.FC = () => {
 
           <div className="p-3 bg-brutal-cream border-2 border-brutal-black/20 text-[11px] text-brutal-black/70 space-y-1 font-medium">
             <p className="font-bold text-brutal-black flex items-center gap-1">
-              <Sparkles className="w-3 h-3 text-brutal-yellow fill-brutal-yellow" />
+              <Sparkles className="w-3 h-3 text-blue-600 fill-blue-600" />
               Demo Credentials Available:
             </p>
-            <p>Admin: <code className="font-mono text-brutal-blue">admin@nitinsir.org</code> / <code className="font-mono text-brutal-blue">AdminPassword123!</code></p>
-            <p>User: <code className="font-mono text-brutal-blue">sarah.jenkins@university.edu</code> / <code className="font-mono text-brutal-blue">UserPassword123!</code></p>
+            <p>Admin: <code className="font-mono text-blue-600">admin@publicationtrack.org</code> / <code className="font-mono text-blue-600">AdminPassword123!</code></p>
+            <p>User: <code className="font-mono text-blue-600">sarah.jenkins@university.edu</code> / <code className="font-mono text-blue-600">UserPassword123!</code></p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">

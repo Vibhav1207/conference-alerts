@@ -177,12 +177,12 @@ export const ProfilePage: React.FC = () => {
       {toast && <Toast type={toast.type} message={toast.message} onClose={() => setToast(null)} />}
 
       {/* ═══ PROFILE HERO BANNER ═══ */}
-      <section className="bg-brutal-black text-white border-b-6 border-brutal-yellow py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-72 h-72 bg-brutal-yellow/10 -rotate-12 translate-x-20 -translate-y-20" />
+      <section className="bg-brutal-black text-white border-b-4 border-blue-600 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-72 h-72 bg-blue-500/10 -rotate-12 translate-x-20 -translate-y-20" />
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center md:items-start gap-6 relative z-10">
           {/* Avatar Container */}
           <div className="relative group flex-shrink-0">
-            <div className="w-28 h-28 sm:w-32 sm:h-32 bg-brutal-yellow border-4 border-white shadow-brutal-lg overflow-hidden flex items-center justify-center font-display text-4xl font-bold text-brutal-black">
+            <div className="w-28 h-28 sm:w-32 sm:h-32 bg-blue-600 border-4 border-white shadow-brutal-lg overflow-hidden flex items-center justify-center font-display text-4xl font-bold text-white">
               {photoURL ? (
                 <img src={photoURL} alt={user?.name} className="w-full h-full object-cover" />
               ) : (
@@ -191,7 +191,7 @@ export const ProfilePage: React.FC = () => {
             </div>
             <button
               onClick={() => setIsAvatarPickerOpen(!isAvatarPickerOpen)}
-              className="absolute -bottom-2 -right-2 bg-brutal-yellow text-brutal-black p-2 border-2 border-brutal-black shadow-brutal-sm hover:scale-110 transition-transform"
+              className="absolute -bottom-2 -right-2 bg-blue-600 text-white p-2 border-2 border-white shadow-brutal-sm hover:scale-110 transition-transform"
               title="Change Profile Photo"
             >
               <Camera className="w-4 h-4" />
@@ -235,9 +235,9 @@ export const ProfilePage: React.FC = () => {
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
               <span
                 ref={badgeRef}
-                className="px-3 py-1 bg-brutal-yellow text-brutal-black border-2 border-brutal-black font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-brutal-sm"
+                className="px-3 py-1 bg-blue-600 text-white border-2 border-blue-400 font-mono text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-brutal-sm"
               >
-                <ShieldCheck className="w-3 h-3 text-brutal-black" />
+                <ShieldCheck className="w-3 h-3 text-blue-200" />
                 {user?.authProvider === 'firebase-google'
                   ? 'Firebase Google Auth'
                   : user?.authProvider === 'firebase-email'
@@ -257,7 +257,7 @@ export const ProfilePage: React.FC = () => {
             </h1>
 
             <p className="text-white/70 text-xs sm:text-sm font-medium flex items-center justify-center md:justify-start gap-2">
-              <Building2 className="w-4 h-4 text-brutal-yellow flex-shrink-0" />
+              <Building2 className="w-4 h-4 text-blue-400 flex-shrink-0" />
               <span>{user?.institution || 'Institution Not Added'}</span>
               <span className="text-white/30">•</span>
               <Globe className="w-4 h-4 text-brutal-green flex-shrink-0" />
@@ -272,7 +272,7 @@ export const ProfilePage: React.FC = () => {
           {/* Quick Stat Card */}
           <div className="bg-white/5 border-2 border-white/20 p-4 min-w-[200px] space-y-2 text-center md:text-right">
             <div className="text-xs text-white/60 font-bold uppercase tracking-widest">Saved Bookmarks</div>
-            <div className="font-display text-3xl font-bold text-brutal-yellow">
+            <div className="font-display text-3xl font-bold text-blue-400">
               {user?.bookmarkedConferences?.length || 0}
             </div>
             <button
@@ -303,7 +303,7 @@ export const ProfilePage: React.FC = () => {
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`px-4 py-2.5 text-xs font-bold font-mono transition-all flex items-center gap-2 border-2 ${
                     active
-                      ? 'bg-brutal-yellow text-brutal-black border-brutal-black shadow-brutal-sm translate-y-[-1px]'
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-brutal-sm translate-y-[-1px]'
                       : 'bg-white text-brutal-black/70 border-transparent hover:bg-brutal-cream hover:border-brutal-black/20'
                   }`}
                 >
@@ -331,9 +331,9 @@ export const ProfilePage: React.FC = () => {
       <main className="flex-1 max-w-6xl mx-auto px-4 py-10 w-full" ref={tabContainerRef}>
         {/* Onboarding Banner when Institution or Country is Missing */}
         {(!user?.institution || !user?.country) && (
-          <div className="bg-brutal-yellow border-4 border-brutal-black shadow-brutal-xl p-6 mb-8 text-brutal-black">
+          <div className="bg-blue-50 border-3 border-blue-600 shadow-brutal-xl p-6 mb-8 text-blue-950">
             <div className="flex items-start gap-4">
-              <div className="bg-brutal-black text-brutal-yellow p-3 border-2 border-brutal-black flex-shrink-0">
+              <div className="bg-blue-600 text-white p-3 border-2 border-blue-700 flex-shrink-0">
                 <Building2 className="w-6 h-6" />
               </div>
               <div className="space-y-1">
@@ -362,7 +362,7 @@ export const ProfilePage: React.FC = () => {
                     Update your scholar credentials and research preferences.
                   </p>
                 </div>
-                <span className="px-2.5 py-1 bg-brutal-yellow text-brutal-black border-2 border-brutal-black font-bold text-[10px] uppercase">
+                <span className="px-2.5 py-1 bg-blue-600 text-white border-2 border-blue-700 font-bold text-[10px] uppercase">
                   Firebase Sync Active
                 </span>
               </div>
@@ -486,33 +486,33 @@ export const ProfilePage: React.FC = () => {
 
             {/* Sidebar Info Card */}
             <div className="space-y-6">
-              <div className="bg-brutal-yellow border-4 border-brutal-black shadow-brutal p-6 space-y-4 text-brutal-black">
-                <div className="flex items-center gap-2 font-display text-lg font-bold">
-                  <Sparkles className="w-5 h-5" />
+              <div className="bg-slate-900 border-4 border-brutal-black shadow-brutal p-6 space-y-4 text-white">
+                <div className="flex items-center gap-2 font-display text-lg font-bold text-blue-400">
+                  <Sparkles className="w-5 h-5 text-blue-400" />
                   <span>Scholar Status</span>
                 </div>
-                <p className="text-xs leading-relaxed font-medium">
+                <p className="text-xs leading-relaxed font-medium text-white/70">
                   Your academic profile enables 1-click bookmarks, custom conference submission reminders, and verified call for papers subscriptions.
                 </p>
-                <div className="space-y-2 border-t-2 border-brutal-black pt-3 text-xs font-mono font-bold">
+                <div className="space-y-2 border-t-2 border-white/20 pt-3 text-xs font-mono font-bold">
                   <div className="flex justify-between">
-                    <span>Account ID:</span>
-                    <span className="truncate max-w-[120px]">{user?.id || 'FB-88219'}</span>
+                    <span className="text-white/60">Account ID:</span>
+                    <span className="truncate max-w-[120px] text-white">{user?.id || 'FB-88219'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Auth Provider:</span>
-                    <span className="uppercase text-brutal-blue">{user?.authProvider || 'Firebase'}</span>
+                    <span className="text-white/60">Auth Provider:</span>
+                    <span className="uppercase text-blue-400">{user?.authProvider || 'Firebase'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Member Since:</span>
-                    <span>2026</span>
+                    <span className="text-white/60">Member Since:</span>
+                    <span className="text-white">2026</span>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white border-4 border-brutal-black shadow-brutal p-6 space-y-3">
                 <h3 className="font-display text-base font-bold text-brutal-black flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-brutal-yellow" />
+                  <Zap className="w-4 h-4 text-blue-600" />
                   Quick Actions
                 </h3>
                 <div className="space-y-2 text-xs font-bold">
@@ -542,7 +542,7 @@ export const ProfilePage: React.FC = () => {
             <div className="bg-white border-4 border-brutal-black shadow-brutal-lg p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <h2 className="font-serif text-xl font-bold text-brutal-black flex items-center gap-2">
-                  <Bookmark className="w-5 h-5 text-brutal-yellow fill-brutal-yellow" />
+                  <Bookmark className="w-5 h-5 text-blue-600 fill-blue-600" />
                   Your Bookmarked Academic Events
                 </h2>
                 <p className="text-xs text-brutal-black/60 font-medium">
@@ -564,7 +564,7 @@ export const ProfilePage: React.FC = () => {
 
             {loadingBookmarks ? (
               <div className="py-16 text-center space-y-2">
-                <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin mx-auto" />
+                <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin mx-auto" />
                 <p className="text-xs font-bold text-brutal-black/50">Fetching your saved events...</p>
               </div>
             ) : filteredBookmarks.length === 0 ? (
@@ -598,7 +598,7 @@ export const ProfilePage: React.FC = () => {
           <div className="bg-white border-4 border-brutal-black shadow-brutal-xl p-6 sm:p-8 space-y-6 max-w-3xl mx-auto">
             <div className="border-b-3 border-brutal-black pb-4">
               <h2 className="font-serif text-xl font-bold text-brutal-black flex items-center gap-2">
-                <Bell className="w-5 h-5 text-brutal-yellow" />
+                <Bell className="w-5 h-5 text-blue-600" />
                 Academic Notification & Alert Settings
               </h2>
               <p className="text-xs text-brutal-black/60 font-medium">
@@ -625,7 +625,7 @@ export const ProfilePage: React.FC = () => {
                   <div
                     key={category}
                     className={`p-4 border-3 border-brutal-black flex items-center justify-between transition-colors ${
-                      isSubscribed ? 'bg-brutal-yellow/20' : 'bg-brutal-cream/50'
+                      isSubscribed ? 'bg-blue-50' : 'bg-brutal-cream/50'
                     }`}
                   >
                     <div>
@@ -637,8 +637,8 @@ export const ProfilePage: React.FC = () => {
                       onClick={() => handleToggleSubscription(category)}
                       className={`px-3 py-1.5 text-xs font-bold border-2 border-brutal-black shadow-brutal-sm ${
                         isSubscribed
-                          ? 'bg-brutal-black text-brutal-yellow'
-                          : 'bg-white text-brutal-black hover:bg-brutal-yellow'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-white text-brutal-black hover:bg-blue-50'
                       }`}
                     >
                       {isSubscribed ? 'Subscribed ✓' : '+ Subscribe'}
@@ -663,7 +663,7 @@ export const ProfilePage: React.FC = () => {
               <div className="p-4 bg-brutal-cream border-2 border-brutal-black space-y-2 text-xs font-medium">
                 <div className="flex justify-between items-center">
                   <span className="font-bold">Primary Auth Method:</span>
-                  <span className="px-2 py-0.5 bg-brutal-yellow text-brutal-black font-bold text-[10px] border border-brutal-black uppercase">
+                  <span className="px-2 py-0.5 bg-blue-50 text-blue-700 font-bold text-[10px] border border-blue-200 uppercase">
                     {user?.authProvider || 'Firebase'}
                   </span>
                 </div>

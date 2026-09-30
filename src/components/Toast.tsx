@@ -24,10 +24,10 @@ export const Toast: React.FC<ToastProps> = ({ type, message, onClose }) => {
 
   const bgStyles =
     type === 'success'
-      ? 'bg-brutal-yellow text-brutal-black border-brutal-black'
+      ? 'bg-emerald-600 text-white border-brutal-black'
       : type === 'error'
       ? 'bg-brutal-red text-white border-brutal-black'
-      : 'bg-brutal-blue text-white border-brutal-black';
+      : 'bg-blue-600 text-white border-brutal-black';
 
   const Icon = type === 'success' ? CheckCircle2 : type === 'error' ? AlertCircle : Info;
 

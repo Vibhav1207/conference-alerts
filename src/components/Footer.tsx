@@ -4,21 +4,21 @@ import { Mail, Globe, ShieldCheck, BookOpen } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-brutal-black text-white border-t-4 border-brutal-yellow">
+    <footer className="bg-brutal-black text-white border-t-4 border-blue-600">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 py-12 border-b-2 border-white/10">
           {/* Brand */}
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-brutal-yellow text-brutal-black flex items-center justify-center font-display text-2xl font-bold border-2 border-brutal-black">
-                N
+              <div className="w-10 h-10 bg-blue-600 text-white flex items-center justify-center font-display text-xl font-bold border-2 border-white">
+                PT
               </div>
               <div>
                 <span className="font-display text-lg font-bold text-white block leading-tight">
-                  Nitin Sir
+                  Publication Track
                 </span>
-                <span className="text-[9px] font-bold text-brutal-yellow uppercase tracking-widest">
+                <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">
                   Academic Alerts 2026
                 </span>
               </div>
@@ -34,7 +34,7 @@ export const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div className="space-y-3">
-            <h4 className="font-display text-xs font-bold text-brutal-yellow uppercase tracking-widest border-b-2 border-brutal-yellow/30 pb-2">
+            <h4 className="font-display text-xs font-bold text-blue-400 uppercase tracking-widest border-b-2 border-blue-500/30 pb-2">
               Navigation
             </h4>
             <ul className="space-y-2 text-xs text-white/60">
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
                 { to: '/register', label: 'Register Account' },
               ].map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to} className="hover:text-brutal-yellow transition-colors font-medium">
+                  <Link to={link.to} className="hover:text-blue-400 transition-colors font-medium">
                     {link.label}
                   </Link>
                 </li>
@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
 
           {/* Disciplines */}
           <div className="space-y-3">
-            <h4 className="font-display text-xs font-bold text-brutal-yellow uppercase tracking-widest border-b-2 border-brutal-yellow/30 pb-2">
+            <h4 className="font-display text-xs font-bold text-blue-400 uppercase tracking-widest border-b-2 border-blue-500/30 pb-2">
               Disciplines
             </h4>
             <ul className="space-y-2 text-xs text-white/60">
@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
                 { to: '/?category=Business & Mgmt', label: 'FinTech & Digital Economy' },
               ].map((link) => (
                 <li key={link.to}>
-                  <Link to={link.to} className="hover:text-brutal-yellow transition-colors font-medium">
+                  <Link to={link.to} className="hover:text-blue-400 transition-colors font-medium">
                     {link.label}
                   </Link>
                 </li>
@@ -77,7 +77,7 @@ export const Footer: React.FC = () => {
 
           {/* Admin */}
           <div className="space-y-3">
-            <h4 className="font-display text-xs font-bold text-brutal-yellow uppercase tracking-widest border-b-2 border-brutal-yellow/30 pb-2">
+            <h4 className="font-display text-xs font-bold text-blue-400 uppercase tracking-widest border-b-2 border-blue-500/30 pb-2">
               For Organizers
             </h4>
             <p className="text-xs text-white/60 leading-relaxed">
@@ -85,7 +85,7 @@ export const Footer: React.FC = () => {
             </p>
             <Link
               to="/admin"
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-brutal-yellow hover:text-brutal-black text-white font-bold text-xs border-2 border-white/20 hover:border-brutal-black transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/10 hover:bg-blue-600 hover:text-white text-white font-bold text-xs border-2 border-white/20 hover:border-blue-600 transition-all"
             >
               <BookOpen className="w-4 h-4" />
               <span>Admin Dashboard</span>
@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-white/40 gap-4">
-          <p>© {new Date().getFullYear()} Nitin Sir Academic Portal. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} Publication Track Academic Portal. All Rights Reserved.</p>
           <div className="flex items-center gap-6 font-medium">
             <span className="hover:text-white/70 cursor-pointer transition-colors">Privacy Policy</span>
             <span className="hover:text-white/70 cursor-pointer transition-colors">Terms of Service</span>

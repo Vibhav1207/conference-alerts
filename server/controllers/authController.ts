@@ -65,17 +65,17 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 
     // ⚡ GUARANTEED HARDCODED PRODUCTION ADMIN AUTHENTICATION & MONGO SYNC
     if (
-      (cleanEmail === 'admin@nitinsir.org' || cleanEmail === 'admin@conferencealerts.com') &&
+      (cleanEmail === 'admin@publicationtrack.org' || cleanEmail === 'admin@nitinsir.org' || cleanEmail === 'admin@conferencealerts.com') &&
       password === 'AdminPassword123!'
     ) {
       let adminUser = await User.findOne({ email: cleanEmail });
       if (!adminUser) {
         adminUser = await User.create({
-          name: cleanEmail.includes('nitinsir') ? 'Nitin Sir (Admin)' : 'Portal Administrator',
+          name: 'Publication Track (Admin)',
           email: cleanEmail,
           password: 'AdminPassword123!',
           role: 'admin',
-          institution: 'Global Academic Research Institute',
+          institution: 'Publication Track Academic Portal',
           country: 'India',
         });
       } else if (adminUser.role !== 'admin') {

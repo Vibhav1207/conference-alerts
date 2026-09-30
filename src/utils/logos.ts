@@ -28,7 +28,7 @@ export const PUBLISHER_LOGOS: PublisherLogoItem[] = [
     shortName: 'Scopus',
     src: scopusLogo,
     tagline: 'Scopus Bibliographic Database',
-    badgeBg: 'bg-brutal-yellow text-brutal-black',
+    badgeBg: 'bg-blue-600 text-white',
   },
   {
     id: 'wos',

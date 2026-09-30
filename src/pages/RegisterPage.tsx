@@ -57,8 +57,8 @@ export const RegisterPage: React.FC = () => {
       <div className="flex-1 flex items-center justify-center py-16 px-4">
         <div className="bg-white border-4 border-brutal-black shadow-brutal-xl max-w-md w-full p-8 space-y-6 animate-scale-in">
           <div className="text-center space-y-2">
-            <div className="w-14 h-14 bg-brutal-green text-white flex items-center justify-center mx-auto font-display text-3xl font-bold border-3 border-brutal-black shadow-brutal-sm">
-              N
+            <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center mx-auto font-display text-2xl font-bold border-2 border-brutal-black shadow-brutal-sm">
+              PT
             </div>
             <h2 className="font-serif text-2xl font-bold text-brutal-black">Create Scholar Profile</h2>
             <p className="text-xs text-brutal-black/60 font-medium">Subscribe to verified call-for-papers & bookmarks</p>

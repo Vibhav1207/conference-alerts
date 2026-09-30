@@ -221,7 +221,7 @@ export const AdminAddEventPage: React.FC = () => {
       <div className="flex min-h-screen bg-brutal-cream">
         <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
         <div className="flex-1 flex flex-col items-center justify-center gap-3">
-          <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+          <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
           <p className="text-xs font-bold text-brutal-black/50">Loading form data...</p>
         </div>
       </div>
@@ -255,7 +255,7 @@ export const AdminAddEventPage: React.FC = () => {
             {/* General Information Section */}
             <motion.div custom={0} variants={sectionVariant} initial="hidden" animate="visible" className="bg-white border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-4">
               <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
-                <div className="w-3 h-6 bg-brutal-yellow" />
+                <div className="w-3 h-6 bg-blue-600" />
                 <h3 className="font-serif text-base sm:text-lg font-bold text-brutal-black">
                   General Information & Type
                 </h3>
@@ -371,7 +371,7 @@ export const AdminAddEventPage: React.FC = () => {
                         }}
                         className={`p-3 border-3 border-brutal-black text-center transition-all flex flex-col items-center justify-between gap-1.5 ${
                           isSelected
-                            ? 'bg-brutal-yellow shadow-brutal translate-y-[-2px]'
+                            ? 'bg-blue-50 border-blue-600 shadow-brutal translate-y-[-2px]'
                             : 'bg-white hover:bg-brutal-cream shadow-brutal-sm opacity-60'
                         }`}
                       >
@@ -379,7 +379,7 @@ export const AdminAddEventPage: React.FC = () => {
                         <span className="text-[10px] font-bold font-mono text-brutal-black">{logo.shortName}</span>
                         <span
                           className={`text-[9px] font-bold px-1.5 py-0.5 border border-brutal-black uppercase ${
-                            isSelected ? 'bg-brutal-black text-brutal-yellow' : 'bg-brutal-cream text-brutal-black/50'
+                            isSelected ? 'bg-blue-600 text-white' : 'bg-brutal-cream text-brutal-black/50'
                           }`}
                         >
                           {isSelected ? 'Selected ✓' : '+ Add'}
@@ -416,7 +416,7 @@ export const AdminAddEventPage: React.FC = () => {
             </motion.div>
 
             {/* Official Redirect Link Section */}
-            <motion.div custom={1} variants={sectionVariant} initial="hidden" animate="visible" className="bg-brutal-yellow/20 border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-3">
+            <motion.div custom={1} variants={sectionVariant} initial="hidden" animate="visible" className="bg-blue-50/60 border-3 border-brutal-black shadow-brutal p-4 sm:p-6 space-y-3">
               <div className="flex items-center gap-3 pb-3 border-b-3 border-brutal-black">
                 <div className="w-3 h-6 bg-brutal-green" />
                 <h3 className="font-serif text-base sm:text-lg font-bold text-brutal-black flex items-center gap-2">

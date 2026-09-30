@@ -20,7 +20,7 @@ const ProtectedAdminRoute: React.FC<{ children: React.ReactNode }> = ({ children
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-brutal-cream font-mono text-xs font-bold gap-3">
-        <div className="w-8 h-8 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+        <div className="w-8 h-8 border-4 border-brutal-black border-t-blue-600 animate-spin" />
         <span>Verifying admin permissions...</span>
       </div>
     );
@@ -40,7 +40,7 @@ const ProtectedUserRoute: React.FC<{ children: React.ReactNode }> = ({ children 
   if (loading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-brutal-cream font-mono text-xs font-bold gap-3">
-        <div className="w-8 h-8 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+        <div className="w-8 h-8 border-4 border-brutal-black border-t-blue-600 animate-spin" />
         <span>Syncing academic profile...</span>
       </div>
     );

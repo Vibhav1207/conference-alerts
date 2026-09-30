@@ -116,7 +116,7 @@ export const AdminConferencesPage: React.FC = () => {
                       onClick={() => setActiveEventTypeTab(type)}
                       className={`px-3 py-1.5 text-xs font-bold transition-all whitespace-nowrap border-2 border-brutal-black ${
                         isSelected
-                          ? 'bg-brutal-yellow text-brutal-black shadow-brutal-sm'
+                          ? 'bg-blue-600 text-white shadow-brutal-sm'
                           : 'bg-white text-brutal-black hover:bg-brutal-cream'
                       }`}
                     >
@@ -139,7 +139,7 @@ export const AdminConferencesPage: React.FC = () => {
                       onClick={() => setActiveStatusTab(status)}
                       className={`px-3 py-1.5 text-xs font-bold transition-all whitespace-nowrap border-2 border-brutal-black ${
                         isSelected
-                          ? 'bg-brutal-black text-brutal-yellow shadow-brutal-sm'
+                          ? 'bg-blue-600 text-white shadow-brutal-sm'
                           : 'bg-white text-brutal-black hover:bg-brutal-cream'
                       }`}
                     >
@@ -172,7 +172,7 @@ export const AdminConferencesPage: React.FC = () => {
           >
             {loading ? (
               <div className="py-16 sm:py-20 flex flex-col items-center justify-center gap-3">
-                <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+                <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
                 <p className="text-xs font-bold text-brutal-black/50">Loading opportunity records...</p>
               </div>
             ) : conferences.length === 0 ? (

@@ -71,7 +71,7 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
               </div>
             ))}
           </div>
-          <span className="text-[8px] font-bold px-1.5 py-0.5 bg-brutal-black text-brutal-yellow uppercase border border-brutal-black">
+          <span className="text-[8px] font-bold px-1.5 py-0.5 bg-slate-900 text-blue-300 uppercase border border-brutal-black">
             Indexed
           </span>
         </div>
@@ -95,7 +95,7 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
                 ? 'bg-purple-100 text-purple-800 border-purple-400'
                 : conference.mode === 'Online'
                 ? 'bg-brutal-blue/10 text-brutal-blue border-brutal-blue'
-                : 'bg-brutal-yellow/20 text-brutal-black border-brutal-orange'
+                : 'bg-slate-100 text-slate-800 border-slate-300'
             }`}
           >
             {conference.mode}
@@ -113,12 +113,12 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
           }}
           className={`p-1.5 border-2 transition-all ${
             bookmarked
-              ? 'bg-brutal-yellow border-brutal-black text-brutal-black'
+              ? 'bg-blue-600 border-brutal-black text-white'
               : 'bg-white border-brutal-black/20 text-brutal-black/40 hover:border-brutal-black hover:text-brutal-black'
           }`}
           title={bookmarked ? 'Remove Bookmark' : 'Save'}
         >
-          <Bookmark className={`w-4 h-4 ${bookmarked ? 'fill-brutal-black' : ''}`} />
+          <Bookmark className={`w-4 h-4 ${bookmarked ? 'fill-white' : ''}`} />
         </button>
       </div>
 
@@ -163,7 +163,7 @@ export const ConferenceCard: React.FC<ConferenceCardProps> = ({ conference }) =>
             </span>
           </div>
           {daysLeft > 0 ? (
-            <span className="brutal-badge bg-brutal-yellow text-brutal-black border-brutal-black text-[9px]">
+            <span className="brutal-badge bg-blue-50 text-blue-700 border-blue-300 text-[9px]">
               {daysLeft}d left
             </span>
           ) : (

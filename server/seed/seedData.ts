@@ -16,19 +16,20 @@ const clearMockDataAndEnsureAdmin = async () => {
     await Resource.deleteMany({});
 
     console.log('[Clean] Ensuring clean Admin user exists...');
-    await User.deleteMany({ email: { $ne: 'admin@nitinsir.org' } });
+    await User.deleteMany({ email: { $nin: ['admin@publicationtrack.org', 'admin@nitinsir.org'] } });
 
-    let adminUser = await User.findOne({ email: 'admin@nitinsir.org' }).select('+password');
+    let adminUser = await User.findOne({ email: 'admin@publicationtrack.org' }).select('+password');
     if (!adminUser) {
       await User.create({
-        name: 'Nitin Sir (Admin)',
-        email: 'admin@nitinsir.org',
+        name: 'Publication Track (Admin)',
+        email: 'admin@publicationtrack.org',
         password: 'AdminPassword123!',
         role: 'admin',
-        institution: 'Global Academic Research Institute',
-        country: 'India',
+        institution: 'Publication Track Academic Portal',
+        country: 'Global',
       });
     } else {
+      adminUser.name = 'Publication Track (Admin)';
       adminUser.password = 'AdminPassword123!';
       adminUser.role = 'admin';
       await adminUser.save();
@@ -36,7 +37,7 @@ const clearMockDataAndEnsureAdmin = async () => {
 
     console.log('==================================================');
     console.log('[Clean] All mock data removed! System is clean & production-ready.');
-    console.log('[Clean] Admin User: admin@nitinsir.org / AdminPassword123!');
+    console.log('[Clean] Admin User: admin@publicationtrack.org / AdminPassword123!');
     console.log('==================================================');
 
     await closeDB();

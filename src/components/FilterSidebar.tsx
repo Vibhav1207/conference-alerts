@@ -164,8 +164,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({ filters, onFilterC
               onClick={() => onFilterChange({ mode: m, page: 1 })}
               className={`px-3 py-2 text-[11px] font-bold border-2 border-brutal-black transition-all ${
                 filters.mode === m
-                  ? 'bg-brutal-black text-brutal-yellow shadow-brutal-sm'
-                  : 'bg-white text-brutal-black hover:bg-brutal-cream'
+                  ? 'bg-blue-600 text-white border-blue-600 shadow-brutal-sm'
+                  : 'bg-white text-brutal-black hover:bg-slate-100'
               }`}
             >
               {m}

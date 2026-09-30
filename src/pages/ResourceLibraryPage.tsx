@@ -50,11 +50,11 @@ export const ResourceLibraryPage: React.FC = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-brutal-black text-white py-14 px-4 sm:px-6 lg:px-8 border-b-6 border-brutal-yellow relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-brutal-yellow/5 -rotate-12 translate-x-16 -translate-y-16" />
+      <section className="bg-brutal-black text-white py-14 px-4 sm:px-6 lg:px-8 border-b-4 border-blue-600 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 -rotate-12 translate-x-16 -translate-y-16" />
         <div className="max-w-5xl mx-auto text-center space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-brutal-yellow text-brutal-black border-2 border-brutal-black font-bold text-[10px] uppercase tracking-widest shadow-brutal-sm">
-            <Sparkles className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-blue-600 text-white border-2 border-white/20 font-bold text-[10px] uppercase tracking-widest shadow-brutal-sm">
+            <Sparkles className="w-3.5 h-3.5 text-blue-200" />
             <span>Author Center</span>
           </div>
           <h1 className="font-serif text-3xl sm:text-5xl font-bold text-white tracking-tight">
@@ -88,7 +88,7 @@ export const ResourceLibraryPage: React.FC = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 text-xs font-bold border-2 border-brutal-black transition-all ${
                 selectedCategory === cat
-                  ? 'bg-brutal-black text-brutal-yellow shadow-brutal-sm'
+                  ? 'bg-blue-600 text-white shadow-brutal-sm'
                   : 'bg-white text-brutal-black hover:bg-brutal-cream shadow-brutal-sm hover:shadow-brutal'
               }`}
             >
@@ -99,7 +99,7 @@ export const ResourceLibraryPage: React.FC = () => {
 
         {loading ? (
           <div className="py-20 flex flex-col items-center justify-center gap-3">
-            <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+            <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
             <p className="text-xs font-bold text-brutal-black/50">Loading resources...</p>
           </div>
         ) : resources.length === 0 ? (

@@ -40,7 +40,7 @@ export const AdminDashboardPage: React.FC = () => {
       <div className="flex min-h-screen bg-brutal-cream">
         <AdminSidebar mobileOpen={mobileSidebarOpen} onToggle={() => setMobileSidebarOpen(false)} />
         <div className="flex-1 flex flex-col items-center justify-center gap-3">
-          <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+          <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
           <p className="text-xs font-bold text-brutal-black/50">Loading metrics...</p>
         </div>
       </div>
@@ -50,7 +50,7 @@ export const AdminDashboardPage: React.FC = () => {
   const m = stats?.metrics;
 
   const metricCards = [
-    { label: 'Total Conferences', value: m?.totalConferences || 0, icon: CalendarCheck, color: 'bg-brutal-yellow text-brutal-black border-brutal-yellow', sub: `${m?.publishedConferences || 0} Published`, subColor: 'text-brutal-green' },
+    { label: 'Total Conferences', value: m?.totalConferences || 0, icon: CalendarCheck, color: 'bg-blue-600 text-white border-blue-600', sub: `${m?.publishedConferences || 0} Published`, subColor: 'text-brutal-green' },
     { label: 'Pending Approvals', value: m?.pendingConferences || 0, icon: Clock, color: 'bg-brutal-orange text-white border-brutal-orange', sub: 'Requires Review', subColor: 'text-brutal-black/50' },
     { label: 'Total Resources', value: m?.totalResources || 0, icon: FileText, color: 'bg-brutal-blue text-white border-brutal-blue', sub: `${m?.totalDownloads || 0} Downloads`, subColor: 'text-brutal-black/50' },
     { label: 'Registered Users', value: m?.totalUsers || 0, icon: Users, color: 'bg-brutal-green text-white border-brutal-green', sub: 'Active Subscribers', subColor: 'text-brutal-black/50' },
@@ -100,14 +100,14 @@ export const AdminDashboardPage: React.FC = () => {
               className="bg-brutal-black text-white border-3 border-brutal-black shadow-brutal p-4 sm:p-5 space-y-4"
             >
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-brutal-yellow" />
+                <ShieldCheck className="w-5 h-5 text-blue-400" />
                 <h3 className="font-display text-sm font-bold">Quick Actions</h3>
               </div>
               <p className="text-[11px] text-white/50 leading-relaxed">
                 Publish events, manage records, or update author guides.
               </p>
               <div className="space-y-2 pt-2">
-                <Link to="/admin/conferences/new" className="w-full flex items-center justify-between p-3 bg-brutal-yellow text-brutal-black font-bold text-xs border-2 border-brutal-black hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
+                <Link to="/admin/conferences/new" className="w-full flex items-center justify-between p-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs border-2 border-white/20 hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all shadow-brutal-sm">
                   <div className="flex items-center gap-2"><PlusCircle className="w-4 h-4" /><span>New Event</span></div>
                   <ChevronRight className="w-4 h-4" />
                 </Link>
@@ -142,7 +142,7 @@ export const AdminDashboardPage: React.FC = () => {
                         <span className="text-brutal-black/50">{cat.count} ({pct}%)</span>
                       </div>
                       <div className="w-full h-3 bg-brutal-cream border-2 border-brutal-black/20">
-                        <div className="h-full bg-brutal-yellow border-r-2 border-brutal-black transition-all duration-500" style={{ width: `${pct}%` }} />
+                        <div className="h-full bg-blue-600 border-r-2 border-brutal-black transition-all duration-500" style={{ width: `${pct}%` }} />
                       </div>
                     </div>
                   );

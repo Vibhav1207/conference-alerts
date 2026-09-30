@@ -58,19 +58,19 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-brutal-black text-white border-b-4 border-brutal-yellow">
+      <header className="sticky top-0 z-40 bg-brutal-black text-white border-b-4 border-blue-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo & Brand */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-brutal-yellow text-brutal-black flex items-center justify-center font-display text-2xl font-bold border-3 border-brutal-black shadow-brutal-sm group-hover:translate-x-[-2px] group-hover:translate-y-[-2px] group-hover:shadow-brutal transition-all">
-                N
+              <div className="w-10 h-10 bg-blue-600 text-white flex items-center justify-center font-display text-xl font-bold border-2 border-white shadow-brutal-sm group-hover:translate-x-[-2px] group-hover:translate-y-[-2px] group-hover:shadow-brutal transition-all">
+                PT
               </div>
               <div className="flex flex-col">
                 <span className="font-display text-lg font-bold tracking-tight text-white leading-tight">
-                  Nitin Sir
+                  Publication Track
                 </span>
-                <span className="text-[9px] font-bold tracking-widest text-brutal-yellow uppercase">
+                <span className="text-[9px] font-bold tracking-widest text-blue-400 uppercase">
                   Academic Alerts 2026
                 </span>
               </div>
@@ -90,7 +90,7 @@ export const Navbar: React.FC = () => {
                     to={link.to}
                     className={`px-3 py-2 transition-all flex items-center gap-1.5 border-2 ${
                       active
-                        ? 'bg-brutal-yellow text-brutal-black border-brutal-yellow shadow-brutal-sm'
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-brutal-sm'
                         : 'border-transparent text-white/70 hover:text-white hover:bg-white/10 hover:border-white/20'
                     }`}
                   >
@@ -115,9 +115,9 @@ export const Navbar: React.FC = () => {
                 <div className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2 px-3 py-1.5 border-2 border-white/20 hover:border-brutal-yellow transition-colors bg-white/5"
+                    className="flex items-center gap-2 px-3 py-1.5 border-2 border-white/20 hover:border-blue-400 transition-colors bg-white/5"
                   >
-                    <div className="w-7 h-7 bg-brutal-yellow text-brutal-black flex items-center justify-center font-bold text-xs border-2 border-brutal-black overflow-hidden flex-shrink-0">
+                    <div className="w-7 h-7 bg-blue-600 text-white flex items-center justify-center font-bold text-xs border-2 border-brutal-black overflow-hidden flex-shrink-0">
                       {user?.photoURL ? (
                         <img src={user.photoURL} alt={user.name} className="w-full h-full object-cover" />
                       ) : (
@@ -130,7 +130,7 @@ export const Navbar: React.FC = () => {
 
                   {userDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-56 bg-white border-3 border-brutal-black shadow-brutal-lg z-50 animate-slide-down">
-                      <div className="px-4 py-3 border-b-2 border-brutal-black bg-brutal-yellow/10">
+                      <div className="px-4 py-3 border-b-2 border-brutal-black bg-blue-50">
                         <p className="text-xs font-bold text-brutal-black truncate">{user?.name}</p>
                         <p className="text-[10px] text-brutal-black/60 truncate">{user?.email}</p>
                       </div>
@@ -138,7 +138,7 @@ export const Navbar: React.FC = () => {
                       <Link
                         to="/profile"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-black hover:bg-brutal-yellow/20 transition-colors border-b border-brutal-black/10"
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-black hover:bg-blue-50 transition-colors border-b border-brutal-black/10"
                       >
                         <User className="w-4 h-4 text-brutal-black" />
                         <span>My Academic Profile</span>
@@ -148,7 +148,7 @@ export const Navbar: React.FC = () => {
                         <Link
                           to="/admin"
                           onClick={() => setUserDropdownOpen(false)}
-                          className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-black hover:bg-brutal-yellow/20 transition-colors border-b border-brutal-black/10"
+                          className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-bold text-brutal-black hover:bg-blue-50 transition-colors border-b border-brutal-black/10"
                         >
                           <LayoutDashboard className="w-4 h-4" />
                           <span>Admin Dashboard</span>
@@ -191,7 +191,7 @@ export const Navbar: React.FC = () => {
             <div className="flex lg:hidden items-center gap-2">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 border-2 border-white/20 hover:border-brutal-yellow transition-colors"
+                className="p-2 border-2 border-white/20 hover:border-blue-400 transition-colors"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -221,7 +221,7 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/profile"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-brutal-yellow"
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm font-bold text-blue-400"
                 >
                   <User className="w-4 h-4" />
                   My Academic Profile
@@ -256,7 +256,7 @@ export const Navbar: React.FC = () => {
                 <Link
                   to="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-center px-4 py-2.5 text-sm font-bold bg-brutal-yellow text-brutal-black border-2 border-brutal-black"
+                  className="text-center px-4 py-2.5 text-sm font-bold bg-blue-600 text-white border-2 border-brutal-black"
                 >
                   Register
                 </Link>
@@ -292,8 +292,8 @@ export const Navbar: React.FC = () => {
               </div>
             ) : (
               <>
-                <div className="w-12 h-12 bg-brutal-yellow border-3 border-brutal-black flex items-center justify-center mb-4 shadow-brutal-sm">
-                  <Bell className="w-6 h-6 text-brutal-black" />
+                <div className="w-12 h-12 bg-blue-600 text-white border-3 border-brutal-black flex items-center justify-center mb-4 shadow-brutal-sm">
+                  <Bell className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-serif text-xl font-bold text-brutal-black mb-1">
                   Subscribe to Alerts

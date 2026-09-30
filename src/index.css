@@ -75,7 +75,10 @@
   }
 
   .brutal-btn-secondary {
-    @apply brutal-btn bg-brutal-yellow text-brutal-black;
+    @apply brutal-btn bg-blue-600 text-white;
+  }
+  .brutal-btn-secondary:hover {
+    @apply bg-blue-700;
   }
 
   .brutal-btn-danger {

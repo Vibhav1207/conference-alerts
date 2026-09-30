@@ -44,7 +44,7 @@ export const ConferenceDetailPage: React.FC = () => {
       <div className="min-h-screen flex flex-col bg-brutal-cream">
         <Navbar />
         <div className="flex-1 flex flex-col items-center justify-center py-24 gap-3">
-          <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+          <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
           <p className="text-xs font-bold text-brutal-black/50">Loading details...</p>
         </div>
         <Footer />
@@ -94,8 +94,8 @@ export const ConferenceDetailPage: React.FC = () => {
       <Navbar />
 
       {/* ═══ HERO HEADER ═══ */}
-      <section className="bg-brutal-black text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b-6 border-brutal-yellow">
-        <div className="absolute top-0 right-0 w-48 h-48 bg-brutal-yellow/5 -rotate-12 translate-x-16 -translate-y-16" />
+      <section className="bg-brutal-black text-white py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-b-4 border-blue-600">
+        <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 -rotate-12 translate-x-16 -translate-y-16" />
         <div className="max-w-7xl mx-auto relative z-10">
           <Link to="/" className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-white mb-6 font-medium transition-colors">
             <ChevronLeft className="w-4 h-4" />
@@ -114,7 +114,7 @@ export const ConferenceDetailPage: React.FC = () => {
                     {logos.map((logo) => (
                       <div
                         key={logo.id}
-                        className="inline-flex items-center gap-2.5 px-3 py-1.5 bg-white text-brutal-black border-2 border-brutal-yellow shadow-brutal-sm"
+                        className="inline-flex items-center gap-2.5 px-3 py-1.5 bg-white text-brutal-black border-2 border-blue-600 shadow-brutal-sm"
                       >
                         <img src={logo.src} alt={logo.name} className="h-6 object-contain max-w-[100px]" />
                         <div className="flex flex-col">
@@ -130,11 +130,11 @@ export const ConferenceDetailPage: React.FC = () => {
               })()}
 
               <div className="flex flex-wrap items-center gap-2">
-                <span className="brutal-badge bg-brutal-yellow/20 text-brutal-yellow border-brutal-yellow text-[9px]">
+                <span className="brutal-badge bg-blue-500/20 text-blue-300 border-blue-400 text-[9px]">
                   {catMeta.badge}
                 </span>
                 {conference.conferenceScope && (
-                  <span className="brutal-badge bg-brutal-blue/20 text-brutal-blue border-brutal-blue text-[9px]">
+                  <span className="brutal-badge bg-blue-500/20 text-blue-300 border-blue-400 text-[9px]">
                     {conference.conferenceScope}
                   </span>
                 )}
@@ -147,13 +147,13 @@ export const ConferenceDetailPage: React.FC = () => {
               </p>
               <div className="flex flex-wrap items-center gap-2 pt-1">
                 <span className="brutal-badge bg-white/10 text-white border-white/20">{conference.category}</span>
-                <span className="brutal-badge bg-brutal-blue/20 text-brutal-blue border-brutal-blue">{conference.mode}</span>
+                <span className="brutal-badge bg-blue-500/20 text-blue-300 border-blue-400">{conference.mode}</span>
               </div>
             </div>
 
             <div className="space-y-3">
               <div className="bg-white/10 border-2 border-white/15 p-4 flex items-center gap-4">
-                <div className="w-10 h-10 bg-brutal-black flex items-center justify-center border-2 border-brutal-yellow text-brutal-yellow">
+                <div className="w-10 h-10 bg-blue-600 flex items-center justify-center border-2 border-white text-white">
                   <Calendar className="w-5 h-5" />
                 </div>
                 <div>
@@ -190,10 +190,10 @@ export const ConferenceDetailPage: React.FC = () => {
                 <section data-reveal className="bg-white border-4 border-brutal-black shadow-brutal p-6 space-y-4">
                   <div className="flex items-center justify-between border-b-3 border-brutal-black pb-3">
                     <h3 className="font-serif text-base font-bold text-brutal-black flex items-center gap-2">
-                      <span className="w-3 h-3 bg-brutal-yellow border border-brutal-black" />
+                      <span className="w-3 h-3 bg-blue-600 border border-brutal-black" />
                       Official Indexing & Publisher Accreditations
                     </h3>
-                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-brutal-black text-brutal-yellow uppercase">
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 bg-blue-600 text-white uppercase">
                       {logos.length} Verified Partner(s)
                     </span>
                   </div>
@@ -224,7 +224,7 @@ export const ConferenceDetailPage: React.FC = () => {
             {/* About Section */}
             <section data-reveal className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-6 h-1 bg-brutal-yellow" />
+                <div className="w-6 h-1 bg-blue-600" />
                 <h2 className="font-serif text-xl font-bold text-brutal-black">{catMeta.aboutTitle}</h2>
               </div>
               <p className="text-brutal-black/70 text-xs sm:text-sm leading-relaxed whitespace-pre-line bg-white border-3 border-brutal-black shadow-brutal-sm p-6">
@@ -237,17 +237,17 @@ export const ConferenceDetailPage: React.FC = () => {
           {/* Right Column */}
           <div className="space-y-5">
             {/* Apply Card */}
-            <div className="bg-brutal-yellow border-4 border-brutal-black shadow-brutal-lg p-6 space-y-5">
+            <div className="bg-blue-600 border-4 border-brutal-black shadow-brutal-lg p-6 space-y-5 text-white">
               <div className="space-y-1.5">
-                <h3 className="font-serif text-xl font-bold text-brutal-black">{catMeta.applyText}</h3>
-                <p className="text-xs text-brutal-black/60 leading-relaxed">{catMeta.ctaSubtext}</p>
+                <h3 className="font-serif text-xl font-bold text-white">{catMeta.applyText}</h3>
+                <p className="text-xs text-white/80 leading-relaxed">{catMeta.ctaSubtext}</p>
               </div>
               {conference.externalApplyUrl ? (
                 <a
                   href={conference.externalApplyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 bg-brutal-black text-brutal-yellow font-bold text-xs uppercase tracking-wider border-3 border-brutal-black shadow-brutal-sm flex items-center justify-center gap-2 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all"
+                  className="w-full py-3.5 bg-white text-blue-700 hover:bg-blue-50 font-bold text-xs uppercase tracking-wider border-2 border-brutal-black shadow-brutal-sm flex items-center justify-center gap-2 hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-brutal transition-all"
                 >
                   <span>{catMeta.applyText}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -257,7 +257,7 @@ export const ConferenceDetailPage: React.FC = () => {
                   Register Interest
                 </button>
               )}
-              <p className="text-[9px] text-center text-brutal-black/40 font-bold uppercase tracking-wider">
+              <p className="text-[9px] text-center text-white/70 font-bold uppercase tracking-wider">
                 Official external portal
               </p>
             </div>
@@ -269,7 +269,7 @@ export const ConferenceDetailPage: React.FC = () => {
               </h3>
               <div className="space-y-4 relative before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-0.5 before:bg-brutal-black/20">
                 <div className="relative pl-6 space-y-0.5">
-                  <div className="absolute left-0 top-1 w-3.5 h-3.5 bg-brutal-black border-2 border-brutal-yellow" />
+                  <div className="absolute left-0 top-1 w-3.5 h-3.5 bg-brutal-black border-2 border-blue-600" />
                   <p className="text-[11px] font-bold text-brutal-black">Application / Submission</p>
                   <p className="text-[10px] text-brutal-black/50">{formatDate(conference.dates.submissionDeadline)}</p>
                 </div>
@@ -284,7 +284,7 @@ export const ConferenceDetailPage: React.FC = () => {
                   <p className="text-[10px] text-brutal-black/50">{conference.dates.cameraReadyDeadline ? formatDate(conference.dates.cameraReadyDeadline) : 'Prior to event'}</p>
                 </div>
                 <div className="relative pl-6 space-y-0.5">
-                  <div className="absolute left-0 top-1 w-3.5 h-3.5 bg-brutal-yellow border-2 border-brutal-black" />
+                  <div className="absolute left-0 top-1 w-3.5 h-3.5 bg-blue-600 border-2 border-brutal-black" />
                   <p className="text-[11px] font-bold text-brutal-black">{conference.eventType === 'Internship' ? 'Internship Begins' : 'Conference Begins'}</p>
                   <p className="text-[10px] font-bold text-brutal-black">{formatDate(conference.dates.startDate)}</p>
                 </div>

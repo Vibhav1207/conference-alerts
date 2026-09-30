@@ -15,13 +15,13 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title, subtitle, onMen
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="bg-brutal-black text-white border-b-4 border-brutal-yellow px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between gap-4"
+      className="bg-brutal-black text-white border-b-4 border-blue-600 px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between gap-4"
     >
       <div className="flex items-center gap-3 min-w-0">
         {onMenuToggle && (
           <button
             onClick={onMenuToggle}
-            className="lg:hidden p-2 border-2 border-white/20 hover:border-brutal-yellow transition-colors flex-shrink-0"
+            className="lg:hidden p-2 border-2 border-white/20 hover:border-blue-400 transition-colors flex-shrink-0"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -41,7 +41,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({ title, subtitle, onMen
         </div>
         <Link
           to="/admin/conferences/new"
-          className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-brutal-yellow text-brutal-black font-bold text-xs border-2 border-brutal-black shadow-brutal-sm hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-brutal transition-all"
+          className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs border-2 border-brutal-black shadow-brutal-sm hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-brutal transition-all"
         >
           <PlusCircle className="w-4 h-4" />
           <span className="hidden sm:inline">Add Event</span>

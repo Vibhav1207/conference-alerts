@@ -43,7 +43,7 @@ app.get('/api/health', (req: Request, res: Response) => {
   res.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    service: 'Nitin Sir Academic Alerts API',
+    service: 'Publication Track Academic Alerts API',
     jwtExpiresIn: 'never',
     environment: process.env.NODE_ENV || 'production',
   });

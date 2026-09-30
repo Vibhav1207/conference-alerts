@@ -24,18 +24,18 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
   ];
 
   const sidebarContent = (
-    <aside className="w-64 bg-brutal-black text-white h-screen flex flex-col justify-between border-r-4 border-brutal-yellow overflow-y-auto">
+    <aside className="w-64 bg-brutal-black text-white h-screen flex flex-col justify-between border-r-4 border-blue-600 overflow-y-auto">
       {/* Brand */}
       <div className="p-5 border-b-2 border-white/10 flex items-center justify-between">
         <Link to="/admin" className="flex items-center gap-3" onClick={onToggle}>
-          <div className="w-9 h-9 bg-brutal-yellow text-brutal-black flex items-center justify-center font-display font-bold text-xl border-2 border-brutal-black">
-            N
+          <div className="w-9 h-9 bg-blue-600 text-white flex items-center justify-center font-display font-bold text-sm border-2 border-white">
+            PT
           </div>
           <div>
             <span className="font-display font-bold text-white text-sm block leading-tight">
-              Nitin Sir Admin
+              Publication Track Admin
             </span>
-            <span className="text-[9px] font-bold text-brutal-yellow uppercase tracking-widest">
+            <span className="text-[9px] font-bold text-blue-400 uppercase tracking-widest">
               Control Center
             </span>
           </div>
@@ -60,7 +60,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
               onClick={onToggle}
               className={`flex items-center justify-between px-3.5 py-2.5 font-bold text-xs transition-all border-l-4 ${
                 isActive
-                  ? 'bg-brutal-yellow text-brutal-black border-brutal-yellow'
+                  ? 'bg-blue-600 text-white border-blue-400'
                   : 'text-white/60 hover:text-white hover:bg-white/5 border-transparent'
               }`}
             >
@@ -85,7 +85,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({ mobileOpen, onToggle
         </Link>
         <div className="flex items-center justify-between p-3 border-2 border-white/10">
           <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="w-8 h-8 bg-brutal-yellow text-brutal-black flex items-center justify-center font-bold text-xs border-2 border-brutal-black flex-shrink-0">
+            <div className="w-8 h-8 bg-blue-600 text-white flex items-center justify-center font-bold text-xs border-2 border-white/20 flex-shrink-0">
               {user?.name?.charAt(0) || 'A'}
             </div>
             <div className="truncate text-xs">

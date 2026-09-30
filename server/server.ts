@@ -12,7 +12,7 @@ const startServer = async () => {
 
     app.listen(PORT, () => {
       console.log(`==================================================`);
-      console.log(`[Server] Nitin Sir Academic Conference Alerts backend running!`);
+      console.log(`[Server] Publication Track Academic Conference Alerts backend running!`);
       console.log(`[Server] Listening on http://localhost:${PORT}`);
       console.log(`[Server] Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`==================================================`);

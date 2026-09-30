@@ -116,7 +116,7 @@ export const AdminResourcesPage: React.FC = () => {
             </div>
             <button
               onClick={() => alert('Scopus links successfully synchronized across all active conferences!')}
-              className="inline-flex items-center gap-2 px-5 py-3 bg-brutal-yellow text-brutal-black font-bold text-xs uppercase tracking-wider border-2 border-brutal-black shadow-brutal-sm hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-brutal transition-all whitespace-nowrap"
+              className="inline-flex items-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider border-2 border-white/20 shadow-brutal-sm hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-brutal transition-all whitespace-nowrap"
             >
               <LinkIcon className="w-4 h-4" />
               <span>Run Scopus Sync</span>
@@ -138,7 +138,7 @@ export const AdminResourcesPage: React.FC = () => {
           {/* Resources Data Grid */}
           {loading ? (
             <div className="py-16 sm:py-20 flex flex-col items-center justify-center gap-3">
-              <div className="w-10 h-10 border-4 border-brutal-black border-t-brutal-yellow animate-spin" />
+              <div className="w-10 h-10 border-4 border-brutal-black border-t-blue-600 animate-spin" />
               <p className="text-xs font-bold text-brutal-black/50">Loading resources...</p>
             </div>
           ) : (
