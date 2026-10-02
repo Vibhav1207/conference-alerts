@@ -13,6 +13,8 @@
     "start": "ts-node server/server.ts"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "animejs": "^3.2.2",
     "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",

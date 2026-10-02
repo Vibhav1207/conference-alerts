@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { HomePage } from './pages/HomePage';
 import { ConferenceDetailPage } from './pages/ConferenceDetailPage';
@@ -66,6 +68,8 @@ export const App: React.FC = () => {
     <AuthProvider>
       <Router>
         <ScrollToTop />
+        <Analytics />
+        <SpeedInsights />
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
